@@ -1,19 +1,50 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Tags on 学少何Blog</title>
     <link>http://study_less_shape.gitee.io/tags/</link>
     <description>Recent content in Tags on 学少何Blog</description>
     <generator>Hugo -- gohugo.io</generator>
-    <language>en-us</language>
-    <lastBuildDate>Tue, 17 Nov 2020 17:16:04 +0800</lastBuildDate><atom:link href="http://study_less_shape.gitee.io/tags/index.xml" rel="self" type="application/rss+xml" />
+    <language>zh-CN</language>
+    <lastBuildDate>Tue, 17 Nov 2020 22:03:50 +0800</lastBuildDate>
+    
+        <atom:link href="http://study_less_shape.gitee.io/tags/index.xml" rel="self" type="application/rss+xml" />
+    
+    
     <item>
-      <title>rust</title>
-      <link>http://study_less_shape.gitee.io/tags/rust/</link>
+      <title>About</title>
+      <link>http://study_less_shape.gitee.io/about/</link>
+      <pubDate>Tue, 17 Nov 2020 22:03:50 +0800</pubDate>
+      
+      <guid>http://study_less_shape.gitee.io/about/</guid>
+      <description>&lt;ul&gt;
+&lt;li&gt;从头（零）开始Rust和OpenGL（&lt;a href=&#34;https://gitee.com/study_less_shape/rust-opengl-nercury&#34;target=&#34;_blank&#34;&gt;施工中&lt;/a&gt;）&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Cargo一直fetch failed</title>
+      <link>http://study_less_shape.gitee.io/rust/fetch-failed/</link>
       <pubDate>Tue, 17 Nov 2020 17:16:04 +0800</pubDate>
       
-      <guid>http://study_less_shape.gitee.io/tags/rust/</guid>
-      <description></description>
+      <guid>http://study_less_shape.gitee.io/rust/fetch-failed/</guid>
+      <description>&lt;h1 id=&#34;前因&#34;&gt;前因&lt;/h1&gt;
+&lt;p&gt;在从朋友那儿clone一份rust代码之后，cargo run竟然出错了，一时半会儿也没解决，以为问题不大就没关注，结果问题也同样出现在了我自己的代码身上&lt;/p&gt;
+&lt;p&gt;&lt;img  src=&#34;fetch-failed.png&#34;
+        alt=&#34;error-details&#34;/&gt;
+(出错详情)&lt;/p&gt;
+&lt;h1 id=&#34;解决&#34;&gt;解决&lt;/h1&gt;
+&lt;blockquote&gt;
+&lt;p&gt;这是在更换镜像源没法解决之后，无意间找搜到的解决方案&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;以下解决方案来自&lt;a href=&#34;https://stackoverflow.com/questions/45722823/cargo-fails-with-spurious-network-error-the-operation-timed-out-on-windows-10&#34;target=&#34;_blank&#34;&gt;stackoverflow&lt;/a&gt;
+先检查代理&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-powershell&#34; data-lang=&#34;powershell&#34;&gt;netsh winhttp show proxy
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;如果有代理的话进行重置&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-powershell&#34; data-lang=&#34;powershell&#34;&gt;netsh winhttp reset proxy
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h1 id=&#34;后记&#34;&gt;后记&lt;/h1&gt;
+&lt;p&gt;残留的代理是之前为编译其他项目而留下的，造成了不小麻烦，&lt;strong&gt;慎用命令行直接设置的代理&lt;/strong&gt;&lt;/p&gt;
+</description>
     </item>
     
   </channel>
