@@ -30,29 +30,29 @@
 <h3 id="代码实现">代码实现</h3>
 <p>在输入时，就处理好最大电池寿命和其他电池寿命的总和：
 (7.1.battery.cpp，部分代码)</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c++" data-lang="c++">        <span style="color:#66d9ef">while</span>(n<span style="color:#f92672">--</span>)
-        {
-            cin<span style="color:#f92672">&gt;&gt;</span>ba;
-            <span style="color:#66d9ef">if</span>(max_life <span style="color:#f92672">&lt;</span> ba)
-            {
-                <span style="color:#75715e">// 如果比当前值大，就把之前没有加的值加上，然后记录当前值
-</span><span style="color:#75715e"></span>                sum <span style="color:#f92672">+=</span> max_life;
-                max_life <span style="color:#f92672">=</span> ba;
-            }
-            <span style="color:#66d9ef">else</span>
-            {
-                <span style="color:#75715e">// 将比最大电池寿命小的电池加到总和
-</span><span style="color:#75715e"></span>                sum <span style="color:#f92672">+=</span> ba;
-            }
-        }
+<div class="highlight"><pre class="chroma"><code class="language-c++" data-lang="c++">        <span class="k">while</span><span class="p">(</span><span class="n">n</span><span class="o">--</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="n">cin</span><span class="o">&gt;&gt;</span><span class="n">ba</span><span class="p">;</span>
+            <span class="k">if</span><span class="p">(</span><span class="n">max_life</span> <span class="o">&lt;</span> <span class="n">ba</span><span class="p">)</span>
+            <span class="p">{</span>
+                <span class="c1">// 如果比当前值大，就把之前没有加的值加上，然后记录当前值
+</span><span class="c1"></span>                <span class="n">sum</span> <span class="o">+=</span> <span class="n">max_life</span><span class="p">;</span>
+                <span class="n">max_life</span> <span class="o">=</span> <span class="n">ba</span><span class="p">;</span>
+            <span class="p">}</span>
+            <span class="k">else</span>
+            <span class="p">{</span>
+                <span class="c1">// 将比最大电池寿命小的电池加到总和
+</span><span class="c1"></span>                <span class="n">sum</span> <span class="o">+=</span> <span class="n">ba</span><span class="p">;</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
 </code></pre></div><p>这里为了理清程序逻辑，将核心部分分离了出来。下面是对不同情况进行处理的代码：
 (7.1.battery.cpp，部分代码)</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c++" data-lang="c++"><span style="color:#66d9ef">float</span> <span style="color:#a6e22e">calculate_longest_life</span>(<span style="color:#66d9ef">int</span> sum, <span style="color:#66d9ef">int</span> max_life)
-{
-    <span style="color:#66d9ef">if</span>(max_life <span style="color:#f92672">&gt;</span> sum)
-        <span style="color:#66d9ef">return</span> sum; <span style="color:#75715e">// 第一、二种情况
-</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">return</span> (<span style="color:#66d9ef">float</span>)(sum <span style="color:#f92672">+</span> max_life) <span style="color:#f92672">/</span> <span style="color:#ae81ff">2.0</span>;<span style="color:#75715e">// 第三种情况
-</span><span style="color:#75715e"></span>}
+<div class="highlight"><pre class="chroma"><code class="language-c++" data-lang="c++"><span class="kt">float</span> <span class="nf">calculate_longest_life</span><span class="p">(</span><span class="kt">int</span> <span class="n">sum</span><span class="p">,</span> <span class="kt">int</span> <span class="n">max_life</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="k">if</span><span class="p">(</span><span class="n">max_life</span> <span class="o">&gt;</span> <span class="n">sum</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">sum</span><span class="p">;</span> <span class="c1">// 第一、二种情况
+</span><span class="c1"></span>    <span class="k">return</span> <span class="p">(</span><span class="kt">float</span><span class="p">)(</span><span class="n">sum</span> <span class="o">+</span> <span class="n">max_life</span><span class="p">)</span> <span class="o">/</span> <span class="mf">2.0</span><span class="p">;</span><span class="c1">// 第三种情况
+</span><span class="c1"></span><span class="p">}</span>
 </code></pre></div><p>全部代码在<a href="https://gitee.com/study_less_shape/Practice_Saving/blob/master/Algorithm/Greedy_method/7.1.battery.cpp"target="_blank">这里</a>可以找到。</p>
 </article><section class="article labels"><a class="category" href=/categories/%E7%AC%94%E8%AE%B0/>笔记</a><a class="tag" href=/tags/%E7%AE%97%E6%B3%95/>算法</a><a class="tag" href=/tags/%E7%AC%94%E8%AE%B0/>笔记</a></section>
 </div>

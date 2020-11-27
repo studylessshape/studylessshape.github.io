@@ -41,29 +41,29 @@
 &lt;h3 id=&#34;代码实现&#34;&gt;代码实现&lt;/h3&gt;
 &lt;p&gt;在输入时，就处理好最大电池寿命和其他电池寿命的总和：
 (7.1.battery.cpp，部分代码)&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-c++&#34; data-lang=&#34;c++&#34;&gt;        &lt;span style=&#34;color:#66d9ef&#34;&gt;while&lt;/span&gt;(n&lt;span style=&#34;color:#f92672&#34;&gt;--&lt;/span&gt;)
-        {
-            cin&lt;span style=&#34;color:#f92672&#34;&gt;&amp;gt;&amp;gt;&lt;/span&gt;ba;
-            &lt;span style=&#34;color:#66d9ef&#34;&gt;if&lt;/span&gt;(max_life &lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;&lt;/span&gt; ba)
-            {
-                &lt;span style=&#34;color:#75715e&#34;&gt;// 如果比当前值大，就把之前没有加的值加上，然后记录当前值
-&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;                sum &lt;span style=&#34;color:#f92672&#34;&gt;+=&lt;/span&gt; max_life;
-                max_life &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; ba;
-            }
-            &lt;span style=&#34;color:#66d9ef&#34;&gt;else&lt;/span&gt;
-            {
-                &lt;span style=&#34;color:#75715e&#34;&gt;// 将比最大电池寿命小的电池加到总和
-&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;                sum &lt;span style=&#34;color:#f92672&#34;&gt;+=&lt;/span&gt; ba;
-            }
-        }
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-c++&#34; data-lang=&#34;c++&#34;&gt;        &lt;span class=&#34;k&#34;&gt;while&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;n&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;--&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+        &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
+            &lt;span class=&#34;n&#34;&gt;cin&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;&amp;gt;&amp;gt;&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;ba&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
+            &lt;span class=&#34;k&#34;&gt;if&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;max_life&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;ba&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+            &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
+                &lt;span class=&#34;c1&#34;&gt;// 如果比当前值大，就把之前没有加的值加上，然后记录当前值
+&lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;&lt;/span&gt;                &lt;span class=&#34;n&#34;&gt;sum&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;+=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;max_life&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
+                &lt;span class=&#34;n&#34;&gt;max_life&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;ba&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
+            &lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
+            &lt;span class=&#34;k&#34;&gt;else&lt;/span&gt;
+            &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
+                &lt;span class=&#34;c1&#34;&gt;// 将比最大电池寿命小的电池加到总和
+&lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;&lt;/span&gt;                &lt;span class=&#34;n&#34;&gt;sum&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;+=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;ba&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
+            &lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
+        &lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;这里为了理清程序逻辑，将核心部分分离了出来。下面是对不同情况进行处理的代码：
 (7.1.battery.cpp，部分代码)&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-c++&#34; data-lang=&#34;c++&#34;&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;float&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;calculate_longest_life&lt;/span&gt;(&lt;span style=&#34;color:#66d9ef&#34;&gt;int&lt;/span&gt; sum, &lt;span style=&#34;color:#66d9ef&#34;&gt;int&lt;/span&gt; max_life)
-{
-    &lt;span style=&#34;color:#66d9ef&#34;&gt;if&lt;/span&gt;(max_life &lt;span style=&#34;color:#f92672&#34;&gt;&amp;gt;&lt;/span&gt; sum)
-        &lt;span style=&#34;color:#66d9ef&#34;&gt;return&lt;/span&gt; sum; &lt;span style=&#34;color:#75715e&#34;&gt;// 第一、二种情况
-&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;    &lt;span style=&#34;color:#66d9ef&#34;&gt;return&lt;/span&gt; (&lt;span style=&#34;color:#66d9ef&#34;&gt;float&lt;/span&gt;)(sum &lt;span style=&#34;color:#f92672&#34;&gt;+&lt;/span&gt; max_life) &lt;span style=&#34;color:#f92672&#34;&gt;/&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;2.0&lt;/span&gt;;&lt;span style=&#34;color:#75715e&#34;&gt;// 第三种情况
-&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;}
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-c++&#34; data-lang=&#34;c++&#34;&gt;&lt;span class=&#34;kt&#34;&gt;float&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;calculate_longest_life&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;kt&#34;&gt;int&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;sum&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;kt&#34;&gt;int&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;max_life&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+&lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
+    &lt;span class=&#34;k&#34;&gt;if&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;max_life&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;sum&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+        &lt;span class=&#34;k&#34;&gt;return&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;sum&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt; &lt;span class=&#34;c1&#34;&gt;// 第一、二种情况
+&lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;&lt;/span&gt;    &lt;span class=&#34;k&#34;&gt;return&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;kt&#34;&gt;float&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;sum&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;+&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;max_life&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;/&lt;/span&gt; &lt;span class=&#34;mf&#34;&gt;2.0&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;// 第三种情况
+&lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;全部代码在&lt;a href=&#34;https://gitee.com/study_less_shape/Practice_Saving/blob/master/Algorithm/Greedy_method/7.1.battery.cpp&#34;target=&#34;_blank&#34;&gt;这里&lt;/a&gt;可以找到。&lt;/p&gt;
 </description>
     </item>
@@ -97,9 +97,9 @@
 &lt;/blockquote&gt;
 &lt;p&gt;以下解决方案来自&lt;a href=&#34;https://stackoverflow.com/questions/45722823/cargo-fails-with-spurious-network-error-the-operation-timed-out-on-windows-10&#34;target=&#34;_blank&#34;&gt;stackoverflow&lt;/a&gt;
 先检查代理&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-powershell&#34; data-lang=&#34;powershell&#34;&gt;netsh winhttp show proxy
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-powershell&#34; data-lang=&#34;powershell&#34;&gt;&lt;span class=&#34;n&#34;&gt;netsh&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;winhttp&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;show&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;proxy&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;如果有代理的话进行重置&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-powershell&#34; data-lang=&#34;powershell&#34;&gt;netsh winhttp reset proxy
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-powershell&#34; data-lang=&#34;powershell&#34;&gt;&lt;span class=&#34;n&#34;&gt;netsh&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;winhttp&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;reset&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;proxy&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h1 id=&#34;后记&#34;&gt;后记&lt;/h1&gt;
 &lt;p&gt;残留的代理是之前为编译其他项目而留下的，造成了不小麻烦，&lt;strong&gt;慎用命令行直接设置的代理&lt;/strong&gt;&lt;/p&gt;
 </description>

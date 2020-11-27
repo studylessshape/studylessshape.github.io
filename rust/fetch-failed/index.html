@@ -16,9 +16,9 @@
 </blockquote>
 <p>以下解决方案来自<a href="https://stackoverflow.com/questions/45722823/cargo-fails-with-spurious-network-error-the-operation-timed-out-on-windows-10"target="_blank">stackoverflow</a>
 先检查代理</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-powershell" data-lang="powershell">netsh winhttp show proxy
+<div class="highlight"><pre class="chroma"><code class="language-powershell" data-lang="powershell"><span class="n">netsh</span> <span class="n">winhttp</span> <span class="n">show</span> <span class="n">proxy</span>
 </code></pre></div><p>如果有代理的话进行重置</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-powershell" data-lang="powershell">netsh winhttp reset proxy
+<div class="highlight"><pre class="chroma"><code class="language-powershell" data-lang="powershell"><span class="n">netsh</span> <span class="n">winhttp</span> <span class="n">reset</span> <span class="n">proxy</span>
 </code></pre></div><h1 id="后记">后记</h1>
 <p>残留的代理是之前为编译其他项目而留下的，造成了不小麻烦，<strong>慎用命令行直接设置的代理</strong></p>
 </article><section class="article labels"><a class="category" href=/categories/rust/>rust</a><a class="tag" href=/tags/rust/>rust</a></section>
