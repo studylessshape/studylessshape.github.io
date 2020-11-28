@@ -1,25 +1,45 @@
 <!DOCTYPE html>
 <html lang="en"><meta charset="utf-8"><meta name="generator" content="Hugo 0.78.2" /><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="color-scheme" content="light dark">
-<meta name="supported-color-schemes" content="light dark"><title>贪心算法&nbsp;&ndash;&nbsp;学少何Blog</title><link rel="stylesheet" href="/css/core.min.8a8111235343fbc761f60b28e6c053b666fb24e5d586025341f7aabc00d8e514e9e97c447c44630f10b4d64a19648535.css" integrity="sha384-ioERI1ND&#43;8dh9gso5sBTtmb7JOXVhgJTQfeqvADY5RTp6XxEfERjDxC01koZZIU1"><meta name="twitter:card" content="summary" />
+<meta name="supported-color-schemes" content="light dark"><title>贪心算法&nbsp;&ndash;&nbsp;学少何Blog</title><link rel="stylesheet" href="/css/core.min.2113e7125efc8ead8917a03f5089e52510f1969aa8f7524539dd8a4dfe80f4a8b0d02e293aaea4e991fa2d5fd065b182.css" integrity="sha384-IRPnEl78jq2JF6A/UInlJRDxlpqo91JFOd2KTf6A9Kiw0C4pOq6k6ZH6LV/QZbGC"><meta name="twitter:card" content="summary" />
 <meta name="twitter:title" content="贪心算法" /><body><section id="header">
     <div class="header wrap"><span class="header left-side"><a class="site home" href="/"><span class="site name">学少何Blog</span></a></span>
-        <span class="header right-side"><div class="nav wrap"><nav class="nav"><a class="nav item" href="/categories/">Categories</a><a class="nav item" href="/tags/">Tags</a><a class="nav item" href="/about">About</a></nav></div></span></div></section><section id="content"><div class="article-container"><section class="article header">
-    <h1 class="article title">贪心算法</h1><p class="article date">2020-11-27</p></section><article class="article markdown-body"><h1 id="贪心算法">贪心算法</h1>
-<blockquote>
+        <span class="header right-side"><div class="nav wrap"><nav class="nav"><a class="nav item" href="/categories">目录</a><a class="nav item" href="/tags">标签</a><a class="nav item" href="/about">关于</a></nav></div></span></div></section><section id="content"><div class="article-container"><section class="article header">
+    <h1 class="article title">贪心算法</h1><p class="article date">2020-11-27</p></section><article class="article markdown-body"><blockquote>
 <p>程序实验课做的题，题目来自<a href="http://noi.openjudge.cn/ch0406/"target="_blank">NOI-4.6算法之贪心</a>。本文留作复习使用</p>
 </blockquote>
-<h2 id="2469-电池寿命httpnoiopenjudgecnch04062469"><a href="http://noi.openjudge.cn/ch0406/2469/"target="_blank">2469-电池寿命</a></h2>
+<h2 id="目录">目录</h2>
+<ul>
+<li><a href="#1-battery-life">2469-电池寿命</a>
+<ul>
+<li><a href="#three-situations">三种情况</a>
+<ul>
+<li><a href="#only-two-battery">1.只有两个电池</a></li>
+<li><a href="#one-longer-than-other">2.一个电池的使用寿命特别长</a></li>
+<li><a href="#split-group">3.任何一个电池的寿命都不可能比其他电池寿命的总和大</a></li>
+</ul>
+</li>
+<li><a href="#code-implement">代码实现</a></li>
+</ul>
+</li>
+</ul>
+<hr/>
+<p><a name="1-battery-life"></a></p>
+<h2 id="2469-电池寿命httpnoiopenjudgecnch04062469-1-battery-life"><a href="http://noi.openjudge.cn/ch0406/2469/"target="_blank">2469-电池寿命</a> <a href="#1-battery-life">🚩</a></h2>
 <p>解题的关键在于理解如何分配电池。代码实现很简单，但是要首先知道电池是怎么分配出来的。有三种情况</p>
-<h3 id="三种情况">三种情况</h3>
-<h4 id="1只有两个电池">1.只有两个电池</h4>
+<p><a name="three-situations"></a></p>
+<h3 id="三种情况-three-situations">三种情况 <a href="#three-situations">🚩</a></h3>
+<p><a name="only-two-battery"></a></p>
+<h4 id="1只有两个电池-only-two-battery">1.只有两个电池 <a href="#only-two-battery">🚩</a></h4>
 <p>这是最简单的情况，只需要输出最短的那个时间就行。</p>
-<h4 id="2一个电池的使用寿命特别长比其他电池的总和还长">2.一个电池的使用寿命特别长，比其他电池的总和还长</h4>
+<p><a name="one-longer-than-other"></a></p>
+<h4 id="2一个电池的使用寿命特别长比其他电池的总和还长-one-longer-than-other">2.一个电池的使用寿命特别长，比其他电池的总和还长 <a href="#one-longer-than-other">🚩</a></h4>
 <p>这是第二种情况，可以画一个图来具象表示一下。下面的电池就是那个寿命特别长的电池，上面的小电池的寿命的总和都没有下面的长。这时候直接计算上面的小电池的总和就行了。<br/>
 <img  src="7-1-battery-1.png"
         alt="sum_smaller_than_one"/></p>
 <p>实质上，第一种情况是第二种情况的特殊情况，所以可以将这两种归为一种情况。</p>
-<h4 id="3任何一个电池的寿命都不可能比其他电池寿命的总和大">3.任何一个电池的寿命都不可能比其他电池寿命的总和大</h4>
+<p><a name="split-group"></a></p>
+<h4 id="3任何一个电池的寿命都不可能比其他电池寿命的总和大-split-group">3.任何一个电池的寿命都不可能比其他电池寿命的总和大 <a href="#split-group">🚩</a></h4>
 <p>第三种情况是任何一个电池的寿命都不可能比其他电池寿命的总和大，这种情况需要分组了。分组要尽量保证两组的寿命相近。比如样例中的<code>[3,3,5]</code>，就可以按照下面的样子分组。<br/>
 <img  src="7-1-battery-2.png"
         alt="group_of_335"/></p>
@@ -27,8 +47,9 @@
 <img  src="7-1-battery-3.png"
         alt="use_group_of_335"/></p>
 <p>相应的，其他数量的电池都可以这样分组，并进行相同的处理。最终会得到，无论怎样分组，最后的使用寿命都是电池寿命总和的1/2。</p>
-<h3 id="代码实现">代码实现</h3>
-<p>在输入时，就处理好最大电池寿命和其他电池寿命的总和：
+<p><a name = "code-implement"></a></p>
+<h3 id="代码实现-code-implement">代码实现 <a href="#code-implement">🚩</a></h3>
+<p>在输入时，就处理好最大电池寿命和其他电池寿命的总和：<br/>
 (7.1.battery.cpp，部分代码)</p>
 <div class="highlight"><pre class="chroma"><code class="language-c++" data-lang="c++">        <span class="k">while</span><span class="p">(</span><span class="n">n</span><span class="o">--</span><span class="p">)</span>
         <span class="p">{</span>
@@ -45,7 +66,7 @@
 </span><span class="c1"></span>                <span class="n">sum</span> <span class="o">+=</span> <span class="n">ba</span><span class="p">;</span>
             <span class="p">}</span>
         <span class="p">}</span>
-</code></pre></div><p>这里为了理清程序逻辑，将核心部分分离了出来。下面是对不同情况进行处理的代码：
+</code></pre></div><p>这里为了理清程序逻辑，将核心部分分离了出来。下面是对不同情况进行处理的代码：<br/>
 (7.1.battery.cpp，部分代码)</p>
 <div class="highlight"><pre class="chroma"><code class="language-c++" data-lang="c++"><span class="kt">float</span> <span class="nf">calculate_longest_life</span><span class="p">(</span><span class="kt">int</span> <span class="n">sum</span><span class="p">,</span> <span class="kt">int</span> <span class="n">max_life</span><span class="p">)</span>
 <span class="p">{</span>
@@ -54,12 +75,13 @@
 </span><span class="c1"></span>    <span class="k">return</span> <span class="p">(</span><span class="kt">float</span><span class="p">)(</span><span class="n">sum</span> <span class="o">+</span> <span class="n">max_life</span><span class="p">)</span> <span class="o">/</span> <span class="mf">2.0</span><span class="p">;</span><span class="c1">// 第三种情况
 </span><span class="c1"></span><span class="p">}</span>
 </code></pre></div><p>全部代码在<a href="https://gitee.com/study_less_shape/Practice_Saving/blob/master/Algorithm/Greedy_method/7.1.battery.cpp"target="_blank">这里</a>可以找到。</p>
-</article><section class="article labels"><a class="category" href=/categories/%E7%AC%94%E8%AE%B0/>笔记</a><a class="tag" href=/tags/%E7%AE%97%E6%B3%95/>算法</a><a class="tag" href=/tags/%E7%AC%94%E8%AE%B0/>笔记</a></section>
+</article><section class="article labels"><a class="category" href=/categories/%E7%AC%94%E8%AE%B0/>笔记</a><a class="tag" href=/tags/%E7%AE%97%E6%B3%95/>算法</a><a class="tag" href=/tags/%E7%AC%94%E8%AE%B0/>笔记</a></section><section class="article author"><p class="name">学少何</p><div class="bio">不求上进的在读大学生……</div><div class="details"><a class="item" href="https://github.com/studylessshape" target="_blank"><span class="iconfont icon-github"></span>&nbsp;studylessshape</a></div>
+</section>
 </div>
 <div class="article bottom"></div></section><section id="footer"><div class="footer-wrap">
     <p class="copyright">学少何Blog</p>
     <p class="powerby"><span>Powered&nbsp;by&nbsp;</span><a href="https://gohugo.io" 
         target="_blank">Hugo</a><span>&nbsp;&amp;&nbsp;</span><a href="https://themes.gohugo.io/hugo-notepadium/" 
-        target="_blank">Notepadium</a></p></div></section><script src="/js/prism.min.28f2bfd6dfaa7ad0e8b973373bb7db234d27a2faafc26d5ffd2de4c2b1b5f2bf80011f2e2976dc9fb364abb13f63ebdc.js" integrity="sha384-KPK/1t&#43;qetDouXM3O7fbI00novqvwm1f/S3kwrG18r&#43;AAR8uKXbcn7Nkq7E/Y&#43;vc"></script></body>
+        target="_blank">Notepadium</a></p></div></section><script src="/js/hljs.min.0799348a91dce12c6be4a73f943cfe78f181f4e6f6ec35c4af0fca1de377879f77cfab03c30f03a174d675737b5a9314.js" integrity="sha384-B5k0ipHc4Sxr5Kc/lDz&#43;ePGB9Ob27DXErw/KHeN3h593z6sDww8DoXTWdXN7WpMU"></script><script>hljs.initHighlightingOnLoad();</script></body>
 
 </html>
