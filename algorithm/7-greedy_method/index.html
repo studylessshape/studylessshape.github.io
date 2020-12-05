@@ -2,10 +2,10 @@
 <html lang="en"><meta charset="utf-8"><meta name="generator" content="Hugo 0.78.2" /><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="color-scheme" content="light dark">
 <meta name="supported-color-schemes" content="light dark"><title>贪心算法&nbsp;&ndash;&nbsp;学少何Blog</title><link rel="stylesheet" href="/css/core.min.2113e7125efc8ead8917a03f5089e52510f1969aa8f7524539dd8a4dfe80f4a8b0d02e293aaea4e991fa2d5fd065b182.css" integrity="sha384-IRPnEl78jq2JF6A/UInlJRDxlpqo91JFOd2KTf6A9Kiw0C4pOq6k6ZH6LV/QZbGC"><meta name="twitter:card" content="summary" />
-<meta name="twitter:title" content="贪心算法" /><body><section id="header">
+<meta name="twitter:title" content="贪心算法" /><meta name="twitter:image" content="https://study_less_shape.gitee.io/algorithm/7-greedy_method/cover.png" /><body><section id="header">
     <div class="header wrap"><span class="header left-side"><a class="site home" href="/"><span class="site name">学少何Blog</span></a></span>
-        <span class="header right-side"><div class="nav wrap"><nav class="nav"><a class="nav item" href="/categories">目录</a><a class="nav item" href="/tags">标签</a><a class="nav item" href="/about">关于</a></nav></div></span></div></section><section id="content"><div class="article-container"><section class="article header">
-    <h1 class="article title">贪心算法</h1><p class="article date">2020-11-27</p></section><article class="article markdown-body"><blockquote>
+        <span class="header right-side"><div class="nav wrap"><nav class="nav"><a class="nav item" href="/categories">归类</a><a class="nav item" href="/tags">标签</a><a class="nav item" href="/about">关于</a><a class="nav item" href="/index%2exml">RSS</a></nav></div></span></div></section><section id="content"><div class="article-container"><section class="article header">
+    <h1 class="article title">贪心算法</h1><p class="article date">2020-11-27<span class="lastmod"> • edited 2020-12-05</span></p></section><article class="article markdown-body"><p><img class="cover" src="cover.png" alt></p><blockquote>
 <p>程序实验课做的题，题目来自<a href="http://noi.openjudge.cn/ch0406/"target="_blank">NOI-4.6算法之贪心</a>。本文留作复习使用</p>
 </blockquote>
 <h2 id="目录">目录</h2>
@@ -25,21 +25,21 @@
 </ul>
 <hr/>
 <p><a name="1-battery-life"></a></p>
-<h2 id="2469-电池寿命httpnoiopenjudgecnch04062469-1-battery-life"><a href="http://noi.openjudge.cn/ch0406/2469/"target="_blank">2469-电池寿命</a> <a href="#1-battery-life">🚩</a></h2>
+<h2 id="2469-电池寿命httpnoiopenjudgecnch04062469-1-battery-life"><a href="http://noi.openjudge.cn/ch0406/2469/"target="_blank">2469-电池寿命</a> <a href="#1-battery-life">¶</a></h2>
 <p>解题的关键在于理解如何分配电池。代码实现很简单，但是要首先知道电池是怎么分配出来的。有三种情况</p>
 <p><a name="three-situations"></a></p>
-<h3 id="三种情况-three-situations">三种情况 <a href="#three-situations">🚩</a></h3>
+<h3 id="三种情况-three-situations">三种情况 <a href="#three-situations">¶</a></h3>
 <p><a name="only-two-battery"></a></p>
-<h4 id="1只有两个电池-only-two-battery">1.只有两个电池 <a href="#only-two-battery">🚩</a></h4>
+<h4 id="1只有两个电池-only-two-battery">1.只有两个电池 <a href="#only-two-battery">¶</a></h4>
 <p>这是最简单的情况，只需要输出最短的那个时间就行。</p>
 <p><a name="one-longer-than-other"></a></p>
-<h4 id="2一个电池的使用寿命特别长比其他电池的总和还长-one-longer-than-other">2.一个电池的使用寿命特别长，比其他电池的总和还长 <a href="#one-longer-than-other">🚩</a></h4>
+<h4 id="2一个电池的使用寿命特别长比其他电池的总和还长-one-longer-than-other">2.一个电池的使用寿命特别长，比其他电池的总和还长 <a href="#one-longer-than-other">¶</a></h4>
 <p>这是第二种情况，可以画一个图来具象表示一下。下面的电池就是那个寿命特别长的电池，上面的小电池的寿命的总和都没有下面的长。这时候直接计算上面的小电池的总和就行了。<br/>
 <img  src="7-1-battery-1.png"
         alt="sum_smaller_than_one"/></p>
 <p>实质上，第一种情况是第二种情况的特殊情况，所以可以将这两种归为一种情况。</p>
 <p><a name="split-group"></a></p>
-<h4 id="3任何一个电池的寿命都不可能比其他电池寿命的总和大-split-group">3.任何一个电池的寿命都不可能比其他电池寿命的总和大 <a href="#split-group">🚩</a></h4>
+<h4 id="3任何一个电池的寿命都不可能比其他电池寿命的总和大-split-group">3.任何一个电池的寿命都不可能比其他电池寿命的总和大 <a href="#split-group">¶</a></h4>
 <p>第三种情况是任何一个电池的寿命都不可能比其他电池寿命的总和大，这种情况需要分组了。分组要尽量保证两组的寿命相近。比如样例中的<code>[3,3,5]</code>，就可以按照下面的样子分组。<br/>
 <img  src="7-1-battery-2.png"
         alt="group_of_335"/></p>
@@ -48,7 +48,7 @@
         alt="use_group_of_335"/></p>
 <p>相应的，其他数量的电池都可以这样分组，并进行相同的处理。最终会得到，无论怎样分组，最后的使用寿命都是电池寿命总和的1/2。</p>
 <p><a name = "code-implement"></a></p>
-<h3 id="代码实现-code-implement">代码实现 <a href="#code-implement">🚩</a></h3>
+<h3 id="代码实现-code-implement">代码实现 <a href="#code-implement">¶</a></h3>
 <p>在输入时，就处理好最大电池寿命和其他电池寿命的总和：<br/>
 (7.1.battery.cpp，部分代码)</p>
 <div class="highlight"><pre class="chroma"><code class="language-c++" data-lang="c++">        <span class="k">while</span><span class="p">(</span><span class="n">n</span><span class="o">--</span><span class="p">)</span>
@@ -75,7 +75,7 @@
 </span><span class="c1"></span>    <span class="k">return</span> <span class="p">(</span><span class="kt">float</span><span class="p">)(</span><span class="n">sum</span> <span class="o">+</span> <span class="n">max_life</span><span class="p">)</span> <span class="o">/</span> <span class="mf">2.0</span><span class="p">;</span><span class="c1">// 第三种情况
 </span><span class="c1"></span><span class="p">}</span>
 </code></pre></div><p>全部代码在<a href="https://gitee.com/study_less_shape/Practice_Saving/blob/master/Algorithm/Greedy_method/7.1.battery.cpp"target="_blank">这里</a>可以找到。</p>
-</article><section class="article labels"><a class="category" href=/categories/%E7%AC%94%E8%AE%B0/>笔记</a><a class="tag" href=/tags/%E7%AE%97%E6%B3%95/>算法</a><a class="tag" href=/tags/%E7%AC%94%E8%AE%B0/>笔记</a></section><section class="article author"><p class="name">学少何</p><div class="bio">不求上进的在读大学生……</div><div class="details"><a class="item" href="https://github.com/studylessshape" target="_blank"><span class="iconfont icon-github"></span>&nbsp;studylessshape</a></div>
+</article><section class="article labels"><a class="category" href=/categories/%E7%AC%94%E8%AE%B0/>笔记</a><a class="tag" href=/tags/%E7%AE%97%E6%B3%95/>算法</a><a class="tag" href=/tags/%E7%AC%94%E8%AE%B0/>笔记</a></section><section class="article author"><p class="name">学少何</p><div class="bio">不求上进的在读大学生……</div><div class="details"><a class="item" href="https://gitee.com/study_less_shape" target="_blank"><span class="iconfont icon-gitee"></span>&nbsp;study_less_shape</a></div>
 </section>
 </div>
 <div class="article bottom"></div></section><section id="footer"><div class="footer-wrap">
