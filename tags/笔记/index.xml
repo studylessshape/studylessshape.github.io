@@ -222,6 +222,27 @@
 &lt;li&gt;&lt;a href=&#34;#code-implement&#34;&gt;代码实现&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 &lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#2-crossing-river&#34;&gt;702:Crossing River&lt;/a&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;#problem&#34;&gt;题目&lt;/a&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;#problem-description&#34;&gt;描述&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#problem-intput&#34;&gt;输入&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#problem-output&#34;&gt;输出&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#problem-input-example&#34;&gt;样例输入&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#problem-output-example&#34;&gt;样例输出&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#problem-from&#34;&gt;来源&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#two-strategies&#34;&gt;两种策略&lt;/a&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;#second-send-boat&#34;&gt;次快的把船送回来&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#fast-send-people&#34;&gt;让最快的送其他人过去&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#code-implement-2&#34;&gt;代码实现&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
 &lt;/ul&gt;
 &lt;hr/&gt;
 &lt;p&gt;&lt;a name=&#34;1-battery-life&#34;&gt;&lt;/a&gt;&lt;/p&gt;
@@ -275,6 +296,116 @@
 &lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;&lt;/span&gt;    &lt;span class=&#34;k&#34;&gt;return&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;kt&#34;&gt;float&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;sum&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;+&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;max_life&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;/&lt;/span&gt; &lt;span class=&#34;mf&#34;&gt;2.0&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;// 第三种情况
 &lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;全部代码在&lt;a href=&#34;https://gitee.com/study_less_shape/Practice_Saving/blob/master/Algorithm/Greedy_method/7.1.battery.cpp&#34;target=&#34;_blank&#34;&gt;这里&lt;/a&gt;可以找到。&lt;/p&gt;
+&lt;p&gt;&lt;a name = &#34;2-crossing-river&#34;&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;h2 id=&#34;702crossing-riverhttpnoiopenjudgecnch04067022-crossing-river&#34;&gt;&lt;a href=&#34;http://noi.openjudge.cn/ch0406/702/&#34;target=&#34;_blank&#34;&gt;702:Crossing River&lt;/a&gt;&lt;a href=&#34;#2-crossing-river&#34;&gt;¶&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;原题是英文，直译成中文。&lt;/p&gt;
+&lt;p&gt;&lt;a name = &#34;problem&#34;&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;h3 id=&#34;题目problem&#34;&gt;题目&lt;a href=&#34;#problem&#34;&gt;¶&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;&lt;a name = &#34;problem-description&#34;&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;h4 id=&#34;描述problem-description&#34;&gt;描述&lt;a href=&#34;#problem-description&#34;&gt;¶&lt;/a&gt;&lt;/h4&gt;
+&lt;p&gt;有N个人想用最多只能载两个人的船过河。因此必须安排某种过河顺序来回划船以至于所有人都能过河。每个人有不同的划船速度；每一对的速度取决于最慢的那一个。你的工作是决定一个使这些人过河时间最短的策略。&lt;/p&gt;
+&lt;p&gt;&lt;a name = &#34;problem-intput&#34;&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;h4 id=&#34;输入problem-intput&#34;&gt;输入&lt;a href=&#34;#problem-intput&#34;&gt;¶&lt;/a&gt;&lt;/h4&gt;
+&lt;p&gt;第一行输入一个整型&lt;code&gt;T&lt;/code&gt;（1&amp;lt;=&lt;code&gt;T&lt;/code&gt;&amp;lt;=20），表示测试用例数。之后跟着&lt;code&gt;T&lt;/code&gt;种情况。每种情况的第一行是&lt;code&gt;N&lt;/code&gt;，第二行数&lt;code&gt;N&lt;/code&gt;个整型数，表示每个人过河的时间。不会超过&lt;code&gt;1000&lt;/code&gt;个人并且过河时间均不会超过&lt;code&gt;100&lt;/code&gt;秒。&lt;/p&gt;
+&lt;p&gt;&lt;a name = &#34;problem-output&#34;&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;h4 id=&#34;输出problem-output&#34;&gt;输出&lt;a href=&#34;#problem-output&#34;&gt;¶&lt;/a&gt;&lt;/h4&gt;
+&lt;p&gt;对于每一测试用例，打印一行&lt;code&gt;N&lt;/code&gt;个人都过河所需要的总时间。&lt;/p&gt;
+&lt;p&gt;&lt;a name = &#34;problem-input-example&#34;&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;h4 id=&#34;样例输入problem-input-example&#34;&gt;样例输入&lt;a href=&#34;#problem-input-example&#34;&gt;¶&lt;/a&gt;&lt;/h4&gt;
+&lt;pre&gt;&lt;code&gt;1
+4
+1 2 5 10
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;a name = &#34;problem-output-example&#34;&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;h4 id=&#34;样例输出problem-output-example&#34;&gt;样例输出&lt;a href=&#34;#problem-output-example&#34;&gt;¶&lt;/a&gt;&lt;/h4&gt;
+&lt;pre&gt;&lt;code&gt;17
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;a name = &#34;problem-from&#34;&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;h4 id=&#34;来源problem-from&#34;&gt;来源&lt;a href=&#34;#problem-from&#34;&gt;¶&lt;/a&gt;&lt;/h4&gt;
+&lt;p&gt;POJ Monthly&amp;ndash;2004.07.18&lt;/p&gt;
+&lt;p&gt;&lt;a name = &#34;two-strategies&#34;&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;h3 id=&#34;两种策略two-strategies&#34;&gt;两种策略&lt;a href=&#34;#two-strategies&#34;&gt;¶&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;首先，考虑只有三个或三个以下的人怎么送。这时候最简单的最省时间的方法就是用最快的那个把其他两个人或一个人或自己送过去。&lt;br/&gt;
+&lt;img  src=&#34;7-2-cross-river-1.gif&#34;
+        alt=&#34;three-people-cross-river&#34;/&gt;&lt;/p&gt;
+&lt;p&gt;接下来看看四个人的。&lt;/p&gt;
+&lt;p&gt;&lt;a name = &#34;second-send-boat&#34;&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;h4 id=&#34;次快的把船送回来second-send-boat&#34;&gt;次快的把船送回来&lt;a href=&#34;#second-send-boat&#34;&gt;¶&lt;/a&gt;&lt;/h4&gt;
+&lt;p&gt;让最快送次快的人过去，再让最慢的两个过河，然后次快的把船送回来。&lt;/p&gt;
+&lt;p&gt;举个例子，四个人，划船速度分别是&lt;code&gt;1&lt;/code&gt;、&lt;code&gt;4&lt;/code&gt;、&lt;code&gt;16&lt;/code&gt;、&lt;code&gt;15&lt;/code&gt;。这时，先让&lt;code&gt;1&lt;/code&gt;、&lt;code&gt;4&lt;/code&gt;过河，然后&lt;code&gt;1&lt;/code&gt;把船送回来，再让&lt;code&gt;16&lt;/code&gt;、&lt;code&gt;15&lt;/code&gt;过河，&lt;code&gt;4&lt;/code&gt;把船送回来，最后&lt;code&gt;1&lt;/code&gt;、&lt;code&gt;4&lt;/code&gt;过河。总的时间为&lt;code&gt;4+1+16+4+4=29&lt;/code&gt;。&lt;/p&gt;
+&lt;p&gt;但是有些情况这样送就不妥当。&lt;/p&gt;
+&lt;p&gt;&lt;a name = &#34;fast-send-people&#34;&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;h4 id=&#34;让最快的送其他人过去fast-send-people&#34;&gt;让最快的送其他人过去&lt;a href=&#34;#fast-send-people&#34;&gt;¶&lt;/a&gt;&lt;/h4&gt;
+&lt;p&gt;直接举例子，四个人，划船速度分别是&lt;code&gt;9&lt;/code&gt;、&lt;code&gt;10&lt;/code&gt;、&lt;code&gt;10&lt;/code&gt;、&lt;code&gt;11&lt;/code&gt;，如果这次用上面的方法，总时间为&lt;code&gt;10+9+11+10+10=50&lt;/code&gt;。如果让最快的那个送其他人过河呢？这时总时间为&lt;code&gt;10+9+10+9+11=49&lt;/code&gt;。明显是第二种方法快！&lt;/p&gt;
+&lt;p&gt;那么贪心策略就是选上面两种方法中耗时最少的！&lt;/p&gt;
+&lt;p&gt;&lt;a name = &#34;code-implement-2&#34;&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;h3 id=&#34;代码实现code-implement-2&#34;&gt;代码实现&lt;a href=&#34;#code-implement-2&#34;&gt;¶&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;为了方便使用贪心策略，需要对输入的数据进行排序。这里直接调用&lt;code&gt;algorithm&lt;/code&gt;头文件里的&lt;code&gt;sort&lt;/code&gt;函数进行升序排序。&lt;/p&gt;
+&lt;p&gt;和之前一样把主要的逻辑部分分出来，塞在单独的函数中。&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-c++&#34; data-lang=&#34;c++&#34;&gt;&lt;span class=&#34;cp&#34;&gt;#include&lt;/span&gt; &lt;span class=&#34;cpf&#34;&gt;&amp;lt;iostream&amp;gt;&lt;/span&gt;&lt;span class=&#34;cp&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;cp&#34;&gt;#include&lt;/span&gt; &lt;span class=&#34;cpf&#34;&gt;&amp;lt;algorithm&amp;gt;&lt;/span&gt;&lt;span class=&#34;cp&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;cp&#34;&gt;&lt;/span&gt;&lt;span class=&#34;k&#34;&gt;using&lt;/span&gt; &lt;span class=&#34;k&#34;&gt;namespace&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;std&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
+
+&lt;span class=&#34;kt&#34;&gt;int&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;cross_river&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;kt&#34;&gt;int&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;people&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;[],&lt;/span&gt; &lt;span class=&#34;kt&#34;&gt;int&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;N&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+&lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
+    &lt;span class=&#34;c1&#34;&gt;// continue...
+&lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
+
+&lt;span class=&#34;kt&#34;&gt;int&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;main&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt;
+&lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
+    &lt;span class=&#34;kt&#34;&gt;int&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;T&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;N&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;people&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;1001&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;];&lt;/span&gt;
+    &lt;span class=&#34;n&#34;&gt;cin&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;&amp;gt;&amp;gt;&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;T&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
+    &lt;span class=&#34;k&#34;&gt;while&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;T&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;--&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+    &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
+        &lt;span class=&#34;n&#34;&gt;cin&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;&amp;gt;&amp;gt;&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;N&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
+        &lt;span class=&#34;k&#34;&gt;for&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;kt&#34;&gt;int&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;i&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;0&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;i&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;N&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;i&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;++&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+        &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
+            &lt;span class=&#34;n&#34;&gt;cin&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;&amp;gt;&amp;gt;&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;people&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;i&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;];&lt;/span&gt;
+        &lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
+
+        &lt;span class=&#34;n&#34;&gt;sort&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;people&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;people&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;+&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;N&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;);&lt;/span&gt;
+
+        &lt;span class=&#34;n&#34;&gt;cout&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;&amp;lt;&amp;lt;&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;cross_river&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;people&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;N&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;&amp;lt;&amp;lt;&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;endl&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
+    &lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
+
+    &lt;span class=&#34;k&#34;&gt;return&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;0&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
+&lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;在&lt;code&gt;N&amp;gt;=4&lt;/code&gt;时，从末尾开始遍历&lt;code&gt;people&lt;/code&gt;数组。根据&lt;a href=&#34;%28#two-strategies%29&#34;&gt;贪心策略&lt;/a&gt;，选择最小的一种情况。&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-c++&#34; data-lang=&#34;c++&#34;&gt;    &lt;span class=&#34;kt&#34;&gt;int&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;total_time&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;0&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
+    &lt;span class=&#34;k&#34;&gt;while&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;N&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;&amp;gt;=&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;4&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+    &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
+        &lt;span class=&#34;n&#34;&gt;total_time&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;+=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;min&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;
+            &lt;span class=&#34;c1&#34;&gt;// 最快的和次快的先过去，然后最快的把船送回来，即people[1] + people[0]
+&lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;&lt;/span&gt;            &lt;span class=&#34;c1&#34;&gt;// 然后最慢的两个人过去，次快的把船送回来，即people[N-1] + people[1]
+&lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;&lt;/span&gt;            &lt;span class=&#34;n&#34;&gt;people&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;]&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;+&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;people&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;0&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;]&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;+&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;people&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;N&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;-&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;]&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;+&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;people&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;],&lt;/span&gt;
+
+            &lt;span class=&#34;c1&#34;&gt;// 最快的送最慢的人过去，然后最快把船送回来，即people[N-1] + people[0]
+&lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;&lt;/span&gt;            &lt;span class=&#34;c1&#34;&gt;// 最快的送次慢的人过去，然后最快把船送回来，即people[N-2] + people[0]
+&lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;&lt;/span&gt;            &lt;span class=&#34;n&#34;&gt;people&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;N&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;-&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;]&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;+&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;people&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;0&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;]&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;+&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;people&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;N&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;-&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;2&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;]&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;+&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;people&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;0&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;]&lt;/span&gt;
+        &lt;span class=&#34;p&#34;&gt;);&lt;/span&gt;
+        &lt;span class=&#34;c1&#34;&gt;// 每次循环送过去两个人，所以减二
+&lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;&lt;/span&gt;        &lt;span class=&#34;n&#34;&gt;N&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;-=&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;2&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
+    &lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
+
+    &lt;span class=&#34;c1&#34;&gt;// continue...
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;之后退出循环或是未进入循环，会有三种情况，&lt;code&gt;N=1&lt;/code&gt;、&lt;code&gt;N=2&lt;/code&gt;、&lt;code&gt;N=3&lt;/code&gt;，使用&lt;code&gt;switch&lt;/code&gt;或者&lt;code&gt;if&lt;/code&gt;判断即可&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-c++&#34; data-lang=&#34;c++&#34;&gt;    &lt;span class=&#34;c1&#34;&gt;// 剩下的1-3个人，用最快的人送过去
+&lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;&lt;/span&gt;    &lt;span class=&#34;k&#34;&gt;switch&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;N&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+    &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
+        &lt;span class=&#34;k&#34;&gt;case&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;:&lt;/span&gt;
+            &lt;span class=&#34;n&#34;&gt;total_time&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;+=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;people&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;0&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;];&lt;/span&gt;
+            &lt;span class=&#34;k&#34;&gt;break&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
+        &lt;span class=&#34;k&#34;&gt;case&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;2&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;:&lt;/span&gt;
+            &lt;span class=&#34;n&#34;&gt;total_time&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;+=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;people&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;];&lt;/span&gt;
+            &lt;span class=&#34;k&#34;&gt;break&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
+        &lt;span class=&#34;k&#34;&gt;case&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;3&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;:&lt;/span&gt;
+            &lt;span class=&#34;n&#34;&gt;total_time&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;+=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;people&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;2&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;]&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;+&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;people&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;0&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;]&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;+&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;people&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;];&lt;/span&gt;
+            &lt;span class=&#34;k&#34;&gt;break&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
+    &lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
+    &lt;span class=&#34;k&#34;&gt;return&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;total_time&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;运行看一看！
+&lt;img  src=&#34;7-2-cross-river-2.png&#34;
+        alt=&#34;running-code-result&#34;/&gt;&lt;/p&gt;
+&lt;p&gt;没有问题。&lt;/p&gt;
+&lt;p&gt;全部代码在&lt;a href=&#34;https://gitee.com/study_less_shape/Practice_Saving/blob/master/Algorithm/Greedy_method/7.2.cross-river.cpp&#34;target=&#34;_blank&#34;&gt;这里&lt;/a&gt;可以找到。&lt;/p&gt;
 </description>
     </item>
     
