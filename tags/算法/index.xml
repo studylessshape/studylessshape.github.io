@@ -99,7 +99,7 @@
         &lt;span class=&#34;c1&#34;&gt;// snip
 &lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;&lt;/span&gt;    &lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
 &lt;span class=&#34;p&#34;&gt;};&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;code&gt;use_skill&lt;/code&gt;根据id法则的不同有不同的实现细节。比如只是单纯的&lt;code&gt;push_back&lt;/code&gt;的话，就需要遍历数组寻找id &lt;del&gt;，这种情况可能使用哈希表会更好&lt;/del&gt; ；而在保证id是有序的或者是有一个生成法则，可以通过下标索引的花，时间可以降到&lt;code&gt;O(0)&lt;/code&gt;。&lt;/p&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;code&gt;use_skill&lt;/code&gt;根据id法则的不同有不同的实现细节。比如只是单纯的&lt;code&gt;push_back&lt;/code&gt;的话，就需要遍历数组寻找id &lt;del&gt;，这种情况可能使用哈希表会更好&lt;/del&gt; ；而在保证id是有序的或者是有一个生成法则，可以通过下标索引的花，时间可以降到&lt;code&gt;O(1)&lt;/code&gt;。&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-c++&#34; data-lang=&#34;c++&#34;&gt;    &lt;span class=&#34;n&#34;&gt;effect&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;use_skill&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;kt&#34;&gt;int&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;id&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
     &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
         &lt;span class=&#34;n&#34;&gt;effect&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;e&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
@@ -200,7 +200,7 @@
     </item>
     
     <item>
-      <title>贪心算法</title>
+      <title>算法课题目笔记：贪心算法</title>
       <link>https://study_less_shape.gitee.io/post/algorithm/7-greedy_method/</link>
       <pubDate>Fri, 27 Nov 2020 00:00:00 +0000</pubDate>
       

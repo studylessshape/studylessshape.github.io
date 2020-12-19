@@ -5,7 +5,7 @@
 <meta name="twitter:title" content="关于游戏技能的一些想法" /><body><section id="header">
     <div class="header wrap"><span class="header left-side"><a class="site home" href="/"><span class="site name">学少何Blog</span></a></span>
         <span class="header right-side"><div class="nav wrap"><nav class="nav"><a class="nav item" href="/categories">归类</a><a class="nav item" href="/tags">标签</a><a class="nav item" href="/about">关于</a><a class="nav item" href="/index%2exml">RSS</a></nav></div></span></div></section><section id="content"><div class="article-container"><section class="article header">
-    <h1 class="article title">关于游戏技能的一些想法</h1><p class="article date">2020-12-09</p></section><article class="article markdown-body"><p>朋友的一个项目让我想了下组合元素发技能的方式。</p>
+    <h1 class="article title">关于游戏技能的一些想法</h1><p class="article date">2020-12-09<span class="lastmod"> • 更新于 2020-12-19</span></p></section><article class="article markdown-body"><p>朋友的一个项目让我想了下组合元素发技能的方式。</p>
 <p>好久没写代码了，写了一点游戏技能的C++代码，感觉有了一点点思路。</p>
 <h2 id="技能基础">技能基础</h2>
 <p>虽然说少用继承，但是我还是写了一个父类来作为技能的基础。命名为<code>skill_base</code>，虽然看起来很蠢但很容易懂。三个字段：</p>
@@ -88,7 +88,7 @@
         <span class="c1">// snip
 </span><span class="c1"></span>    <span class="p">}</span>
 <span class="p">};</span>
-</code></pre></div><p><code>use_skill</code>根据id法则的不同有不同的实现细节。比如只是单纯的<code>push_back</code>的话，就需要遍历数组寻找id <del>，这种情况可能使用哈希表会更好</del> ；而在保证id是有序的或者是有一个生成法则，可以通过下标索引的花，时间可以降到<code>O(0)</code>。</p>
+</code></pre></div><p><code>use_skill</code>根据id法则的不同有不同的实现细节。比如只是单纯的<code>push_back</code>的话，就需要遍历数组寻找id <del>，这种情况可能使用哈希表会更好</del> ；而在保证id是有序的或者是有一个生成法则，可以通过下标索引的花，时间可以降到<code>O(1)</code>。</p>
 <div class="highlight"><pre class="chroma"><code class="language-c++" data-lang="c++">    <span class="n">effect</span> <span class="nf">use_skill</span><span class="p">(</span><span class="kt">int</span> <span class="n">id</span><span class="p">)</span>
     <span class="p">{</span>
         <span class="n">effect</span> <span class="n">e</span><span class="p">;</span>
@@ -188,7 +188,7 @@
 </article><section class="article labels"><a class="category" href=/categories/%E9%9A%8F%E8%AE%B0/>随记</a><a class="tag" href=/tags/c&#43;&#43;/>C&#43;&#43;</a><a class="tag" href=/tags/%E6%B8%B8%E6%88%8F/>游戏</a></section><section class="article author"><p class="name">学少何</p><div class="bio">不求上进的在读大学生……</div><div class="details"><a class="item" href="https://github.com/studylessshape" target="_blank"><span class="iconfont icon-github"></span>&nbsp;studylessshape</a></div>
 </section>
 </div>
-<div class="article bottom"><section class="article navigation"><p><a class="link" href="/post/algorithm/7-greedy_method/"><span class="iconfont icon-article"></span>贪心算法</a></p></section></div></section><section id="footer"><div class="footer-wrap">
+<div class="article bottom"><section class="article navigation"><p><a class="link" href="/post/algorithm/7-greedy_method/"><span class="iconfont icon-article"></span>算法课题目笔记：贪心算法</a></p></section></div></section><section id="footer"><div class="footer-wrap">
     <p class="copyright">学少何Blog</p>
     <p class="powerby"><span>Powered&nbsp;by&nbsp;</span><a href="https://gohugo.io" 
         target="_blank">Hugo</a><span>&nbsp;&amp;&nbsp;</span><a href="https://themes.gohugo.io/hugo-notepadium/" 
