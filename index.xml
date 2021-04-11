@@ -5,10 +5,37 @@
     <description>Recent content on 学少何Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Wed, 09 Dec 2020 20:19:18 +0800</lastBuildDate>
+    <lastBuildDate>Sun, 11 Apr 2021 14:09:14 +0800</lastBuildDate>
     
         <atom:link href="https://study_less_shape.gitee.io/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Vscode插件Markdown Preview Enhanced无法预览</title>
+      <link>https://study_less_shape.gitee.io/post/note/markdown-pre-command-not-found/</link>
+      <pubDate>Sun, 11 Apr 2021 14:09:14 +0800</pubDate>
+      
+      <guid>https://study_less_shape.gitee.io/post/note/markdown-pre-command-not-found/</guid>
+      <description>&lt;blockquote&gt;
+&lt;p&gt;写这篇博客是防止之后遇到相同的事时，需要费很多时间解决。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;有段时间没使用Vscode写Markdown了，最近要给别人发一个思路，然后觉得自己调word太费时了就想用Markdown偷下懒。结果就是点下面的选项没有作用
+&lt;img  src=&#34;right-menu.png&#34;
+        alt=&#34;右键菜单&#34;/&gt;&lt;/p&gt;
+&lt;p&gt;然后试了下&lt;code&gt;Shift+Ctrl+p&lt;/code&gt;打开命令面板，然后使用预览。结果出现了报错，提示&lt;code&gt;Command not found&lt;/code&gt;。在Bing和百度都搜寻不到合适的解决方案，不过最终在&lt;code&gt;github-issue&lt;/code&gt;发现了一个相同的情况。在回答中找到了&lt;a href=&#34;https://github.com/shd101wyy/vscode-markdown-preview-enhanced/issues/108#issuecomment-572964043&#34;target=&#34;_blank&#34;&gt;解决方法&lt;/a&gt;。&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;卸载该插件&lt;/li&gt;
+&lt;li&gt;提示需要重启，点击&lt;/li&gt;
+&lt;li&gt;关闭Vscode&lt;/li&gt;
+&lt;li&gt;删除用户目录下的&lt;code&gt;%USERS_NAME%/.vscode/extensions/.vscode/extensions/shd101wyy.markdown-preview-enhanced-0.5.1/&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;打开Vscode&lt;/li&gt;
+&lt;li&gt;重新安装插件&lt;/li&gt;
+&lt;li&gt;重启Vscode&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;注意&lt;code&gt;shd101wyy.markdown-preview-enhanced-0.5.1&lt;/code&gt;这个文件夹，后面的数字是版本名，不清楚是否需要删除所有这个插件的文件夹，不过有这个前缀的我有两个，所以我都删了。&lt;/p&gt;
+&lt;p&gt;上面的方法要是还没用的话。就只能自己再找办法了。&lt;/p&gt;
+</description>
+    </item>
     
     <item>
       <title>关于游戏技能的一些想法</title>
