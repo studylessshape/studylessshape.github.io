@@ -11,6 +11,41 @@
     
     
     <item>
+      <title>Unity安装一直卡在一个进度无法成功安装</title>
+      <link>https://study_less_shape.gitee.io/post/note/unity-install-blocked/</link>
+      <pubDate>Tue, 13 Apr 2021 20:13:50 +0800</pubDate>
+      
+      <guid>https://study_less_shape.gitee.io/post/note/unity-install-blocked/</guid>
+      <description>&lt;p&gt;这两天折腾Unity，之前的Unity没法发布Android包，没有办法，去下载新的长期支持的版本。但是要不就是安装成功了但是我选择的模块指安装了一部分，要不然就是卡住了。&lt;/p&gt;
+&lt;p&gt;安装了一部分，之后继续安装其他的模块卡住是我没想到的。既没有报错也没有任何提示。
+&lt;img  src=&#34;unity_install_blocked.png&#34;
+        alt=&#34;Unity安装卡住&#34;/&gt;&lt;/p&gt;
+&lt;p&gt;在网上搜索了一阵才找到合适的方法（不一定是最佳的解决办法）。记录下来以便之后翻阅。&lt;/p&gt;
+&lt;h3 id=&#34;安装不成功的因素&#34;&gt;安装不成功的因素&lt;/h3&gt;
+&lt;p&gt;个人觉得一个是网络，二个是也许没有给管理员权限。而后者一般是没有问题的，所以主要原因可能出在前者。&lt;/p&gt;
+&lt;p&gt;但是其实细细深入一下，会发现也不一定就是网络的锅。&lt;/p&gt;
+&lt;h3 id=&#34;解决方法&#34;&gt;解决方法&lt;/h3&gt;
+&lt;p&gt;为了了解到Unity安装不同的模块到底下载了什么东西，需要找到安装日志。&lt;/p&gt;
+&lt;p&gt;打开路径&lt;code&gt;%APPDATA%\UnityHub\logs&lt;/code&gt;，如果执行过安装操作，一般会有一个&lt;code&gt;info-log.json&lt;/code&gt;的文件。
+&lt;img  src=&#34;unityhub_log_directory.png&#34;
+        alt=&#34;UnityHub日志目录&#34;/&gt;&lt;/p&gt;
+&lt;p&gt;打开它，翻到文件末尾，根据选择模块的不同会看到不同的内容，不过大致应该相同，会有文件的链接。
+&lt;img  src=&#34;log_info.png&#34;
+        alt=&#34;UnityHub日志内容&#34;/&gt;&lt;/p&gt;
+&lt;p&gt;我这里在UnityHub中选择的是三个模块，所以这里是三个链接，把这三个链接分别复制到浏览器或者下载器里下载然后安装就行了。&lt;/p&gt;
+&lt;p&gt;其中比较特殊的是文档，需要自行解压到UnityHub目录的&lt;code&gt;\Editor\[Unity版本（缺省值）]\Editor\Data&lt;/code&gt;下。快捷打开之间按安装好的UnityEditor右上角的三个点，里面的菜单有一个在资源管理器中显示。
+&lt;img  src=&#34;unity_hub_show_in_exploer.png&#34;
+        alt=&#34;在文件资源管理器中显示&#34;/&gt;&lt;/p&gt;
+&lt;h3 id=&#34;其他的错误&#34;&gt;其他的错误&lt;/h3&gt;
+&lt;p&gt;在安装其他模块，比如安卓构建模块或者Windows-IL2CPP支持的时候，也许会提示UnityHub或UnityEditor正在运行。&lt;/p&gt;
+&lt;p&gt;如果将这两个关闭之后依旧会有提示，那么就需要在Editor目录将&lt;code&gt;\Data\PlaybackEngines&lt;/code&gt;下相应的模块文件夹删掉，然后再进行安装这样就没有问题了。&lt;/p&gt;
+&lt;h3 id=&#34;最后的问题&#34;&gt;最后的问题&lt;/h3&gt;
+&lt;p&gt;这样进行安装有一个坏处，那就是UnityHub并不会将自行安装的模块进行显示，并且在添加模块处依旧需要安装这些模块。但其实这些模块已经安装完成了！并不需要再进行安装了。&lt;/p&gt;
+&lt;p&gt;我暂未找到解决方法。不过Unity可以正常使用了，对应模块的支持能够使用。&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
       <title>Vscode插件Markdown Preview Enhanced无法预览</title>
       <link>https://study_less_shape.gitee.io/post/note/markdown-pre-command-not-found/</link>
       <pubDate>Sun, 11 Apr 2021 14:09:14 +0800</pubDate>
