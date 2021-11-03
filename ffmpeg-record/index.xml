@@ -1,14 +1,185 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>杂记 on 学少何Blog</title>
-    <link>https://study_less_shape.gitee.io/categories/%E6%9D%82%E8%AE%B0/</link>
-    <description>Recent content in 杂记 on 学少何Blog</description>
+    <title>Ffmpeg-records on 学少何Blog</title>
+    <link>https://study_less_shape.gitee.io/ffmpeg-record/</link>
+    <description>Recent content in Ffmpeg-records on 学少何Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Sun, 11 Apr 2021 14:09:14 +0800</lastBuildDate>
+    <lastBuildDate>Sun, 04 Jul 2021 23:24:39 +0800</lastBuildDate>
     
-        <atom:link href="https://study_less_shape.gitee.io/categories/%E6%9D%82%E8%AE%B0/index.xml" rel="self" type="application/rss+xml" />
+        <atom:link href="https://study_less_shape.gitee.io/ffmpeg-record/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>视频中不同的输入流的提取</title>
+      <link>https://study_less_shape.gitee.io/ffmpeg-record/2-extract-video-stream/</link>
+      <pubDate>Sun, 04 Jul 2021 23:24:39 +0800</pubDate>
+      
+      <guid>https://study_less_shape.gitee.io/ffmpeg-record/2-extract-video-stream/</guid>
+      <description>&lt;p&gt;情景，我现在有一个有字幕的视频，但是我想对这个视频进行如下的操作：&lt;/p&gt;
+&lt;h2 id=&#34;1字幕是外语想把视频和字幕分开&#34;&gt;1:字幕是外语，想把视频和字幕分开&lt;/h2&gt;
+&lt;p&gt;这个比较简单，使用下面的命令可以提取视频（包含音频）:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;ffmpeg -i video.mkv -vcodec copy -acodec copy -sn output.mkv
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;一般封装而不是压制的话，会用到 &lt;code&gt;mkv&lt;/code&gt; 格式比较多，所以输入输出视频都是 &lt;code&gt;mkv&lt;/code&gt; 格式。&lt;/p&gt;
+&lt;p&gt;解释一下参数的意义（自己理解+搜索到的）:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;-vcodec&lt;/code&gt; 表示视频解码， &lt;code&gt;copy&lt;/code&gt; 表示复制，也就是直接复制视频流&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;-acodec&lt;/code&gt; 表示音频解码， &lt;code&gt;copy&lt;/code&gt; 表示复制，也就是直接复制音频流&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;sn&lt;/code&gt;，即 &lt;code&gt;Subtitle&lt;/code&gt; ， &lt;code&gt;n&lt;/code&gt; 是不需要的意思，也就是不需要字幕&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;前面两条选项是为了保证输出视频中，视频和音频的质量；而第三个选项为什么需要呢？难道前面两条，不是已经限制了只复制视频流和音频流吗？具体我也不清楚，但是在我自己使用的时候，不加 &lt;code&gt;sn&lt;/code&gt; 会导致字幕也一起复制到输出的视频中。&lt;/p&gt;
+&lt;p&gt;最后来看看效果:
+&lt;img  src=&#34;1.1.compare-output.png&#34;
+        alt=&#34;文件大小&#34;/&gt;
+&lt;img  src=&#34;1.2.compare-output.png&#34;
+        alt=&#34;视频参数&#34;/&gt;&lt;/p&gt;
+&lt;p&gt;可以看到几乎没有差别，但是导出的视频帧率也许没有原视频稳定。&lt;/p&gt;
+&lt;p&gt;来，举一反三，看看之后的其他问题&lt;/p&gt;
+&lt;h2 id=&#34;2我只想要视频其他的音频什么的都不要作为视频剪辑的素材&#34;&gt;2:我只想要视频，其他的音频什么的都不要，作为视频剪辑的素材&lt;/h2&gt;
+&lt;p&gt;通过上面的第一个问题，想必这个问题也很简单。&lt;/p&gt;
+&lt;p&gt;输入以下指令可以解决:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;ffmpeg -i video.mkv -vcodec copy -an output.mp4
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;其中， &lt;code&gt;-an&lt;/code&gt; 表示不需要音频，那么这样就能够单独输出视频流。这里输出时格式换成了 &lt;code&gt;mp4&lt;/code&gt; ，因为源视频编码为 &lt;code&gt;H.265&lt;/code&gt; 中的一种 (&lt;code&gt;HVC1&lt;/code&gt;) ，所以导出文件选择 &lt;code&gt;mp4&lt;/code&gt; 格式对质量影响应该不大。&lt;/p&gt;
+&lt;h2 id=&#34;3我只需要音频而视频中的音频轨可能不只一个&#34;&gt;3:我只需要音频，而视频中的音频轨可能不只一个&lt;/h2&gt;
+&lt;p&gt;单个音轨的提取很简单，输入下面的指令:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;ffmpeg -i video.mkv -acodec copy -vn output.mp3
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;其中， &lt;code&gt;-vn&lt;/code&gt; 表示不需要视频流。但是输出音频会遇到很多问题，比如我遇到的：在 PotPlayer 中看到的解码格式为 &lt;code&gt;AAC&lt;/code&gt; ，但是在导出为 &lt;code&gt;AAC&lt;/code&gt; 格式的音频时，导出的文件有误。一是播放时长度未知，二是在和视频合并时，时间不正确（从原来的 &lt;code&gt;00:48:37&lt;/code&gt; ，变成了 &lt;code&gt;28:02:57&lt;/code&gt; ）。导出为 &lt;code&gt;mp3&lt;/code&gt; 的话，这种问题也许就没了，但是会导致音频质量下降。所以如果只是单纯需要去掉字幕的话，第一个指令会很好，不会出现这种问题。&lt;/p&gt;
+&lt;p&gt;多音轨（ &lt;code&gt;TODO&lt;/code&gt; ）&lt;/p&gt;
+&lt;h2 id=&#34;参考&#34;&gt;参考&lt;/h2&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;a href=&#34;https://blog.csdn.net/achang21/article/details/49128785&#34;target=&#34;_blank&#34;&gt;ffmpeg 提取 视频，音频，字幕 方法&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://vimsky.com/article/3687.html&#34;target=&#34;_blank&#34;&gt;在ffmpeg中怎么合并音频和视频文件？&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://www.cnblogs.com/CodeAndMoe/p/13360011.html&#34;target=&#34;_blank&#34;&gt;FFmpeg 提取视频的音频&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://blog.csdn.net/season_hangzhou/article/details/27503421&#34;target=&#34;_blank&#34;&gt;用ffmpeg转多音轨的mkv文件&lt;/a&gt;&lt;/li&gt;
+&lt;/ol&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>GIF（或图片）转视频或视频转GIF（或图片）</title>
+      <link>https://study_less_shape.gitee.io/ffmpeg-record/1-gif2video-video2gif/</link>
+      <pubDate>Sat, 12 Jun 2021 17:58:59 +0800</pubDate>
+      
+      <guid>https://study_less_shape.gitee.io/ffmpeg-record/1-gif2video-video2gif/</guid>
+      <description>&lt;h2 id=&#34;gif或图片转视频&#34;&gt;GIF（或图片）转视频&lt;/h2&gt;
+&lt;p&gt;这个相对简单，参数要求不多。用下面的图来测试（图片来源于 twitter ）。
+&lt;img  src=&#34;Freya%20Crescent.gif&#34;
+        alt=&#34;样图&#34;/&gt;&lt;/p&gt;
+&lt;p&gt;使用命令&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;ffmpeg -i Freya%20Crescent.gif output.mp4
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;一般来说，不需要很多调整的时候， &lt;code&gt;ffmpeg -i&lt;/code&gt; + 输入的文件地址 + 输出的文件地址 就可以完成很多想要的效果了，比如 &lt;code&gt;png&lt;/code&gt; 与 &lt;code&gt;jpg&lt;/code&gt; 等图片格式互转。&lt;code&gt;-i&lt;/code&gt; 的 &lt;code&gt;i&lt;/code&gt; 表示 &lt;code&gt;input&lt;/code&gt;，即输入的意思，后面跟随一个文件地址，代表输入的文件。&lt;/p&gt;
+&lt;p&gt;来看看输出的视频与源图片的参数。宽高一致，每帧都为像素画，所以导出的码率相对比较能够让人满意。
+&lt;img  src=&#34;gif-compare-mp4.png&#34;
+        alt=&#34;参数比较&#34;/&gt;&lt;/p&gt;
+&lt;p&gt;实际上本人目前需要用到此功能不多，所以暂且只记录到浅层。&lt;/p&gt;
+&lt;h2 id=&#34;视频转gif图片&#34;&gt;视频转GIF（图片）&lt;/h2&gt;
+&lt;p&gt;这个如果直接使用上面说的命令，简单的导出gif，会发现&lt;strong&gt;质量根本不行&lt;/strong&gt;。所以要导出高质量的gif，方法会比较多，有一些会稍微复杂一些。&lt;/p&gt;
+&lt;p&gt;这里以上面已经导出的视频 &lt;code&gt;output.mp4&lt;/code&gt; 作为样本来使用。&lt;/p&gt;
+&lt;h3 id=&#34;方法一将视频转换为图片再将图片转为gif&#34;&gt;方法一：将视频转换为图片，再将图片转为gif&lt;/h3&gt;
+&lt;p&gt;这个方法的大概思路是将视频的每一帧都弄出来作为图片保存，然后把这些图片再转为gif。这种方法是我目前认为&lt;strong&gt;导出质量最高的&lt;/strong&gt;。&lt;/p&gt;
+&lt;p&gt;首先创建一个&lt;strong&gt;文件夹&lt;/strong&gt;，名字任意：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;mkdir png
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;对于视频 &lt;code&gt;output.mp4&lt;/code&gt; ，将其每一帧都保存为图片：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;ffmpeg -i output.mp4 png/gif-%4d.png
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;strong&gt;注意&lt;/strong&gt;上面的命令，在导出的图片文件名中，有一个像C语言格式化输出一样的字符串 &lt;code&gt;%4d&lt;/code&gt; ，这个代表的是指定输出的数字位数，此处指定4位。&lt;strong&gt;另外还要注意&lt;/strong&gt;，因为此处的视频只有短短的两秒，所以没有指定帧率，而是将所有的帧都导出了，而当视频比较长或者视频分辨率比较高的时候，使用 &lt;code&gt;-r&lt;/code&gt; 适当减小帧率比较好。如下面将帧率限制为10帧。&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;ffmpeg -i output.mp4 -r &lt;span class=&#34;m&#34;&gt;10&lt;/span&gt; png/gif-%4d.png
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;还有一点，png 是较高质量的图片，占用空间比较大，如果没有太高的质量需求，可以导出为 jpg 等压缩格式图片。&lt;/p&gt;
+&lt;p&gt;在上面创建的文件夹下，可以看到导出的图片文件。
+&lt;img  src=&#34;mp4-output-png.png&#34;
+        alt=&#34;导出的图片&#34;/&gt;&lt;/p&gt;
+&lt;p&gt;再使用下面的命令，即可将图片转为 gif ：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;ffmpeg -i png/gif-%4d.png output.gif
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;方法二先生成调色板然后利用调色板生成gif&#34;&gt;方法二：先生成调色板，然后利用调色板生成gif&lt;/h3&gt;
+&lt;p&gt;直接生成 gif 除了图片模糊，还有偏色的问题。生成调色板，然后再生成 gif 解决了这个问题。&lt;/p&gt;
+&lt;p&gt;使用下面的命令生成调色板：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;ffmpeg -i output.mp4 -vf &lt;span class=&#34;nv&#34;&gt;fps&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;30,scale&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;832:-1:flags&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;lanczos,palettegen palette.png
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;其中 &lt;code&gt;-vf&lt;/code&gt; 表示 &lt;code&gt;video filter&lt;/code&gt; ，即视频滤镜。这里设置帧率为30帧，分辨率为832:-1，表示宽为832，-1表示按比例设置。 lanczos 应该是压缩算法， palettegen 代表生成调色板，最后的 palette.png 表示生成的调色板的文件名。&lt;/p&gt;
+&lt;p&gt;生成好调色板之后，就可以利用调色板来生成gif了：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;ffmpeg -i output.mp4 -i palette.png -filter_complex &lt;span class=&#34;s2&#34;&gt;&amp;#34;fps=30,scale=832:-1:flags=lanczos[x];[x][1:v]paletteuse&amp;#34;&lt;/span&gt; out.gif
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;扩展&#34;&gt;扩展&lt;/h2&gt;
+&lt;p&gt;这些方法同时也能处理 gif 图，使用的命令差不多。&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>ffmpeg使用的命令记录</title>
+      <link>https://study_less_shape.gitee.io/post/note/ffmpeg-record/</link>
+      <pubDate>Fri, 11 Jun 2021 16:44:41 +0800</pubDate>
+      
+      <guid>https://study_less_shape.gitee.io/post/note/ffmpeg-record/</guid>
+      <description>&lt;p&gt;题外话：gitee审核博客，我的博客因为含有色情内容（？）被毙掉了，转战github。&lt;/p&gt;
+&lt;h2 id=&#34;正题&#34;&gt;正题&lt;/h2&gt;
+&lt;p&gt;我会把最近用到的 ffmpeg 指令都记下来，并尝试解释每一个 option 和参数的详细含义（也许有一些只是个人理解）。希望能够在需要用到的时候很方便的找到，并且也希望能够帮助到看博客的人，虽说应该没什么人会看我的博客（。&lt;/p&gt;
+&lt;p&gt;很多都来自于之前搜索到的方法，由于个人之前清理过一次浏览记录，而且有时候用手机查有时候用电脑查，所以暂时没法列出来源。&lt;/p&gt;
+&lt;h2 id=&#34;有关文件路径文件名&#34;&gt;有关文件路径/文件名&lt;/h2&gt;
+&lt;p&gt;个人使用 ffmpeg 时，由于部分文件名过长，所以有一个小技巧（也许只是我不知道大家都知道）。将选中的文件拖拽到控制台，控制台上就会自动填入文件路径。这是一个很方便的功能，基本一直在使用。&lt;/p&gt;
+&lt;p&gt;（如下是使用 Windows Terminal 时的界面，其他控制台/控制台集成软件应该差不多）
+&lt;img  src=&#34;./1.drag-file.png&#34;
+        alt=&#34;拖拽文件&#34;/&gt;&lt;/p&gt;
+&lt;h2 id=&#34;目录&#34;&gt;目录&lt;/h2&gt;
+&lt;p&gt;该项目会不定期更新。&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;a href=&#34;../../../ffmpeg-record/1-gif2video-video2gif&#34;&gt;GIF（图片）与视频互转&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;../../../ffmpeg-record/2-extract-video-stream&#34;&gt;视频中不同的输入流的提取&lt;/a&gt;&lt;/li&gt;
+&lt;/ol&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>上网出现了400/ERR_SSL_PROTOCOL_ERROR</title>
+      <link>https://study_less_shape.gitee.io/post/note/error_ssl_protocol/</link>
+      <pubDate>Thu, 22 Apr 2021 23:59:24 +0800</pubDate>
+      
+      <guid>https://study_less_shape.gitee.io/post/note/error_ssl_protocol/</guid>
+      <description>&lt;p&gt;又是一件不起眼的小事，结果花了我几天的时间去解决。&lt;/p&gt;
+&lt;p&gt;前段时间，我的电脑突然就没法浏览网页了。网络问题在我的电脑上时常会发生，所以我很久之前就下了一个别人从数字家抽出来的一个断网工具。很快就检测出了问题并且可以正常浏览网页了。就在我兴致极好地进行网上冲浪的时候，突然有点想去某特，毕竟上次整了一阵去解锁帐号，感觉时不时还是要去登录一下，所以就去了。结果就出现了&lt;code&gt;ERR_SSL_PROTOCOL_ERROR&lt;/code&gt;。&lt;/p&gt;
+&lt;p&gt;过了一阵要进github，校园网真的不行，有时进得去有时又进不去，然后又是&lt;code&gt;ERR_SSL_PROTOCOL_ERROR&lt;/code&gt;。&lt;/p&gt;
+&lt;p&gt;之后又想进x歌进行搜索，但是出现了&lt;code&gt;400 bad request&lt;/code&gt;。&lt;/p&gt;
+&lt;p&gt;百度/Bing了很多，但是大部分都是清楚Cookie和浏览数据，设置Internet选项……&lt;/p&gt;
+&lt;p&gt;找了两天突然在Microsoft Community的提问看到了，&lt;a href=&#34;https://answers.microsoft.com/zh-hans/ie/forum/all/win10%E7%B3%BB%E7%BB%9F%E7%9A%84ie%E8%AE%BE/a7f80150-565f-4232-b5a0-bbb7a600e90b&#34;target=&#34;_blank&#34;&gt;Internet选项中的SSL2.0被取消了&lt;/a&gt;。&lt;/p&gt;
+&lt;p&gt;几经周转，没有查到什么好的方法，那就需要自己动手想办法，要么从命令行，要么从注册表启用。&lt;/p&gt;
+&lt;p&gt;命令行的没有找到，自己也很少使用，所以这条选项稍微摸索了一下就放弃了。&lt;/p&gt;
+&lt;p&gt;而注册表果然没有让我失望，竟然找到了&lt;a href=&#34;https://docs.microsoft.com/zh-cn/windows-server/security/tls/tls-registry-settings&#34;target=&#34;_blank&#34;&gt;Microsoft关于SSL/TLS注册表修改的方法&lt;/a&gt;。按照步骤，我添加了一个SSL1.0的项，然后再次进入成功了。不清楚这是不是假象，但总归是暂时解决了。
+&lt;img  src=&#34;register_view.png&#34;
+        alt=&#34;注册表添加项&#34;/&gt;&lt;/p&gt;
+&lt;p&gt;或许过几天又会出问题，到时候再另说了。&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Unity安装一直卡在一个进度无法成功安装</title>
+      <link>https://study_less_shape.gitee.io/post/note/unity-install-blocked/</link>
+      <pubDate>Tue, 13 Apr 2021 20:13:50 +0800</pubDate>
+      
+      <guid>https://study_less_shape.gitee.io/post/note/unity-install-blocked/</guid>
+      <description>&lt;p&gt;这两天折腾Unity，之前的Unity没法发布Android包，没有办法，去下载新的长期支持的版本。但是要不就是安装成功了但是我选择的模块指安装了一部分，要不然就是卡住了。&lt;/p&gt;
+&lt;p&gt;安装了一部分，之后继续安装其他的模块卡住是我没想到的。既没有报错也没有任何提示。
+&lt;img  src=&#34;unity_install_blocked.png&#34;
+        alt=&#34;Unity安装卡住&#34;/&gt;&lt;/p&gt;
+&lt;p&gt;在网上搜索了一阵才找到合适的方法（不一定是最佳的解决办法）。记录下来以便之后翻阅。&lt;/p&gt;
+&lt;h3 id=&#34;安装不成功的因素&#34;&gt;安装不成功的因素&lt;/h3&gt;
+&lt;p&gt;个人觉得一个是网络，二个是也许没有给管理员权限。而后者一般是没有问题的，所以主要原因可能出在前者。&lt;/p&gt;
+&lt;p&gt;但是其实细细深入一下，会发现也不一定就是网络的锅。&lt;/p&gt;
+&lt;h3 id=&#34;解决方法&#34;&gt;解决方法&lt;/h3&gt;
+&lt;p&gt;为了了解到Unity安装不同的模块到底下载了什么东西，需要找到安装日志。&lt;/p&gt;
+&lt;p&gt;打开路径&lt;code&gt;%APPDATA%\UnityHub\logs&lt;/code&gt;，如果执行过安装操作，一般会有一个&lt;code&gt;info-log.json&lt;/code&gt;的文件。
+&lt;img  src=&#34;unityhub_log_directory.png&#34;
+        alt=&#34;UnityHub日志目录&#34;/&gt;&lt;/p&gt;
+&lt;p&gt;打开它，翻到文件末尾，根据选择模块的不同会看到不同的内容，不过大致应该相同，会有文件的链接。
+&lt;img  src=&#34;log_info.png&#34;
+        alt=&#34;UnityHub日志内容&#34;/&gt;&lt;/p&gt;
+&lt;p&gt;我这里在UnityHub中选择的是三个模块，所以这里是三个链接，把这三个链接分别复制到浏览器或者下载器里下载然后安装就行了。&lt;/p&gt;
+&lt;p&gt;其中比较特殊的是文档，需要自行解压到UnityHub目录的&lt;code&gt;\Editor\[Unity版本（缺省值）]\Editor\Data&lt;/code&gt;下。快捷打开之间按安装好的UnityEditor右上角的三个点，里面的菜单有一个在资源管理器中显示。
+&lt;img  src=&#34;unity_hub_show_in_exploer.png&#34;
+        alt=&#34;在文件资源管理器中显示&#34;/&gt;&lt;/p&gt;
+&lt;h3 id=&#34;其他的错误&#34;&gt;其他的错误&lt;/h3&gt;
+&lt;p&gt;在安装其他模块，比如安卓构建模块或者Windows-IL2CPP支持的时候，也许会提示UnityHub或UnityEditor正在运行。&lt;/p&gt;
+&lt;p&gt;如果将这两个关闭之后依旧会有提示，那么就需要在Editor目录将&lt;code&gt;\Data\PlaybackEngines&lt;/code&gt;下相应的模块文件夹删掉，然后再进行安装这样就没有问题了。&lt;/p&gt;
+&lt;h3 id=&#34;最后的问题&#34;&gt;最后的问题&lt;/h3&gt;
+&lt;p&gt;这样进行安装有一个坏处，那就是UnityHub并不会将自行安装的模块进行显示，并且在添加模块处依旧需要安装这些模块。但其实这些模块已经安装完成了！并不需要再进行安装了。&lt;/p&gt;
+&lt;p&gt;我暂未找到解决方法。不过Unity可以正常使用了，对应模块的支持能够使用。&lt;/p&gt;
+</description>
+    </item>
     
     <item>
       <title>Vscode插件Markdown Preview Enhanced无法预览</title>

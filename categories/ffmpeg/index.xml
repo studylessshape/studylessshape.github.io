@@ -1,0 +1,648 @@
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>ffmpeg on 学少何Blog</title>
+    <link>https://study_less_shape.gitee.io/categories/ffmpeg/</link>
+    <description>Recent content in ffmpeg on 学少何Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Sun, 04 Jul 2021 23:24:39 +0800</lastBuildDate>
+    
+        <atom:link href="https://study_less_shape.gitee.io/categories/ffmpeg/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>视频中不同的输入流的提取</title>
+      <link>https://study_less_shape.gitee.io/ffmpeg-record/2-extract-video-stream/</link>
+      <pubDate>Sun, 04 Jul 2021 23:24:39 +0800</pubDate>
+      
+      <guid>https://study_less_shape.gitee.io/ffmpeg-record/2-extract-video-stream/</guid>
+      <description>&lt;p&gt;情景，我现在有一个有字幕的视频，但是我想对这个视频进行如下的操作：&lt;/p&gt;
+&lt;h2 id=&#34;1字幕是外语想把视频和字幕分开&#34;&gt;1:字幕是外语，想把视频和字幕分开&lt;/h2&gt;
+&lt;p&gt;这个比较简单，使用下面的命令可以提取视频（包含音频）:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;ffmpeg -i video.mkv -vcodec copy -acodec copy -sn output.mkv
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;一般封装而不是压制的话，会用到 &lt;code&gt;mkv&lt;/code&gt; 格式比较多，所以输入输出视频都是 &lt;code&gt;mkv&lt;/code&gt; 格式。&lt;/p&gt;
+&lt;p&gt;解释一下参数的意义（自己理解+搜索到的）:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;-vcodec&lt;/code&gt; 表示视频解码， &lt;code&gt;copy&lt;/code&gt; 表示复制，也就是直接复制视频流&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;-acodec&lt;/code&gt; 表示音频解码， &lt;code&gt;copy&lt;/code&gt; 表示复制，也就是直接复制音频流&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;sn&lt;/code&gt;，即 &lt;code&gt;Subtitle&lt;/code&gt; ， &lt;code&gt;n&lt;/code&gt; 是不需要的意思，也就是不需要字幕&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;前面两条选项是为了保证输出视频中，视频和音频的质量；而第三个选项为什么需要呢？难道前面两条，不是已经限制了只复制视频流和音频流吗？具体我也不清楚，但是在我自己使用的时候，不加 &lt;code&gt;sn&lt;/code&gt; 会导致字幕也一起复制到输出的视频中。&lt;/p&gt;
+&lt;p&gt;最后来看看效果:
+&lt;img  src=&#34;1.1.compare-output.png&#34;
+        alt=&#34;文件大小&#34;/&gt;
+&lt;img  src=&#34;1.2.compare-output.png&#34;
+        alt=&#34;视频参数&#34;/&gt;&lt;/p&gt;
+&lt;p&gt;可以看到几乎没有差别，但是导出的视频帧率也许没有原视频稳定。&lt;/p&gt;
+&lt;p&gt;来，举一反三，看看之后的其他问题&lt;/p&gt;
+&lt;h2 id=&#34;2我只想要视频其他的音频什么的都不要作为视频剪辑的素材&#34;&gt;2:我只想要视频，其他的音频什么的都不要，作为视频剪辑的素材&lt;/h2&gt;
+&lt;p&gt;通过上面的第一个问题，想必这个问题也很简单。&lt;/p&gt;
+&lt;p&gt;输入以下指令可以解决:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;ffmpeg -i video.mkv -vcodec copy -an output.mp4
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;其中， &lt;code&gt;-an&lt;/code&gt; 表示不需要音频，那么这样就能够单独输出视频流。这里输出时格式换成了 &lt;code&gt;mp4&lt;/code&gt; ，因为源视频编码为 &lt;code&gt;H.265&lt;/code&gt; 中的一种 (&lt;code&gt;HVC1&lt;/code&gt;) ，所以导出文件选择 &lt;code&gt;mp4&lt;/code&gt; 格式对质量影响应该不大。&lt;/p&gt;
+&lt;h2 id=&#34;3我只需要音频而视频中的音频轨可能不只一个&#34;&gt;3:我只需要音频，而视频中的音频轨可能不只一个&lt;/h2&gt;
+&lt;p&gt;单个音轨的提取很简单，输入下面的指令:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;ffmpeg -i video.mkv -acodec copy -vn output.mp3
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;其中， &lt;code&gt;-vn&lt;/code&gt; 表示不需要视频流。但是输出音频会遇到很多问题，比如我遇到的：在 PotPlayer 中看到的解码格式为 &lt;code&gt;AAC&lt;/code&gt; ，但是在导出为 &lt;code&gt;AAC&lt;/code&gt; 格式的音频时，导出的文件有误。一是播放时长度未知，二是在和视频合并时，时间不正确（从原来的 &lt;code&gt;00:48:37&lt;/code&gt; ，变成了 &lt;code&gt;28:02:57&lt;/code&gt; ）。导出为 &lt;code&gt;mp3&lt;/code&gt; 的话，这种问题也许就没了，但是会导致音频质量下降。所以如果只是单纯需要去掉字幕的话，第一个指令会很好，不会出现这种问题。&lt;/p&gt;
+&lt;p&gt;多音轨（ &lt;code&gt;TODO&lt;/code&gt; ）&lt;/p&gt;
+&lt;h2 id=&#34;参考&#34;&gt;参考&lt;/h2&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;a href=&#34;https://blog.csdn.net/achang21/article/details/49128785&#34;target=&#34;_blank&#34;&gt;ffmpeg 提取 视频，音频，字幕 方法&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://vimsky.com/article/3687.html&#34;target=&#34;_blank&#34;&gt;在ffmpeg中怎么合并音频和视频文件？&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://www.cnblogs.com/CodeAndMoe/p/13360011.html&#34;target=&#34;_blank&#34;&gt;FFmpeg 提取视频的音频&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://blog.csdn.net/season_hangzhou/article/details/27503421&#34;target=&#34;_blank&#34;&gt;用ffmpeg转多音轨的mkv文件&lt;/a&gt;&lt;/li&gt;
+&lt;/ol&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>GIF（或图片）转视频或视频转GIF（或图片）</title>
+      <link>https://study_less_shape.gitee.io/ffmpeg-record/1-gif2video-video2gif/</link>
+      <pubDate>Sat, 12 Jun 2021 17:58:59 +0800</pubDate>
+      
+      <guid>https://study_less_shape.gitee.io/ffmpeg-record/1-gif2video-video2gif/</guid>
+      <description>&lt;h2 id=&#34;gif或图片转视频&#34;&gt;GIF（或图片）转视频&lt;/h2&gt;
+&lt;p&gt;这个相对简单，参数要求不多。用下面的图来测试（图片来源于 twitter ）。
+&lt;img  src=&#34;Freya%20Crescent.gif&#34;
+        alt=&#34;样图&#34;/&gt;&lt;/p&gt;
+&lt;p&gt;使用命令&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;ffmpeg -i Freya%20Crescent.gif output.mp4
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;一般来说，不需要很多调整的时候， &lt;code&gt;ffmpeg -i&lt;/code&gt; + 输入的文件地址 + 输出的文件地址 就可以完成很多想要的效果了，比如 &lt;code&gt;png&lt;/code&gt; 与 &lt;code&gt;jpg&lt;/code&gt; 等图片格式互转。&lt;code&gt;-i&lt;/code&gt; 的 &lt;code&gt;i&lt;/code&gt; 表示 &lt;code&gt;input&lt;/code&gt;，即输入的意思，后面跟随一个文件地址，代表输入的文件。&lt;/p&gt;
+&lt;p&gt;来看看输出的视频与源图片的参数。宽高一致，每帧都为像素画，所以导出的码率相对比较能够让人满意。
+&lt;img  src=&#34;gif-compare-mp4.png&#34;
+        alt=&#34;参数比较&#34;/&gt;&lt;/p&gt;
+&lt;p&gt;实际上本人目前需要用到此功能不多，所以暂且只记录到浅层。&lt;/p&gt;
+&lt;h2 id=&#34;视频转gif图片&#34;&gt;视频转GIF（图片）&lt;/h2&gt;
+&lt;p&gt;这个如果直接使用上面说的命令，简单的导出gif，会发现&lt;strong&gt;质量根本不行&lt;/strong&gt;。所以要导出高质量的gif，方法会比较多，有一些会稍微复杂一些。&lt;/p&gt;
+&lt;p&gt;这里以上面已经导出的视频 &lt;code&gt;output.mp4&lt;/code&gt; 作为样本来使用。&lt;/p&gt;
+&lt;h3 id=&#34;方法一将视频转换为图片再将图片转为gif&#34;&gt;方法一：将视频转换为图片，再将图片转为gif&lt;/h3&gt;
+&lt;p&gt;这个方法的大概思路是将视频的每一帧都弄出来作为图片保存，然后把这些图片再转为gif。这种方法是我目前认为&lt;strong&gt;导出质量最高的&lt;/strong&gt;。&lt;/p&gt;
+&lt;p&gt;首先创建一个&lt;strong&gt;文件夹&lt;/strong&gt;，名字任意：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;mkdir png
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;对于视频 &lt;code&gt;output.mp4&lt;/code&gt; ，将其每一帧都保存为图片：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;ffmpeg -i output.mp4 png/gif-%4d.png
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;strong&gt;注意&lt;/strong&gt;上面的命令，在导出的图片文件名中，有一个像C语言格式化输出一样的字符串 &lt;code&gt;%4d&lt;/code&gt; ，这个代表的是指定输出的数字位数，此处指定4位。&lt;strong&gt;另外还要注意&lt;/strong&gt;，因为此处的视频只有短短的两秒，所以没有指定帧率，而是将所有的帧都导出了，而当视频比较长或者视频分辨率比较高的时候，使用 &lt;code&gt;-r&lt;/code&gt; 适当减小帧率比较好。如下面将帧率限制为10帧。&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;ffmpeg -i output.mp4 -r &lt;span class=&#34;m&#34;&gt;10&lt;/span&gt; png/gif-%4d.png
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;还有一点，png 是较高质量的图片，占用空间比较大，如果没有太高的质量需求，可以导出为 jpg 等压缩格式图片。&lt;/p&gt;
+&lt;p&gt;在上面创建的文件夹下，可以看到导出的图片文件。
+&lt;img  src=&#34;mp4-output-png.png&#34;
+        alt=&#34;导出的图片&#34;/&gt;&lt;/p&gt;
+&lt;p&gt;再使用下面的命令，即可将图片转为 gif ：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;ffmpeg -i png/gif-%4d.png output.gif
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;方法二先生成调色板然后利用调色板生成gif&#34;&gt;方法二：先生成调色板，然后利用调色板生成gif&lt;/h3&gt;
+&lt;p&gt;直接生成 gif 除了图片模糊，还有偏色的问题。生成调色板，然后再生成 gif 解决了这个问题。&lt;/p&gt;
+&lt;p&gt;使用下面的命令生成调色板：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;ffmpeg -i output.mp4 -vf &lt;span class=&#34;nv&#34;&gt;fps&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;30,scale&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;832:-1:flags&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;lanczos,palettegen palette.png
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;其中 &lt;code&gt;-vf&lt;/code&gt; 表示 &lt;code&gt;video filter&lt;/code&gt; ，即视频滤镜。这里设置帧率为30帧，分辨率为832:-1，表示宽为832，-1表示按比例设置。 lanczos 应该是压缩算法， palettegen 代表生成调色板，最后的 palette.png 表示生成的调色板的文件名。&lt;/p&gt;
+&lt;p&gt;生成好调色板之后，就可以利用调色板来生成gif了：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;ffmpeg -i output.mp4 -i palette.png -filter_complex &lt;span class=&#34;s2&#34;&gt;&amp;#34;fps=30,scale=832:-1:flags=lanczos[x];[x][1:v]paletteuse&amp;#34;&lt;/span&gt; out.gif
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;扩展&#34;&gt;扩展&lt;/h2&gt;
+&lt;p&gt;这些方法同时也能处理 gif 图，使用的命令差不多。&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>ffmpeg使用的命令记录</title>
+      <link>https://study_less_shape.gitee.io/post/note/ffmpeg-record/</link>
+      <pubDate>Fri, 11 Jun 2021 16:44:41 +0800</pubDate>
+      
+      <guid>https://study_less_shape.gitee.io/post/note/ffmpeg-record/</guid>
+      <description>&lt;p&gt;题外话：gitee审核博客，我的博客因为含有色情内容（？）被毙掉了，转战github。&lt;/p&gt;
+&lt;h2 id=&#34;正题&#34;&gt;正题&lt;/h2&gt;
+&lt;p&gt;我会把最近用到的 ffmpeg 指令都记下来，并尝试解释每一个 option 和参数的详细含义（也许有一些只是个人理解）。希望能够在需要用到的时候很方便的找到，并且也希望能够帮助到看博客的人，虽说应该没什么人会看我的博客（。&lt;/p&gt;
+&lt;p&gt;很多都来自于之前搜索到的方法，由于个人之前清理过一次浏览记录，而且有时候用手机查有时候用电脑查，所以暂时没法列出来源。&lt;/p&gt;
+&lt;h2 id=&#34;有关文件路径文件名&#34;&gt;有关文件路径/文件名&lt;/h2&gt;
+&lt;p&gt;个人使用 ffmpeg 时，由于部分文件名过长，所以有一个小技巧（也许只是我不知道大家都知道）。将选中的文件拖拽到控制台，控制台上就会自动填入文件路径。这是一个很方便的功能，基本一直在使用。&lt;/p&gt;
+&lt;p&gt;（如下是使用 Windows Terminal 时的界面，其他控制台/控制台集成软件应该差不多）
+&lt;img  src=&#34;./1.drag-file.png&#34;
+        alt=&#34;拖拽文件&#34;/&gt;&lt;/p&gt;
+&lt;h2 id=&#34;目录&#34;&gt;目录&lt;/h2&gt;
+&lt;p&gt;该项目会不定期更新。&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;a href=&#34;../../../ffmpeg-record/1-gif2video-video2gif&#34;&gt;GIF（图片）与视频互转&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;../../../ffmpeg-record/2-extract-video-stream&#34;&gt;视频中不同的输入流的提取&lt;/a&gt;&lt;/li&gt;
+&lt;/ol&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>上网出现了400/ERR_SSL_PROTOCOL_ERROR</title>
+      <link>https://study_less_shape.gitee.io/post/note/error_ssl_protocol/</link>
+      <pubDate>Thu, 22 Apr 2021 23:59:24 +0800</pubDate>
+      
+      <guid>https://study_less_shape.gitee.io/post/note/error_ssl_protocol/</guid>
+      <description>&lt;p&gt;又是一件不起眼的小事，结果花了我几天的时间去解决。&lt;/p&gt;
+&lt;p&gt;前段时间，我的电脑突然就没法浏览网页了。网络问题在我的电脑上时常会发生，所以我很久之前就下了一个别人从数字家抽出来的一个断网工具。很快就检测出了问题并且可以正常浏览网页了。就在我兴致极好地进行网上冲浪的时候，突然有点想去某特，毕竟上次整了一阵去解锁帐号，感觉时不时还是要去登录一下，所以就去了。结果就出现了&lt;code&gt;ERR_SSL_PROTOCOL_ERROR&lt;/code&gt;。&lt;/p&gt;
+&lt;p&gt;过了一阵要进github，校园网真的不行，有时进得去有时又进不去，然后又是&lt;code&gt;ERR_SSL_PROTOCOL_ERROR&lt;/code&gt;。&lt;/p&gt;
+&lt;p&gt;之后又想进x歌进行搜索，但是出现了&lt;code&gt;400 bad request&lt;/code&gt;。&lt;/p&gt;
+&lt;p&gt;百度/Bing了很多，但是大部分都是清楚Cookie和浏览数据，设置Internet选项……&lt;/p&gt;
+&lt;p&gt;找了两天突然在Microsoft Community的提问看到了，&lt;a href=&#34;https://answers.microsoft.com/zh-hans/ie/forum/all/win10%E7%B3%BB%E7%BB%9F%E7%9A%84ie%E8%AE%BE/a7f80150-565f-4232-b5a0-bbb7a600e90b&#34;target=&#34;_blank&#34;&gt;Internet选项中的SSL2.0被取消了&lt;/a&gt;。&lt;/p&gt;
+&lt;p&gt;几经周转，没有查到什么好的方法，那就需要自己动手想办法，要么从命令行，要么从注册表启用。&lt;/p&gt;
+&lt;p&gt;命令行的没有找到，自己也很少使用，所以这条选项稍微摸索了一下就放弃了。&lt;/p&gt;
+&lt;p&gt;而注册表果然没有让我失望，竟然找到了&lt;a href=&#34;https://docs.microsoft.com/zh-cn/windows-server/security/tls/tls-registry-settings&#34;target=&#34;_blank&#34;&gt;Microsoft关于SSL/TLS注册表修改的方法&lt;/a&gt;。按照步骤，我添加了一个SSL1.0的项，然后再次进入成功了。不清楚这是不是假象，但总归是暂时解决了。
+&lt;img  src=&#34;register_view.png&#34;
+        alt=&#34;注册表添加项&#34;/&gt;&lt;/p&gt;
+&lt;p&gt;或许过几天又会出问题，到时候再另说了。&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Unity安装一直卡在一个进度无法成功安装</title>
+      <link>https://study_less_shape.gitee.io/post/note/unity-install-blocked/</link>
+      <pubDate>Tue, 13 Apr 2021 20:13:50 +0800</pubDate>
+      
+      <guid>https://study_less_shape.gitee.io/post/note/unity-install-blocked/</guid>
+      <description>&lt;p&gt;这两天折腾Unity，之前的Unity没法发布Android包，没有办法，去下载新的长期支持的版本。但是要不就是安装成功了但是我选择的模块指安装了一部分，要不然就是卡住了。&lt;/p&gt;
+&lt;p&gt;安装了一部分，之后继续安装其他的模块卡住是我没想到的。既没有报错也没有任何提示。
+&lt;img  src=&#34;unity_install_blocked.png&#34;
+        alt=&#34;Unity安装卡住&#34;/&gt;&lt;/p&gt;
+&lt;p&gt;在网上搜索了一阵才找到合适的方法（不一定是最佳的解决办法）。记录下来以便之后翻阅。&lt;/p&gt;
+&lt;h3 id=&#34;安装不成功的因素&#34;&gt;安装不成功的因素&lt;/h3&gt;
+&lt;p&gt;个人觉得一个是网络，二个是也许没有给管理员权限。而后者一般是没有问题的，所以主要原因可能出在前者。&lt;/p&gt;
+&lt;p&gt;但是其实细细深入一下，会发现也不一定就是网络的锅。&lt;/p&gt;
+&lt;h3 id=&#34;解决方法&#34;&gt;解决方法&lt;/h3&gt;
+&lt;p&gt;为了了解到Unity安装不同的模块到底下载了什么东西，需要找到安装日志。&lt;/p&gt;
+&lt;p&gt;打开路径&lt;code&gt;%APPDATA%\UnityHub\logs&lt;/code&gt;，如果执行过安装操作，一般会有一个&lt;code&gt;info-log.json&lt;/code&gt;的文件。
+&lt;img  src=&#34;unityhub_log_directory.png&#34;
+        alt=&#34;UnityHub日志目录&#34;/&gt;&lt;/p&gt;
+&lt;p&gt;打开它，翻到文件末尾，根据选择模块的不同会看到不同的内容，不过大致应该相同，会有文件的链接。
+&lt;img  src=&#34;log_info.png&#34;
+        alt=&#34;UnityHub日志内容&#34;/&gt;&lt;/p&gt;
+&lt;p&gt;我这里在UnityHub中选择的是三个模块，所以这里是三个链接，把这三个链接分别复制到浏览器或者下载器里下载然后安装就行了。&lt;/p&gt;
+&lt;p&gt;其中比较特殊的是文档，需要自行解压到UnityHub目录的&lt;code&gt;\Editor\[Unity版本（缺省值）]\Editor\Data&lt;/code&gt;下。快捷打开之间按安装好的UnityEditor右上角的三个点，里面的菜单有一个在资源管理器中显示。
+&lt;img  src=&#34;unity_hub_show_in_exploer.png&#34;
+        alt=&#34;在文件资源管理器中显示&#34;/&gt;&lt;/p&gt;
+&lt;h3 id=&#34;其他的错误&#34;&gt;其他的错误&lt;/h3&gt;
+&lt;p&gt;在安装其他模块，比如安卓构建模块或者Windows-IL2CPP支持的时候，也许会提示UnityHub或UnityEditor正在运行。&lt;/p&gt;
+&lt;p&gt;如果将这两个关闭之后依旧会有提示，那么就需要在Editor目录将&lt;code&gt;\Data\PlaybackEngines&lt;/code&gt;下相应的模块文件夹删掉，然后再进行安装这样就没有问题了。&lt;/p&gt;
+&lt;h3 id=&#34;最后的问题&#34;&gt;最后的问题&lt;/h3&gt;
+&lt;p&gt;这样进行安装有一个坏处，那就是UnityHub并不会将自行安装的模块进行显示，并且在添加模块处依旧需要安装这些模块。但其实这些模块已经安装完成了！并不需要再进行安装了。&lt;/p&gt;
+&lt;p&gt;我暂未找到解决方法。不过Unity可以正常使用了，对应模块的支持能够使用。&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Vscode插件Markdown Preview Enhanced无法预览</title>
+      <link>https://study_less_shape.gitee.io/post/note/markdown-pre-command-not-found/</link>
+      <pubDate>Sun, 11 Apr 2021 14:09:14 +0800</pubDate>
+      
+      <guid>https://study_less_shape.gitee.io/post/note/markdown-pre-command-not-found/</guid>
+      <description>&lt;blockquote&gt;
+&lt;p&gt;写这篇博客是防止之后遇到相同的事时，需要费很多时间解决。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;有段时间没使用Vscode写Markdown了，最近要给别人发一个思路，然后觉得自己调word太费时了就想用Markdown偷下懒。结果就是点下面的选项没有作用
+&lt;img  src=&#34;right-menu.png&#34;
+        alt=&#34;右键菜单&#34;/&gt;&lt;/p&gt;
+&lt;p&gt;然后试了下&lt;code&gt;Shift+Ctrl+p&lt;/code&gt;打开命令面板，然后使用预览。结果出现了报错，提示&lt;code&gt;Command not found&lt;/code&gt;。在Bing和百度都搜寻不到合适的解决方案，不过最终在&lt;code&gt;github-issue&lt;/code&gt;发现了一个相同的情况。在回答中找到了&lt;a href=&#34;https://github.com/shd101wyy/vscode-markdown-preview-enhanced/issues/108#issuecomment-572964043&#34;target=&#34;_blank&#34;&gt;解决方法&lt;/a&gt;。&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;卸载该插件&lt;/li&gt;
+&lt;li&gt;提示需要重启，点击&lt;/li&gt;
+&lt;li&gt;关闭Vscode&lt;/li&gt;
+&lt;li&gt;删除用户目录下的&lt;code&gt;%USERS_NAME%/.vscode/extensions/.vscode/extensions/shd101wyy.markdown-preview-enhanced-0.5.1/&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;打开Vscode&lt;/li&gt;
+&lt;li&gt;重新安装插件&lt;/li&gt;
+&lt;li&gt;重启Vscode&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;注意&lt;code&gt;shd101wyy.markdown-preview-enhanced-0.5.1&lt;/code&gt;这个文件夹，后面的数字是版本名，不清楚是否需要删除所有这个插件的文件夹，不过有这个前缀的我有两个，所以我都删了。&lt;/p&gt;
+&lt;p&gt;上面的方法要是还没用的话。就只能自己再找办法了。&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>关于游戏技能的一些想法</title>
+      <link>https://study_less_shape.gitee.io/post/misnotes/game-skill-idea/</link>
+      <pubDate>Wed, 09 Dec 2020 20:19:18 +0800</pubDate>
+      
+      <guid>https://study_less_shape.gitee.io/post/misnotes/game-skill-idea/</guid>
+      <description>&lt;p&gt;朋友的一个项目让我想了下组合元素发技能的方式。&lt;/p&gt;
+&lt;p&gt;好久没写代码了，写了一点游戏技能的C++代码，感觉有了一点点思路。&lt;/p&gt;
+&lt;h2 id=&#34;技能基础&#34;&gt;技能基础&lt;/h2&gt;
+&lt;p&gt;虽然说少用继承，但是我还是写了一个父类来作为技能的基础。命名为&lt;code&gt;skill_base&lt;/code&gt;，虽然看起来很蠢但很容易懂。三个字段：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;skill_id&lt;/code&gt;:技能的id，用来索引比较方便&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;skill_name&lt;/code&gt;:技能名字&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;eff&lt;/code&gt;:技能的效果&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;顺带来个可以覆写的方法&lt;code&gt;use_skill()&lt;/code&gt;，返回的就是定义的技能效果；和一个用来获取id的&lt;code&gt;get_id()&lt;/code&gt;。&lt;br/&gt;
+(skill_base.h)&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-c++&#34; data-lang=&#34;c++&#34;&gt;&lt;span class=&#34;k&#34;&gt;class&lt;/span&gt; &lt;span class=&#34;nc&#34;&gt;skill_base&lt;/span&gt;
+&lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
+&lt;span class=&#34;k&#34;&gt;protected&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;:&lt;/span&gt;
+    &lt;span class=&#34;kt&#34;&gt;int&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;skill_id&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
+    &lt;span class=&#34;n&#34;&gt;string&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;skill_name&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
+    &lt;span class=&#34;n&#34;&gt;effect&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;eff&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
+
+&lt;span class=&#34;k&#34;&gt;public&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;:&lt;/span&gt;
+    &lt;span class=&#34;k&#34;&gt;virtual&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;effect&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;use_skill&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt;
+    &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
+        &lt;span class=&#34;n&#34;&gt;cout&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class=&#34;s&#34;&gt;&amp;#34;use skill &amp;#34;&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;skill_name&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;endl&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
+        &lt;span class=&#34;k&#34;&gt;return&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;eff&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
+    &lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
+
+    &lt;span class=&#34;kt&#34;&gt;int&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;get_id&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt;
+    &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
+        &lt;span class=&#34;k&#34;&gt;return&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;skill_id&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
+    &lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
+&lt;span class=&#34;p&#34;&gt;};&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;code&gt;effect&lt;/code&gt;是技能的效果，需要在&lt;code&gt;skill_base&lt;/code&gt;前定义一个&lt;code&gt;effect&lt;/code&gt;类：&lt;br/&gt;
+(skill_base.h)&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-c++&#34; data-lang=&#34;c++&#34;&gt;&lt;span class=&#34;k&#34;&gt;class&lt;/span&gt; &lt;span class=&#34;nc&#34;&gt;effect&lt;/span&gt;
+&lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
+&lt;span class=&#34;k&#34;&gt;private&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;:&lt;/span&gt;
+    &lt;span class=&#34;kt&#34;&gt;int&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;damage&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
+
+&lt;span class=&#34;k&#34;&gt;public&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;:&lt;/span&gt;
+    &lt;span class=&#34;n&#34;&gt;effect&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt;
+    &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
+        &lt;span class=&#34;n&#34;&gt;damage&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;0&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
+    &lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
+    &lt;span class=&#34;n&#34;&gt;effect&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;kt&#34;&gt;int&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;set_damage&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;damage&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;set_damage&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+    &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
+    &lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
+    &lt;span class=&#34;kt&#34;&gt;int&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;get_damage&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt;
+    &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
+        &lt;span class=&#34;k&#34;&gt;return&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;damage&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
+    &lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
+&lt;span class=&#34;p&#34;&gt;};&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;这里仅定义了一个伤害（damage）的字段，可以在之后添加其他字段或者添加虚方法用于继承和实现多态。&lt;code&gt;effect&lt;/code&gt;里加了两个构造，为了之后方便实现了无参构造，不需要的话可以加个&lt;code&gt;explicit&lt;/code&gt;。这里的&lt;code&gt;get_damage&lt;/code&gt;可以的话弄成其他的会更好，这里就不再更换了。&lt;/p&gt;
+&lt;p&gt;有了这两个，就可以开始想办法弄点其他的了。这里有两个方案：一个是用构造者模式，写一个builder类，另外一个是写一个list类。这里选后一种。当然推荐第一种。&lt;/p&gt;
+&lt;p&gt;技能的list可以封装一个&lt;code&gt;vector&amp;lt;skill_base&amp;gt;&lt;/code&gt;字段，其他语言比如C#可以是&lt;code&gt;List&amp;lt;SkillBase&amp;gt;&lt;/code&gt;。此处简单的定义了三个方法，分别是&lt;code&gt;add_skill&lt;/code&gt;、&lt;code&gt;rm_skill&lt;/code&gt;、&lt;code&gt;use_skill&lt;/code&gt;，即添加技能、移除技能和使用技能。那么&lt;code&gt;skill_list&lt;/code&gt;大致可以定义成这样：&lt;br/&gt;
+(skill_base.h)&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-c++&#34; data-lang=&#34;c++&#34;&gt;&lt;span class=&#34;k&#34;&gt;class&lt;/span&gt; &lt;span class=&#34;nc&#34;&gt;skill_list&lt;/span&gt;
+&lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
+&lt;span class=&#34;k&#34;&gt;private&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;:&lt;/span&gt;
+    &lt;span class=&#34;n&#34;&gt;vector&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;skill_base&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;skills&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
+
+&lt;span class=&#34;k&#34;&gt;public&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;:&lt;/span&gt;
+    &lt;span class=&#34;kt&#34;&gt;void&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;add_skill&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;skill_base&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;skill&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+    &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
+        &lt;span class=&#34;n&#34;&gt;skills&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;push_back&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;skill&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;);&lt;/span&gt;
+    &lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
+
+    &lt;span class=&#34;kt&#34;&gt;void&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;rm_skill&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;kt&#34;&gt;int&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;skill_id&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+    &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
+        &lt;span class=&#34;k&#34;&gt;for&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;k&#34;&gt;auto&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;i&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;skills&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;begin&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;();&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;i&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;!=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;skills&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;end&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;();&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;i&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;++&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+        &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
+            &lt;span class=&#34;k&#34;&gt;if&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;i&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;-&amp;gt;&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;get_id&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;==&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;skill_id&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+            &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
+                &lt;span class=&#34;c1&#34;&gt;//erase为vector移除元素的操作
+&lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;&lt;/span&gt;                &lt;span class=&#34;n&#34;&gt;skills&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;erase&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;i&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;i&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;);&lt;/span&gt;
+                &lt;span class=&#34;k&#34;&gt;break&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
+            &lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
+        &lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
+    &lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
+
+    &lt;span class=&#34;n&#34;&gt;effect&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;use_skill&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;kt&#34;&gt;int&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;id&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+    &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
+        &lt;span class=&#34;c1&#34;&gt;// snip
+&lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;&lt;/span&gt;    &lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
+&lt;span class=&#34;p&#34;&gt;};&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;code&gt;use_skill&lt;/code&gt;根据id法则的不同有不同的实现细节。比如只是单纯的&lt;code&gt;push_back&lt;/code&gt;的话，就需要遍历数组寻找id &lt;del&gt;，这种情况可能使用哈希表会更好&lt;/del&gt; ；而在保证id是有序的或者是有一个生成法则，可以通过下标索引的花，时间可以降到&lt;code&gt;O(1)&lt;/code&gt;。&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-c++&#34; data-lang=&#34;c++&#34;&gt;    &lt;span class=&#34;n&#34;&gt;effect&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;use_skill&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;kt&#34;&gt;int&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;id&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+    &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
+        &lt;span class=&#34;n&#34;&gt;effect&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;e&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
+        &lt;span class=&#34;k&#34;&gt;for&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;k&#34;&gt;auto&lt;/span&gt; &lt;span class=&#34;nl&#34;&gt;i&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;skills&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+        &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
+            &lt;span class=&#34;k&#34;&gt;if&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;i&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;get_id&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;==&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;id&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+            &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
+                &lt;span class=&#34;n&#34;&gt;e&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;i&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;use_skill&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;();&lt;/span&gt;
+            &lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
+        &lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
+        &lt;span class=&#34;k&#34;&gt;return&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;e&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
+    &lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;技能实现&#34;&gt;技能实现&lt;/h2&gt;
+&lt;p&gt;如果使用构造者的话可能可以忽略这一步。这里写了四个简单的技能：风（wind）、火（fire）、水（water）、雷（thunder）。&lt;br/&gt;
+(skills.h)&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-c++&#34; data-lang=&#34;c++&#34;&gt;&lt;span class=&#34;cp&#34;&gt;#include&lt;/span&gt; &lt;span class=&#34;cpf&#34;&gt;&amp;#34;skill_base.h&amp;#34;&lt;/span&gt;&lt;span class=&#34;cp&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;cp&#34;&gt;&lt;/span&gt;&lt;span class=&#34;k&#34;&gt;class&lt;/span&gt; &lt;span class=&#34;nc&#34;&gt;wind&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;k&#34;&gt;public&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;skill_base&lt;/span&gt;
+&lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
+&lt;span class=&#34;k&#34;&gt;public&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;:&lt;/span&gt;
+    &lt;span class=&#34;n&#34;&gt;wind&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;kt&#34;&gt;int&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;damage&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;kt&#34;&gt;int&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;id&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+    &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
+        &lt;span class=&#34;n&#34;&gt;eff&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;effect&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;damage&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;);&lt;/span&gt;
+        &lt;span class=&#34;n&#34;&gt;skill_id&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;id&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
+        &lt;span class=&#34;n&#34;&gt;skill_name&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;s&#34;&gt;&amp;#34;wind&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
+    &lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
+&lt;span class=&#34;p&#34;&gt;};&lt;/span&gt;
+
+&lt;span class=&#34;k&#34;&gt;class&lt;/span&gt; &lt;span class=&#34;nc&#34;&gt;fire&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;k&#34;&gt;public&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;skill_base&lt;/span&gt;
+&lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
+&lt;span class=&#34;k&#34;&gt;public&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;:&lt;/span&gt;
+    &lt;span class=&#34;n&#34;&gt;fire&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;kt&#34;&gt;int&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;damage&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;kt&#34;&gt;int&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;id&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+    &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
+        &lt;span class=&#34;n&#34;&gt;eff&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;effect&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;damage&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;);&lt;/span&gt;
+        &lt;span class=&#34;n&#34;&gt;skill_id&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;id&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
+        &lt;span class=&#34;n&#34;&gt;skill_name&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;s&#34;&gt;&amp;#34;fire&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
+    &lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
+&lt;span class=&#34;p&#34;&gt;};&lt;/span&gt;
+
+&lt;span class=&#34;k&#34;&gt;class&lt;/span&gt; &lt;span class=&#34;nc&#34;&gt;water&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;k&#34;&gt;public&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;skill_base&lt;/span&gt;
+&lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
+&lt;span class=&#34;k&#34;&gt;public&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;:&lt;/span&gt;
+    &lt;span class=&#34;n&#34;&gt;water&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;kt&#34;&gt;int&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;damage&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;kt&#34;&gt;int&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;id&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+    &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
+        &lt;span class=&#34;n&#34;&gt;eff&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;effect&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;damage&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;);&lt;/span&gt;
+        &lt;span class=&#34;n&#34;&gt;skill_id&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;id&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
+        &lt;span class=&#34;n&#34;&gt;skill_name&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;s&#34;&gt;&amp;#34;water&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
+    &lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
+&lt;span class=&#34;p&#34;&gt;};&lt;/span&gt;
+
+&lt;span class=&#34;k&#34;&gt;class&lt;/span&gt; &lt;span class=&#34;nc&#34;&gt;thunder&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;k&#34;&gt;public&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;skill_base&lt;/span&gt;
+&lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
+&lt;span class=&#34;k&#34;&gt;public&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;:&lt;/span&gt;
+    &lt;span class=&#34;n&#34;&gt;thunder&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;kt&#34;&gt;int&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;damage&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;kt&#34;&gt;int&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;id&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+    &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
+        &lt;span class=&#34;n&#34;&gt;eff&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;effect&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;damage&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;);&lt;/span&gt;
+        &lt;span class=&#34;n&#34;&gt;skill_id&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;id&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
+        &lt;span class=&#34;n&#34;&gt;skill_name&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;s&#34;&gt;&amp;#34;thunder&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
+    &lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
+&lt;span class=&#34;p&#34;&gt;};&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;使用&#34;&gt;使用！&lt;/h2&gt;
+&lt;p&gt;写了个小样例。前面init的部分在真正到项目中，应该是从配置文件中读取的。&lt;br/&gt;
+(main.cpp)&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-c++&#34; data-lang=&#34;c++&#34;&gt;&lt;span class=&#34;cp&#34;&gt;#include&lt;/span&gt; &lt;span class=&#34;cpf&#34;&gt;&amp;lt;iostream&amp;gt;&lt;/span&gt;&lt;span class=&#34;cp&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;cp&#34;&gt;#include&lt;/span&gt; &lt;span class=&#34;cpf&#34;&gt;&amp;lt;../include/skills.h&amp;gt;&lt;/span&gt;&lt;span class=&#34;cp&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;cp&#34;&gt;&lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;// Windows将上面的注释，下面的取消注释
+&lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;// #include &amp;#34;../include/skills.h&amp;#34;
+&lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;&lt;/span&gt;&lt;span class=&#34;k&#34;&gt;using&lt;/span&gt; &lt;span class=&#34;k&#34;&gt;namespace&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;std&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
+&lt;span class=&#34;kt&#34;&gt;int&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;main&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt;
+&lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
+    &lt;span class=&#34;c1&#34;&gt;//init
+&lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;&lt;/span&gt;    &lt;span class=&#34;n&#34;&gt;wind&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;wi&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;10&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;);&lt;/span&gt;
+    &lt;span class=&#34;n&#34;&gt;fire&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;fi&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;15&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;2&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;);&lt;/span&gt;
+    &lt;span class=&#34;n&#34;&gt;water&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;wa&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;8&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;3&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;);&lt;/span&gt;
+    &lt;span class=&#34;n&#34;&gt;thunder&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;th&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;18&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;4&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;);&lt;/span&gt;
+
+    &lt;span class=&#34;n&#34;&gt;skill_list&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;list&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
+    &lt;span class=&#34;n&#34;&gt;list&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;add_skill&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;wi&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;);&lt;/span&gt;
+    &lt;span class=&#34;n&#34;&gt;list&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;add_skill&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;fi&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;);&lt;/span&gt;
+    &lt;span class=&#34;n&#34;&gt;list&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;add_skill&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;wa&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;);&lt;/span&gt;
+    &lt;span class=&#34;n&#34;&gt;list&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;add_skill&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;th&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;);&lt;/span&gt;
+&lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;之后就能直接用了！此处为了方便，输入id选择技能使用。&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-c++&#34; data-lang=&#34;c++&#34;&gt;    &lt;span class=&#34;c1&#34;&gt;//input
+&lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;&lt;/span&gt;    &lt;span class=&#34;kt&#34;&gt;int&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;id&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
+    &lt;span class=&#34;n&#34;&gt;cout&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class=&#34;s&#34;&gt;&amp;#34;input number to use skill:&amp;#34;&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;endl&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
+    &lt;span class=&#34;n&#34;&gt;cin&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;id&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
+
+    &lt;span class=&#34;k&#34;&gt;auto&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;e&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;list&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;use_skill&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;id&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;);&lt;/span&gt;
+    &lt;span class=&#34;n&#34;&gt;cout&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;&amp;lt;&amp;lt;&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;&amp;#34;get &amp;#34;&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;&amp;lt;&amp;lt;&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;e&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;get_damage&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;&amp;lt;&amp;lt;&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;&amp;#34; damage!&amp;#34;&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;&amp;lt;&amp;lt;&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;endl&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;效果：&lt;br/&gt;
+&lt;img  src=&#34;game-skill-idea-running.png&#34;
+        alt/&gt;&lt;/p&gt;
+&lt;h2 id=&#34;胡思乱想&#34;&gt;胡思乱想&lt;/h2&gt;
+&lt;p&gt;也许可以使用键值索引（c#的dictionary）？或者还能进一步封装？等用到游戏里再想吧（Lazy）。&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;https://gitee.com/study_less_shape/Practice_Saving/tree/master/FooIdea/game-skill&#34;target=&#34;_blank&#34;&gt;源码仓库&lt;/a&gt;&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>算法课题目笔记：贪心算法</title>
+      <link>https://study_less_shape.gitee.io/post/algorithm/7-greedy_method/</link>
+      <pubDate>Fri, 27 Nov 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://study_less_shape.gitee.io/post/algorithm/7-greedy_method/</guid>
+      <description>&lt;blockquote&gt;
+&lt;p&gt;程序实验课做的题，题目来自&lt;a href=&#34;http://noi.openjudge.cn/ch0406/&#34;target=&#34;_blank&#34;&gt;NOI-4.6算法之贪心&lt;/a&gt;。本文留作复习使用&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h2 id=&#34;目录&#34;&gt;目录&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;#1-battery-life&#34;&gt;2469-电池寿命&lt;/a&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;#three-situations&#34;&gt;三种情况&lt;/a&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;#only-two-battery&#34;&gt;1.只有两个电池&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#one-longer-than-other&#34;&gt;2.一个电池的使用寿命特别长&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#split-group&#34;&gt;3.任何一个电池的寿命都不可能比其他电池寿命的总和大&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#code-implement&#34;&gt;代码实现&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#2-crossing-river&#34;&gt;702:Crossing River&lt;/a&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;#problem&#34;&gt;题目&lt;/a&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;#problem-description&#34;&gt;描述&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#problem-intput&#34;&gt;输入&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#problem-output&#34;&gt;输出&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#problem-input-example&#34;&gt;样例输入&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#problem-output-example&#34;&gt;样例输出&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#problem-from&#34;&gt;来源&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#two-strategies&#34;&gt;两种策略&lt;/a&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;#second-send-boat&#34;&gt;次快的把船送回来&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#fast-send-people&#34;&gt;让最快的送其他人过去&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#code-implement-2&#34;&gt;代码实现&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr/&gt;
+&lt;p&gt;&lt;a name=&#34;1-battery-life&#34;&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;h2 id=&#34;2469-电池寿命httpnoiopenjudgecnch04062469-1-battery-life&#34;&gt;&lt;a href=&#34;http://noi.openjudge.cn/ch0406/2469/&#34;target=&#34;_blank&#34;&gt;2469-电池寿命&lt;/a&gt; &lt;a href=&#34;#1-battery-life&#34;&gt;¶&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;解题的关键在于理解如何分配电池。代码实现很简单，但是要首先知道电池是怎么分配出来的。有三种情况&lt;/p&gt;
+&lt;p&gt;&lt;a name=&#34;three-situations&#34;&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;h3 id=&#34;三种情况-three-situations&#34;&gt;三种情况 &lt;a href=&#34;#three-situations&#34;&gt;¶&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;&lt;a name=&#34;only-two-battery&#34;&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;h4 id=&#34;1只有两个电池-only-two-battery&#34;&gt;1.只有两个电池 &lt;a href=&#34;#only-two-battery&#34;&gt;¶&lt;/a&gt;&lt;/h4&gt;
+&lt;p&gt;这是最简单的情况，只需要输出最短的那个时间就行。&lt;/p&gt;
+&lt;p&gt;&lt;a name=&#34;one-longer-than-other&#34;&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;h4 id=&#34;2一个电池的使用寿命特别长比其他电池的总和还长-one-longer-than-other&#34;&gt;2.一个电池的使用寿命特别长，比其他电池的总和还长 &lt;a href=&#34;#one-longer-than-other&#34;&gt;¶&lt;/a&gt;&lt;/h4&gt;
+&lt;p&gt;这是第二种情况，可以画一个图来具象表示一下。下面的电池就是那个寿命特别长的电池，上面的小电池的寿命的总和都没有下面的长。这时候直接计算上面的小电池的总和就行了。&lt;br/&gt;
+&lt;img  src=&#34;7-1-battery-1.png&#34;
+        alt=&#34;sum_smaller_than_one&#34;/&gt;&lt;/p&gt;
+&lt;p&gt;实质上，第一种情况是第二种情况的特殊情况，所以可以将这两种归为一种情况。&lt;/p&gt;
+&lt;p&gt;&lt;a name=&#34;split-group&#34;&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;h4 id=&#34;3任何一个电池的寿命都不可能比其他电池寿命的总和大-split-group&#34;&gt;3.任何一个电池的寿命都不可能比其他电池寿命的总和大 &lt;a href=&#34;#split-group&#34;&gt;¶&lt;/a&gt;&lt;/h4&gt;
+&lt;p&gt;第三种情况是任何一个电池的寿命都不可能比其他电池寿命的总和大，这种情况需要分组了。分组要尽量保证两组的寿命相近。比如样例中的&lt;code&gt;[3,3,5]&lt;/code&gt;，就可以按照下面的样子分组。&lt;br/&gt;
+&lt;img  src=&#34;7-1-battery-2.png&#34;
+        alt=&#34;group_of_335&#34;/&gt;&lt;/p&gt;
+&lt;p&gt;分组之后会发现上面那组会比下面那组的要多出一节，那么先用上面两节电池，直到上下寿命长度相等，然后再上下匹配使用，这时候就能达到最长使用长度了。（灰色代表用去的部分）&lt;br/&gt;
+&lt;img  src=&#34;7-1-battery-3.png&#34;
+        alt=&#34;use_group_of_335&#34;/&gt;&lt;/p&gt;
+&lt;p&gt;相应的，其他数量的电池都可以这样分组，并进行相同的处理。最终会得到，无论怎样分组，最后的使用寿命都是电池寿命总和的1/2。&lt;/p&gt;
+&lt;p&gt;&lt;a name = &#34;code-implement&#34;&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;h3 id=&#34;代码实现-code-implement&#34;&gt;代码实现 &lt;a href=&#34;#code-implement&#34;&gt;¶&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;在输入时，就处理好最大电池寿命和其他电池寿命的总和：&lt;br/&gt;
+(7.1.battery.cpp，部分代码)&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-c++&#34; data-lang=&#34;c++&#34;&gt;        &lt;span class=&#34;k&#34;&gt;while&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;n&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;--&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+        &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
+            &lt;span class=&#34;n&#34;&gt;cin&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;&amp;gt;&amp;gt;&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;ba&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
+            &lt;span class=&#34;k&#34;&gt;if&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;max_life&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;ba&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+            &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
+                &lt;span class=&#34;c1&#34;&gt;// 如果比当前值大，就把之前没有加的值加上，然后记录当前值
+&lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;&lt;/span&gt;                &lt;span class=&#34;n&#34;&gt;sum&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;+=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;max_life&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
+                &lt;span class=&#34;n&#34;&gt;max_life&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;ba&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
+            &lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
+            &lt;span class=&#34;k&#34;&gt;else&lt;/span&gt;
+            &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
+                &lt;span class=&#34;c1&#34;&gt;// 将比最大电池寿命小的电池加到总和
+&lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;&lt;/span&gt;                &lt;span class=&#34;n&#34;&gt;sum&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;+=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;ba&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
+            &lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
+        &lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;这里为了理清程序逻辑，将核心部分分离了出来。下面是对不同情况进行处理的代码：&lt;br/&gt;
+(7.1.battery.cpp，部分代码)&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-c++&#34; data-lang=&#34;c++&#34;&gt;&lt;span class=&#34;kt&#34;&gt;float&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;calculate_longest_life&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;kt&#34;&gt;int&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;sum&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;kt&#34;&gt;int&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;max_life&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+&lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
+    &lt;span class=&#34;k&#34;&gt;if&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;max_life&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;sum&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+        &lt;span class=&#34;k&#34;&gt;return&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;sum&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt; &lt;span class=&#34;c1&#34;&gt;// 第一、二种情况
+&lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;&lt;/span&gt;    &lt;span class=&#34;k&#34;&gt;return&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;kt&#34;&gt;float&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;sum&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;+&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;max_life&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;/&lt;/span&gt; &lt;span class=&#34;mf&#34;&gt;2.0&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;// 第三种情况
+&lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;全部代码在&lt;a href=&#34;https://gitee.com/study_less_shape/Practice_Saving/blob/master/Algorithm/Greedy_method/7.1.battery.cpp&#34;target=&#34;_blank&#34;&gt;这里&lt;/a&gt;可以找到。&lt;/p&gt;
+&lt;p&gt;&lt;a name = &#34;2-crossing-river&#34;&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;h2 id=&#34;702crossing-riverhttpnoiopenjudgecnch04067022-crossing-river&#34;&gt;&lt;a href=&#34;http://noi.openjudge.cn/ch0406/702/&#34;target=&#34;_blank&#34;&gt;702:Crossing River&lt;/a&gt;&lt;a href=&#34;#2-crossing-river&#34;&gt;¶&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;原题是英文，直译成中文。&lt;/p&gt;
+&lt;p&gt;&lt;a name = &#34;problem&#34;&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;h3 id=&#34;题目problem&#34;&gt;题目&lt;a href=&#34;#problem&#34;&gt;¶&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;&lt;a name = &#34;problem-description&#34;&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;h4 id=&#34;描述problem-description&#34;&gt;描述&lt;a href=&#34;#problem-description&#34;&gt;¶&lt;/a&gt;&lt;/h4&gt;
+&lt;p&gt;有N个人想用最多只能载两个人的船过河。因此必须安排某种过河顺序来回划船以至于所有人都能过河。每个人有不同的划船速度；每一对的速度取决于最慢的那一个。你的工作是决定一个使这些人过河时间最短的策略。&lt;/p&gt;
+&lt;p&gt;&lt;a name = &#34;problem-intput&#34;&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;h4 id=&#34;输入problem-intput&#34;&gt;输入&lt;a href=&#34;#problem-intput&#34;&gt;¶&lt;/a&gt;&lt;/h4&gt;
+&lt;p&gt;第一行输入一个整型&lt;code&gt;T&lt;/code&gt;（1&amp;lt;=&lt;code&gt;T&lt;/code&gt;&amp;lt;=20），表示测试用例数。之后跟着&lt;code&gt;T&lt;/code&gt;种情况。每种情况的第一行是&lt;code&gt;N&lt;/code&gt;，第二行数&lt;code&gt;N&lt;/code&gt;个整型数，表示每个人过河的时间。不会超过&lt;code&gt;1000&lt;/code&gt;个人并且过河时间均不会超过&lt;code&gt;100&lt;/code&gt;秒。&lt;/p&gt;
+&lt;p&gt;&lt;a name = &#34;problem-output&#34;&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;h4 id=&#34;输出problem-output&#34;&gt;输出&lt;a href=&#34;#problem-output&#34;&gt;¶&lt;/a&gt;&lt;/h4&gt;
+&lt;p&gt;对于每一测试用例，打印一行&lt;code&gt;N&lt;/code&gt;个人都过河所需要的总时间。&lt;/p&gt;
+&lt;p&gt;&lt;a name = &#34;problem-input-example&#34;&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;h4 id=&#34;样例输入problem-input-example&#34;&gt;样例输入&lt;a href=&#34;#problem-input-example&#34;&gt;¶&lt;/a&gt;&lt;/h4&gt;
+&lt;pre&gt;&lt;code&gt;1
+4
+1 2 5 10
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;a name = &#34;problem-output-example&#34;&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;h4 id=&#34;样例输出problem-output-example&#34;&gt;样例输出&lt;a href=&#34;#problem-output-example&#34;&gt;¶&lt;/a&gt;&lt;/h4&gt;
+&lt;pre&gt;&lt;code&gt;17
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;a name = &#34;problem-from&#34;&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;h4 id=&#34;来源problem-from&#34;&gt;来源&lt;a href=&#34;#problem-from&#34;&gt;¶&lt;/a&gt;&lt;/h4&gt;
+&lt;p&gt;POJ Monthly&amp;ndash;2004.07.18&lt;/p&gt;
+&lt;p&gt;&lt;a name = &#34;two-strategies&#34;&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;h3 id=&#34;两种策略two-strategies&#34;&gt;两种策略&lt;a href=&#34;#two-strategies&#34;&gt;¶&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;首先，考虑只有三个或三个以下的人怎么送。这时候最简单的最省时间的方法就是用最快的那个把其他两个人或一个人或自己送过去。&lt;br/&gt;
+&lt;img  src=&#34;7-2-cross-river-1.gif&#34;
+        alt=&#34;three-people-cross-river&#34;/&gt;&lt;/p&gt;
+&lt;p&gt;接下来看看四个人的。&lt;/p&gt;
+&lt;p&gt;&lt;a name = &#34;second-send-boat&#34;&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;h4 id=&#34;次快的把船送回来second-send-boat&#34;&gt;次快的把船送回来&lt;a href=&#34;#second-send-boat&#34;&gt;¶&lt;/a&gt;&lt;/h4&gt;
+&lt;p&gt;让最快送次快的人过去，再让最慢的两个过河，然后次快的把船送回来。&lt;/p&gt;
+&lt;p&gt;举个例子，四个人，划船速度分别是&lt;code&gt;1&lt;/code&gt;、&lt;code&gt;4&lt;/code&gt;、&lt;code&gt;16&lt;/code&gt;、&lt;code&gt;15&lt;/code&gt;。这时，先让&lt;code&gt;1&lt;/code&gt;、&lt;code&gt;4&lt;/code&gt;过河，然后&lt;code&gt;1&lt;/code&gt;把船送回来，再让&lt;code&gt;16&lt;/code&gt;、&lt;code&gt;15&lt;/code&gt;过河，&lt;code&gt;4&lt;/code&gt;把船送回来，最后&lt;code&gt;1&lt;/code&gt;、&lt;code&gt;4&lt;/code&gt;过河。总的时间为&lt;code&gt;4+1+16+4+4=29&lt;/code&gt;。&lt;/p&gt;
+&lt;p&gt;但是有些情况这样送就不妥当。&lt;/p&gt;
+&lt;p&gt;&lt;a name = &#34;fast-send-people&#34;&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;h4 id=&#34;让最快的送其他人过去fast-send-people&#34;&gt;让最快的送其他人过去&lt;a href=&#34;#fast-send-people&#34;&gt;¶&lt;/a&gt;&lt;/h4&gt;
+&lt;p&gt;直接举例子，四个人，划船速度分别是&lt;code&gt;9&lt;/code&gt;、&lt;code&gt;10&lt;/code&gt;、&lt;code&gt;10&lt;/code&gt;、&lt;code&gt;11&lt;/code&gt;，如果这次用上面的方法，总时间为&lt;code&gt;10+9+11+10+10=50&lt;/code&gt;。如果让最快的那个送其他人过河呢？这时总时间为&lt;code&gt;10+9+10+9+11=49&lt;/code&gt;。明显是第二种方法快！&lt;/p&gt;
+&lt;p&gt;那么贪心策略就是选上面两种方法中耗时最少的！&lt;/p&gt;
+&lt;p&gt;&lt;a name = &#34;code-implement-2&#34;&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;h3 id=&#34;代码实现code-implement-2&#34;&gt;代码实现&lt;a href=&#34;#code-implement-2&#34;&gt;¶&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;为了方便使用贪心策略，需要对输入的数据进行排序。这里直接调用&lt;code&gt;algorithm&lt;/code&gt;头文件里的&lt;code&gt;sort&lt;/code&gt;函数进行升序排序。&lt;/p&gt;
+&lt;p&gt;和之前一样把主要的逻辑部分分出来，塞在单独的函数中。&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-c++&#34; data-lang=&#34;c++&#34;&gt;&lt;span class=&#34;cp&#34;&gt;#include&lt;/span&gt; &lt;span class=&#34;cpf&#34;&gt;&amp;lt;iostream&amp;gt;&lt;/span&gt;&lt;span class=&#34;cp&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;cp&#34;&gt;#include&lt;/span&gt; &lt;span class=&#34;cpf&#34;&gt;&amp;lt;algorithm&amp;gt;&lt;/span&gt;&lt;span class=&#34;cp&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;cp&#34;&gt;&lt;/span&gt;&lt;span class=&#34;k&#34;&gt;using&lt;/span&gt; &lt;span class=&#34;k&#34;&gt;namespace&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;std&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
+
+&lt;span class=&#34;kt&#34;&gt;int&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;cross_river&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;kt&#34;&gt;int&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;people&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;[],&lt;/span&gt; &lt;span class=&#34;kt&#34;&gt;int&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;N&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+&lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
+    &lt;span class=&#34;c1&#34;&gt;// continue...
+&lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
+
+&lt;span class=&#34;kt&#34;&gt;int&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;main&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt;
+&lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
+    &lt;span class=&#34;kt&#34;&gt;int&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;T&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;N&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;people&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;1001&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;];&lt;/span&gt;
+    &lt;span class=&#34;n&#34;&gt;cin&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;&amp;gt;&amp;gt;&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;T&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
+    &lt;span class=&#34;k&#34;&gt;while&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;T&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;--&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+    &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
+        &lt;span class=&#34;n&#34;&gt;cin&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;&amp;gt;&amp;gt;&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;N&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
+        &lt;span class=&#34;k&#34;&gt;for&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;kt&#34;&gt;int&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;i&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;0&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;i&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;N&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;i&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;++&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+        &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
+            &lt;span class=&#34;n&#34;&gt;cin&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;&amp;gt;&amp;gt;&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;people&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;i&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;];&lt;/span&gt;
+        &lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
+
+        &lt;span class=&#34;n&#34;&gt;sort&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;people&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;people&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;+&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;N&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;);&lt;/span&gt;
+
+        &lt;span class=&#34;n&#34;&gt;cout&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;&amp;lt;&amp;lt;&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;cross_river&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;people&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;N&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;&amp;lt;&amp;lt;&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;endl&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
+    &lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
+
+    &lt;span class=&#34;k&#34;&gt;return&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;0&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
+&lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;在&lt;code&gt;N&amp;gt;=4&lt;/code&gt;时，从末尾开始遍历&lt;code&gt;people&lt;/code&gt;数组。根据&lt;a href=&#34;#two-strategies&#34;&gt;贪心策略&lt;/a&gt;，选择最小的一种情况。&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-c++&#34; data-lang=&#34;c++&#34;&gt;    &lt;span class=&#34;kt&#34;&gt;int&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;total_time&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;0&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
+    &lt;span class=&#34;k&#34;&gt;while&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;N&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;&amp;gt;=&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;4&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+    &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
+        &lt;span class=&#34;n&#34;&gt;total_time&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;+=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;min&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;
+            &lt;span class=&#34;c1&#34;&gt;// 最快的和次快的先过去，然后最快的把船送回来，即people[1] + people[0]
+&lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;&lt;/span&gt;            &lt;span class=&#34;c1&#34;&gt;// 然后最慢的两个人过去，次快的把船送回来，即people[N-1] + people[1]
+&lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;&lt;/span&gt;            &lt;span class=&#34;n&#34;&gt;people&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;]&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;+&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;people&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;0&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;]&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;+&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;people&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;N&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;-&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;]&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;+&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;people&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;],&lt;/span&gt;
+
+            &lt;span class=&#34;c1&#34;&gt;// 最快的送最慢的人过去，然后最快把船送回来，即people[N-1] + people[0]
+&lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;&lt;/span&gt;            &lt;span class=&#34;c1&#34;&gt;// 最快的送次慢的人过去，然后最快把船送回来，即people[N-2] + people[0]
+&lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;&lt;/span&gt;            &lt;span class=&#34;n&#34;&gt;people&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;N&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;-&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;]&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;+&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;people&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;0&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;]&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;+&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;people&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;N&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;-&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;2&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;]&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;+&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;people&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;0&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;]&lt;/span&gt;
+        &lt;span class=&#34;p&#34;&gt;);&lt;/span&gt;
+        &lt;span class=&#34;c1&#34;&gt;// 每次循环送过去两个人，所以减二
+&lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;&lt;/span&gt;        &lt;span class=&#34;n&#34;&gt;N&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;-=&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;2&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
+    &lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
+
+    &lt;span class=&#34;c1&#34;&gt;// continue...
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;之后退出循环或是未进入循环，会有三种情况，&lt;code&gt;N=1&lt;/code&gt;、&lt;code&gt;N=2&lt;/code&gt;、&lt;code&gt;N=3&lt;/code&gt;，使用&lt;code&gt;switch&lt;/code&gt;或者&lt;code&gt;if&lt;/code&gt;判断即可&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-c++&#34; data-lang=&#34;c++&#34;&gt;    &lt;span class=&#34;c1&#34;&gt;// 剩下的1-3个人，用最快的人送过去
+&lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;&lt;/span&gt;    &lt;span class=&#34;k&#34;&gt;switch&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;N&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+    &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
+        &lt;span class=&#34;k&#34;&gt;case&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;:&lt;/span&gt;
+            &lt;span class=&#34;n&#34;&gt;total_time&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;+=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;people&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;0&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;];&lt;/span&gt;
+            &lt;span class=&#34;k&#34;&gt;break&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
+        &lt;span class=&#34;k&#34;&gt;case&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;2&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;:&lt;/span&gt;
+            &lt;span class=&#34;n&#34;&gt;total_time&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;+=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;people&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;];&lt;/span&gt;
+            &lt;span class=&#34;k&#34;&gt;break&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
+        &lt;span class=&#34;k&#34;&gt;case&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;3&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;:&lt;/span&gt;
+            &lt;span class=&#34;n&#34;&gt;total_time&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;+=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;people&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;2&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;]&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;+&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;people&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;0&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;]&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;+&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;people&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;];&lt;/span&gt;
+            &lt;span class=&#34;k&#34;&gt;break&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
+    &lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
+    &lt;span class=&#34;k&#34;&gt;return&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;total_time&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;运行看一看！
+&lt;img  src=&#34;7-2-cross-river-2.png&#34;
+        alt=&#34;running-code-result&#34;/&gt;&lt;/p&gt;
+&lt;p&gt;没有问题。&lt;/p&gt;
+&lt;p&gt;全部代码在&lt;a href=&#34;https://gitee.com/study_less_shape/Practice_Saving/blob/master/Algorithm/Greedy_method/7.2.cross-river.cpp&#34;target=&#34;_blank&#34;&gt;这里&lt;/a&gt;可以找到。&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>About</title>
+      <link>https://study_less_shape.gitee.io/about/</link>
+      <pubDate>Tue, 17 Nov 2020 22:03:50 +0800</pubDate>
+      
+      <guid>https://study_less_shape.gitee.io/about/</guid>
+      <description>&lt;ul&gt;
+&lt;li&gt;从头（零）开始Rust和OpenGL（&lt;a href=&#34;https://gitee.com/study_less_shape/rust-opengl-nercury&#34;target=&#34;_blank&#34;&gt;施工中&lt;/a&gt;）&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Cargo一直fetch failed</title>
+      <link>https://study_less_shape.gitee.io/post/rust/fetch-failed/</link>
+      <pubDate>Tue, 17 Nov 2020 17:16:04 +0800</pubDate>
+      
+      <guid>https://study_less_shape.gitee.io/post/rust/fetch-failed/</guid>
+      <description>&lt;h1 id=&#34;前因&#34;&gt;前因&lt;/h1&gt;
+&lt;p&gt;在从朋友那儿clone一份rust代码之后，cargo run竟然出错了，一时半会儿也没解决，以为问题不大就没关注，结果问题也同样出现在了我自己的代码身上&lt;/p&gt;
+&lt;p&gt;&lt;img  src=&#34;fetch-failed.png&#34;
+        alt=&#34;error-details&#34;/&gt;
+(出错详情)&lt;/p&gt;
+&lt;h1 id=&#34;解决&#34;&gt;解决&lt;/h1&gt;
+&lt;blockquote&gt;
+&lt;p&gt;这是在更换镜像源没法解决之后，无意间找搜到的解决方案&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;以下解决方案来自&lt;a href=&#34;https://stackoverflow.com/questions/45722823/cargo-fails-with-spurious-network-error-the-operation-timed-out-on-windows-10&#34;target=&#34;_blank&#34;&gt;stackoverflow&lt;/a&gt;
+先检查代理&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-powershell&#34; data-lang=&#34;powershell&#34;&gt;&lt;span class=&#34;n&#34;&gt;netsh&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;winhttp&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;show&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;proxy&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;如果有代理的话进行重置&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-powershell&#34; data-lang=&#34;powershell&#34;&gt;&lt;span class=&#34;n&#34;&gt;netsh&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;winhttp&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;reset&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;proxy&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h1 id=&#34;后记&#34;&gt;后记&lt;/h1&gt;
+&lt;p&gt;残留的代理是之前为编译其他项目而留下的，造成了不小麻烦，&lt;strong&gt;慎用命令行直接设置的代理&lt;/strong&gt;&lt;/p&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>
