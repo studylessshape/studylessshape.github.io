@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh"><meta charset="utf-8"><meta name="generator" content="Hugo 0.85.0" /><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<html lang="zh"><meta charset="utf-8"><meta name="generator" content="Hugo 0.89.0" /><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="color-scheme" content="light dark">
 <meta name="supported-color-schemes" content="light dark"><title>关于游戏技能的一些想法&nbsp;&ndash;&nbsp;学少何Blog</title><link rel="stylesheet" href="/css/core.min.1956e613a36574601191d938635793e7eff08bb2942b4eaf2868cf44a7b752d66cedb4d0e8bf4f59a32a7abf70c3801e.css" integrity="sha384-GVbmE6NldGARkdk4Y1eT5&#43;/wi7KUK06vKGjPRKe3UtZs7bTQ6L9PWaMqer9ww4Ae"><meta name="twitter:card" content="summary" />
 <meta name="twitter:title" content="关于游戏技能的一些想法" /><body><section id="header">
@@ -16,7 +16,7 @@
 </ul>
 <p>顺带来个可以覆写的方法<code>use_skill()</code>，返回的就是定义的技能效果；和一个用来获取id的<code>get_id()</code>。<br/>
 (skill_base.h)</p>
-<div class="highlight"><pre class="chroma"><code class="language-c++" data-lang="c++"><span class="k">class</span> <span class="nc">skill_base</span>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-c++" data-lang="c++"><span class="k">class</span> <span class="nc">skill_base</span>
 <span class="p">{</span>
 <span class="k">protected</span><span class="o">:</span>
     <span class="kt">int</span> <span class="n">skill_id</span><span class="p">;</span>
@@ -37,7 +37,7 @@
 <span class="p">};</span>
 </code></pre></div><p><code>effect</code>是技能的效果，需要在<code>skill_base</code>前定义一个<code>effect</code>类：<br/>
 (skill_base.h)</p>
-<div class="highlight"><pre class="chroma"><code class="language-c++" data-lang="c++"><span class="k">class</span> <span class="nc">effect</span>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-c++" data-lang="c++"><span class="k">class</span> <span class="nc">effect</span>
 <span class="p">{</span>
 <span class="k">private</span><span class="o">:</span>
     <span class="kt">int</span> <span class="n">damage</span><span class="p">;</span>
@@ -59,7 +59,7 @@
 <p>有了这两个，就可以开始想办法弄点其他的了。这里有两个方案：一个是用构造者模式，写一个builder类，另外一个是写一个list类。这里选后一种。当然推荐第一种。</p>
 <p>技能的list可以封装一个<code>vector&lt;skill_base&gt;</code>字段，其他语言比如C#可以是<code>List&lt;SkillBase&gt;</code>。此处简单的定义了三个方法，分别是<code>add_skill</code>、<code>rm_skill</code>、<code>use_skill</code>，即添加技能、移除技能和使用技能。那么<code>skill_list</code>大致可以定义成这样：<br/>
 (skill_base.h)</p>
-<div class="highlight"><pre class="chroma"><code class="language-c++" data-lang="c++"><span class="k">class</span> <span class="nc">skill_list</span>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-c++" data-lang="c++"><span class="k">class</span> <span class="nc">skill_list</span>
 <span class="p">{</span>
 <span class="k">private</span><span class="o">:</span>
     <span class="n">vector</span><span class="o">&lt;</span><span class="n">skill_base</span><span class="o">&gt;</span> <span class="n">skills</span><span class="p">;</span>
@@ -89,7 +89,7 @@
 </span><span class="c1"></span>    <span class="p">}</span>
 <span class="p">};</span>
 </code></pre></div><p><code>use_skill</code>根据id法则的不同有不同的实现细节。比如只是单纯的<code>push_back</code>的话，就需要遍历数组寻找id <del>，这种情况可能使用哈希表会更好</del> ；而在保证id是有序的或者是有一个生成法则，可以通过下标索引的花，时间可以降到<code>O(1)</code>。</p>
-<div class="highlight"><pre class="chroma"><code class="language-c++" data-lang="c++">    <span class="n">effect</span> <span class="nf">use_skill</span><span class="p">(</span><span class="kt">int</span> <span class="n">id</span><span class="p">)</span>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-c++" data-lang="c++">    <span class="n">effect</span> <span class="nf">use_skill</span><span class="p">(</span><span class="kt">int</span> <span class="n">id</span><span class="p">)</span>
     <span class="p">{</span>
         <span class="n">effect</span> <span class="n">e</span><span class="p">;</span>
         <span class="k">for</span> <span class="p">(</span><span class="k">auto</span> <span class="nl">i</span> <span class="p">:</span> <span class="n">skills</span><span class="p">)</span>
@@ -104,7 +104,7 @@
 </code></pre></div><h2 id="技能实现">技能实现</h2>
 <p>如果使用构造者的话可能可以忽略这一步。这里写了四个简单的技能：风（wind）、火（fire）、水（water）、雷（thunder）。<br/>
 (skills.h)</p>
-<div class="highlight"><pre class="chroma"><code class="language-c++" data-lang="c++"><span class="cp">#include</span> <span class="cpf">&#34;skill_base.h&#34;</span><span class="cp">
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-c++" data-lang="c++"><span class="cp">#include</span> <span class="cpf">&#34;skill_base.h&#34;</span><span class="cp">
 </span><span class="cp"></span><span class="k">class</span> <span class="nc">wind</span> <span class="o">:</span> <span class="k">public</span> <span class="n">skill_base</span>
 <span class="p">{</span>
 <span class="k">public</span><span class="o">:</span>
@@ -151,7 +151,7 @@
 </code></pre></div><h2 id="使用">使用！</h2>
 <p>写了个小样例。前面init的部分在真正到项目中，应该是从配置文件中读取的。<br/>
 (main.cpp)</p>
-<div class="highlight"><pre class="chroma"><code class="language-c++" data-lang="c++"><span class="cp">#include</span> <span class="cpf">&lt;iostream&gt;</span><span class="cp">
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-c++" data-lang="c++"><span class="cp">#include</span> <span class="cpf">&lt;iostream&gt;</span><span class="cp">
 </span><span class="cp">#include</span> <span class="cpf">&lt;../include/skills.h&gt;</span><span class="cp">
 </span><span class="cp"></span><span class="c1">// Windows将上面的注释，下面的取消注释
 </span><span class="c1">// #include &#34;../include/skills.h&#34;
@@ -171,7 +171,7 @@
     <span class="n">list</span><span class="p">.</span><span class="n">add_skill</span><span class="p">(</span><span class="n">th</span><span class="p">);</span>
 <span class="p">}</span>
 </code></pre></div><p>之后就能直接用了！此处为了方便，输入id选择技能使用。</p>
-<div class="highlight"><pre class="chroma"><code class="language-c++" data-lang="c++">    <span class="c1">//input
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-c++" data-lang="c++">    <span class="c1">//input
 </span><span class="c1"></span>    <span class="kt">int</span> <span class="n">id</span><span class="p">;</span>
     <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&#34;input number to use skill:&#34;</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
     <span class="n">cin</span> <span class="o">&gt;&gt;</span> <span class="n">id</span><span class="p">;</span>

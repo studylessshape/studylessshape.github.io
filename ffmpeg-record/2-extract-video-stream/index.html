@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh"><meta charset="utf-8"><meta name="generator" content="Hugo 0.85.0" /><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<html lang="zh"><meta charset="utf-8"><meta name="generator" content="Hugo 0.89.0" /><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="color-scheme" content="light dark">
 <meta name="supported-color-schemes" content="light dark"><title>视频中不同的输入流的提取&nbsp;&ndash;&nbsp;学少何Blog</title><link rel="stylesheet" href="/css/core.min.1956e613a36574601191d938635793e7eff08bb2942b4eaf2868cf44a7b752d66cedb4d0e8bf4f59a32a7abf70c3801e.css" integrity="sha384-GVbmE6NldGARkdk4Y1eT5&#43;/wi7KUK06vKGjPRKe3UtZs7bTQ6L9PWaMqer9ww4Ae"><meta name="twitter:card" content="summary" />
 <meta name="twitter:title" content="视频中不同的输入流的提取" /><body><section id="header">
@@ -8,7 +8,7 @@
     <h1 class="article title">视频中不同的输入流的提取</h1><p class="article date">2021-07-04<span class="lastmod"> • 更新于 2021-07-17</span></p></section><article class="article markdown-body"><p>情景，我现在有一个有字幕的视频，但是我想对这个视频进行如下的操作：</p>
 <h2 id="1字幕是外语想把视频和字幕分开">1:字幕是外语，想把视频和字幕分开</h2>
 <p>这个比较简单，使用下面的命令可以提取视频（包含音频）:</p>
-<div class="highlight"><pre class="chroma"><code class="language-sh" data-lang="sh">ffmpeg -i video.mkv -vcodec copy -acodec copy -sn output.mkv
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh">ffmpeg -i video.mkv -vcodec copy -acodec copy -sn output.mkv
 </code></pre></div><p>一般封装而不是压制的话，会用到 <code>mkv</code> 格式比较多，所以输入输出视频都是 <code>mkv</code> 格式。</p>
 <p>解释一下参数的意义（自己理解+搜索到的）:</p>
 <ul>
@@ -27,11 +27,11 @@
 <h2 id="2我只想要视频其他的音频什么的都不要作为视频剪辑的素材">2:我只想要视频，其他的音频什么的都不要，作为视频剪辑的素材</h2>
 <p>通过上面的第一个问题，想必这个问题也很简单。</p>
 <p>输入以下指令可以解决:</p>
-<div class="highlight"><pre class="chroma"><code class="language-sh" data-lang="sh">ffmpeg -i video.mkv -vcodec copy -an output.mp4
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh">ffmpeg -i video.mkv -vcodec copy -an output.mp4
 </code></pre></div><p>其中， <code>-an</code> 表示不需要音频，那么这样就能够单独输出视频流。这里输出时格式换成了 <code>mp4</code> ，因为源视频编码为 <code>H.265</code> 中的一种 (<code>HVC1</code>) ，所以导出文件选择 <code>mp4</code> 格式对质量影响应该不大。</p>
 <h2 id="3我只需要音频而视频中的音频轨可能不只一个">3:我只需要音频，而视频中的音频轨可能不只一个</h2>
 <p>单个音轨的提取很简单，输入下面的指令:</p>
-<div class="highlight"><pre class="chroma"><code class="language-sh" data-lang="sh">ffmpeg -i video.mkv -acodec copy -vn output.mp3
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh">ffmpeg -i video.mkv -acodec copy -vn output.mp3
 </code></pre></div><p>其中， <code>-vn</code> 表示不需要视频流。但是输出音频会遇到很多问题，比如我遇到的：在 PotPlayer 中看到的解码格式为 <code>AAC</code> ，但是在导出为 <code>AAC</code> 格式的音频时，导出的文件有误。一是播放时长度未知，二是在和视频合并时，时间不正确（从原来的 <code>00:48:37</code> ，变成了 <code>28:02:57</code> ）。导出为 <code>mp3</code> 的话，这种问题也许就没了，但是会导致音频质量下降。所以如果只是单纯需要去掉字幕的话，第一个指令会很好，不会出现这种问题。</p>
 <p>多音轨（ <code>TODO</code> ）</p>
 <h2 id="参考">参考</h2>

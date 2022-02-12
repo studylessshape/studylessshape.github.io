@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh"><meta charset="utf-8"><meta name="generator" content="Hugo 0.85.0" /><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<html lang="zh"><meta charset="utf-8"><meta name="generator" content="Hugo 0.89.0" /><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="color-scheme" content="light dark">
 <meta name="supported-color-schemes" content="light dark"><title>Cargo一直fetch failed&nbsp;&ndash;&nbsp;学少何Blog</title><link rel="stylesheet" href="/css/core.min.1956e613a36574601191d938635793e7eff08bb2942b4eaf2868cf44a7b752d66cedb4d0e8bf4f59a32a7abf70c3801e.css" integrity="sha384-GVbmE6NldGARkdk4Y1eT5&#43;/wi7KUK06vKGjPRKe3UtZs7bTQ6L9PWaMqer9ww4Ae"><meta name="twitter:card" content="summary" />
 <meta name="twitter:title" content="Cargo一直fetch failed" /><body><section id="header">
@@ -16,9 +16,9 @@
 </blockquote>
 <p>以下解决方案来自<a href="https://stackoverflow.com/questions/45722823/cargo-fails-with-spurious-network-error-the-operation-timed-out-on-windows-10"target="_blank">stackoverflow</a>
 先检查代理</p>
-<div class="highlight"><pre class="chroma"><code class="language-powershell" data-lang="powershell"><span class="n">netsh</span> <span class="n">winhttp</span> <span class="n">show</span> <span class="n">proxy</span>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-powershell" data-lang="powershell"><span class="n">netsh</span> <span class="n">winhttp</span> <span class="n">show</span> <span class="n">proxy</span>
 </code></pre></div><p>如果有代理的话进行重置</p>
-<div class="highlight"><pre class="chroma"><code class="language-powershell" data-lang="powershell"><span class="n">netsh</span> <span class="n">winhttp</span> <span class="n">reset</span> <span class="n">proxy</span>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-powershell" data-lang="powershell"><span class="n">netsh</span> <span class="n">winhttp</span> <span class="n">reset</span> <span class="n">proxy</span>
 </code></pre></div><h1 id="后记">后记</h1>
 <p>残留的代理是之前为编译其他项目而留下的，造成了不小麻烦，<strong>慎用命令行直接设置的代理</strong></p>
 </article><section class="article labels"><a class="category" href=/categories/rust/>rust</a><a class="tag" href=/tags/rust/>rust</a></section><section class="article author"><p class="name">学少何</p><div class="bio">不求上进的在读大学生……</div><div class="details"><a class="item" href="https://github.com/studylessshape" target="_blank"><span class="iconfont icon-github"></span>&nbsp;studylessshape</a></div>

@@ -1,25 +1,44 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>插件 on 学少何Blog</title>
-    <link>https://study_less_shape.gitee.io/tags/%E6%8F%92%E4%BB%B6/</link>
+    <link>https://study_less_shape.github.io/tags/%E6%8F%92%E4%BB%B6/</link>
     <description>Recent content in 插件 on 学少何Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
     <lastBuildDate>Sun, 11 Apr 2021 14:09:14 +0800</lastBuildDate>
     
-        <atom:link href="https://study_less_shape.gitee.io/tags/%E6%8F%92%E4%BB%B6/index.xml" rel="self" type="application/rss+xml" />
+        <atom:link href="https://study_less_shape.github.io/tags/%E6%8F%92%E4%BB%B6/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
+      <title>Passge Collection</title>
+      <link>https://study_less_shape.github.io/post/misnotes/passge-collection/</link>
+      <pubDate>Sat, 12 Feb 2022 17:47:00 +0800</pubDate>
+      
+      <guid>https://study_less_shape.github.io/post/misnotes/passge-collection/</guid>
+      <description>&lt;p&gt;最近突然想把看到的一些好的文章收集一下了，慢慢更新，看到一篇收集一篇。&lt;/p&gt;
+&lt;h2 id=&#34;c&#34;&gt;C#&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://www.nimaara.com/beware-of-the-idictionary-tkey-tvalue/&#34;target=&#34;_blank&#34;&gt;小心IDictionary&amp;lt;TKey, TValue&amp;gt;&lt;/a&gt;
+&lt;blockquote&gt;
+&lt;p&gt;大致说了下使用IDictionary实例化对象和直接使用Dictionary的区别，并从IL汇编代码进行了分析。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    </item>
+    
+    <item>
       <title>视频中不同的输入流的提取</title>
-      <link>https://study_less_shape.gitee.io/ffmpeg-record/2-extract-video-stream/</link>
+      <link>https://study_less_shape.github.io/ffmpeg-record/2-extract-video-stream/</link>
       <pubDate>Sun, 04 Jul 2021 23:24:39 +0800</pubDate>
       
-      <guid>https://study_less_shape.gitee.io/ffmpeg-record/2-extract-video-stream/</guid>
+      <guid>https://study_less_shape.github.io/ffmpeg-record/2-extract-video-stream/</guid>
       <description>&lt;p&gt;情景，我现在有一个有字幕的视频，但是我想对这个视频进行如下的操作：&lt;/p&gt;
 &lt;h2 id=&#34;1字幕是外语想把视频和字幕分开&#34;&gt;1:字幕是外语，想把视频和字幕分开&lt;/h2&gt;
 &lt;p&gt;这个比较简单，使用下面的命令可以提取视频（包含音频）:&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;ffmpeg -i video.mkv -vcodec copy -acodec copy -sn output.mkv
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;ffmpeg -i video.mkv -vcodec copy -acodec copy -sn output.mkv
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;一般封装而不是压制的话，会用到 &lt;code&gt;mkv&lt;/code&gt; 格式比较多，所以输入输出视频都是 &lt;code&gt;mkv&lt;/code&gt; 格式。&lt;/p&gt;
 &lt;p&gt;解释一下参数的意义（自己理解+搜索到的）:&lt;/p&gt;
 &lt;ul&gt;
@@ -38,11 +57,11 @@
 &lt;h2 id=&#34;2我只想要视频其他的音频什么的都不要作为视频剪辑的素材&#34;&gt;2:我只想要视频，其他的音频什么的都不要，作为视频剪辑的素材&lt;/h2&gt;
 &lt;p&gt;通过上面的第一个问题，想必这个问题也很简单。&lt;/p&gt;
 &lt;p&gt;输入以下指令可以解决:&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;ffmpeg -i video.mkv -vcodec copy -an output.mp4
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;ffmpeg -i video.mkv -vcodec copy -an output.mp4
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;其中， &lt;code&gt;-an&lt;/code&gt; 表示不需要音频，那么这样就能够单独输出视频流。这里输出时格式换成了 &lt;code&gt;mp4&lt;/code&gt; ，因为源视频编码为 &lt;code&gt;H.265&lt;/code&gt; 中的一种 (&lt;code&gt;HVC1&lt;/code&gt;) ，所以导出文件选择 &lt;code&gt;mp4&lt;/code&gt; 格式对质量影响应该不大。&lt;/p&gt;
 &lt;h2 id=&#34;3我只需要音频而视频中的音频轨可能不只一个&#34;&gt;3:我只需要音频，而视频中的音频轨可能不只一个&lt;/h2&gt;
 &lt;p&gt;单个音轨的提取很简单，输入下面的指令:&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;ffmpeg -i video.mkv -acodec copy -vn output.mp3
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;ffmpeg -i video.mkv -acodec copy -vn output.mp3
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;其中， &lt;code&gt;-vn&lt;/code&gt; 表示不需要视频流。但是输出音频会遇到很多问题，比如我遇到的：在 PotPlayer 中看到的解码格式为 &lt;code&gt;AAC&lt;/code&gt; ，但是在导出为 &lt;code&gt;AAC&lt;/code&gt; 格式的音频时，导出的文件有误。一是播放时长度未知，二是在和视频合并时，时间不正确（从原来的 &lt;code&gt;00:48:37&lt;/code&gt; ，变成了 &lt;code&gt;28:02:57&lt;/code&gt; ）。导出为 &lt;code&gt;mp3&lt;/code&gt; 的话，这种问题也许就没了，但是会导致音频质量下降。所以如果只是单纯需要去掉字幕的话，第一个指令会很好，不会出现这种问题。&lt;/p&gt;
 &lt;p&gt;多音轨（ &lt;code&gt;TODO&lt;/code&gt; ）&lt;/p&gt;
 &lt;h2 id=&#34;参考&#34;&gt;参考&lt;/h2&gt;
@@ -57,16 +76,16 @@
     
     <item>
       <title>GIF（或图片）转视频或视频转GIF（或图片）</title>
-      <link>https://study_less_shape.gitee.io/ffmpeg-record/1-gif2video-video2gif/</link>
+      <link>https://study_less_shape.github.io/ffmpeg-record/1-gif2video-video2gif/</link>
       <pubDate>Sat, 12 Jun 2021 17:58:59 +0800</pubDate>
       
-      <guid>https://study_less_shape.gitee.io/ffmpeg-record/1-gif2video-video2gif/</guid>
+      <guid>https://study_less_shape.github.io/ffmpeg-record/1-gif2video-video2gif/</guid>
       <description>&lt;h2 id=&#34;gif或图片转视频&#34;&gt;GIF（或图片）转视频&lt;/h2&gt;
 &lt;p&gt;这个相对简单，参数要求不多。用下面的图来测试（图片来源于 twitter ）。
 &lt;img  src=&#34;Freya%20Crescent.gif&#34;
         alt=&#34;样图&#34;/&gt;&lt;/p&gt;
 &lt;p&gt;使用命令&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;ffmpeg -i Freya%20Crescent.gif output.mp4
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;ffmpeg -i Freya%20Crescent.gif output.mp4
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;一般来说，不需要很多调整的时候， &lt;code&gt;ffmpeg -i&lt;/code&gt; + 输入的文件地址 + 输出的文件地址 就可以完成很多想要的效果了，比如 &lt;code&gt;png&lt;/code&gt; 与 &lt;code&gt;jpg&lt;/code&gt; 等图片格式互转。&lt;code&gt;-i&lt;/code&gt; 的 &lt;code&gt;i&lt;/code&gt; 表示 &lt;code&gt;input&lt;/code&gt;，即输入的意思，后面跟随一个文件地址，代表输入的文件。&lt;/p&gt;
 &lt;p&gt;来看看输出的视频与源图片的参数。宽高一致，每帧都为像素画，所以导出的码率相对比较能够让人满意。
 &lt;img  src=&#34;gif-compare-mp4.png&#34;
@@ -78,24 +97,24 @@
 &lt;h3 id=&#34;方法一将视频转换为图片再将图片转为gif&#34;&gt;方法一：将视频转换为图片，再将图片转为gif&lt;/h3&gt;
 &lt;p&gt;这个方法的大概思路是将视频的每一帧都弄出来作为图片保存，然后把这些图片再转为gif。这种方法是我目前认为&lt;strong&gt;导出质量最高的&lt;/strong&gt;。&lt;/p&gt;
 &lt;p&gt;首先创建一个&lt;strong&gt;文件夹&lt;/strong&gt;，名字任意：&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;mkdir png
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;mkdir png
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;对于视频 &lt;code&gt;output.mp4&lt;/code&gt; ，将其每一帧都保存为图片：&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;ffmpeg -i output.mp4 png/gif-%4d.png
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;ffmpeg -i output.mp4 png/gif-%4d.png
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;strong&gt;注意&lt;/strong&gt;上面的命令，在导出的图片文件名中，有一个像C语言格式化输出一样的字符串 &lt;code&gt;%4d&lt;/code&gt; ，这个代表的是指定输出的数字位数，此处指定4位。&lt;strong&gt;另外还要注意&lt;/strong&gt;，因为此处的视频只有短短的两秒，所以没有指定帧率，而是将所有的帧都导出了，而当视频比较长或者视频分辨率比较高的时候，使用 &lt;code&gt;-r&lt;/code&gt; 适当减小帧率比较好。如下面将帧率限制为10帧。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;ffmpeg -i output.mp4 -r &lt;span class=&#34;m&#34;&gt;10&lt;/span&gt; png/gif-%4d.png
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;ffmpeg -i output.mp4 -r &lt;span class=&#34;m&#34;&gt;10&lt;/span&gt; png/gif-%4d.png
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;还有一点，png 是较高质量的图片，占用空间比较大，如果没有太高的质量需求，可以导出为 jpg 等压缩格式图片。&lt;/p&gt;
 &lt;p&gt;在上面创建的文件夹下，可以看到导出的图片文件。
 &lt;img  src=&#34;mp4-output-png.png&#34;
         alt=&#34;导出的图片&#34;/&gt;&lt;/p&gt;
 &lt;p&gt;再使用下面的命令，即可将图片转为 gif ：&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;ffmpeg -i png/gif-%4d.png output.gif
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;ffmpeg -i png/gif-%4d.png output.gif
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;方法二先生成调色板然后利用调色板生成gif&#34;&gt;方法二：先生成调色板，然后利用调色板生成gif&lt;/h3&gt;
 &lt;p&gt;直接生成 gif 除了图片模糊，还有偏色的问题。生成调色板，然后再生成 gif 解决了这个问题。&lt;/p&gt;
 &lt;p&gt;使用下面的命令生成调色板：&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;ffmpeg -i output.mp4 -vf &lt;span class=&#34;nv&#34;&gt;fps&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;30,scale&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;832:-1:flags&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;lanczos,palettegen palette.png
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;ffmpeg -i output.mp4 -vf &lt;span class=&#34;nv&#34;&gt;fps&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;30,scale&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;832:-1:flags&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;lanczos,palettegen palette.png
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;其中 &lt;code&gt;-vf&lt;/code&gt; 表示 &lt;code&gt;video filter&lt;/code&gt; ，即视频滤镜。这里设置帧率为30帧，分辨率为832:-1，表示宽为832，-1表示按比例设置。 lanczos 应该是压缩算法， palettegen 代表生成调色板，最后的 palette.png 表示生成的调色板的文件名。&lt;/p&gt;
 &lt;p&gt;生成好调色板之后，就可以利用调色板来生成gif了：&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;ffmpeg -i output.mp4 -i palette.png -filter_complex &lt;span class=&#34;s2&#34;&gt;&amp;#34;fps=30,scale=832:-1:flags=lanczos[x];[x][1:v]paletteuse&amp;#34;&lt;/span&gt; out.gif
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;ffmpeg -i output.mp4 -i palette.png -filter_complex &lt;span class=&#34;s2&#34;&gt;&amp;#34;fps=30,scale=832:-1:flags=lanczos[x];[x][1:v]paletteuse&amp;#34;&lt;/span&gt; out.gif
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;扩展&#34;&gt;扩展&lt;/h2&gt;
 &lt;p&gt;这些方法同时也能处理 gif 图，使用的命令差不多。&lt;/p&gt;
 </description>
@@ -103,10 +122,10 @@
     
     <item>
       <title>ffmpeg使用的命令记录</title>
-      <link>https://study_less_shape.gitee.io/post/note/ffmpeg-record/</link>
+      <link>https://study_less_shape.github.io/post/note/ffmpeg-record/</link>
       <pubDate>Fri, 11 Jun 2021 16:44:41 +0800</pubDate>
       
-      <guid>https://study_less_shape.gitee.io/post/note/ffmpeg-record/</guid>
+      <guid>https://study_less_shape.github.io/post/note/ffmpeg-record/</guid>
       <description>&lt;p&gt;题外话：gitee审核博客，我的博客因为含有色情内容（？）被毙掉了，转战github。&lt;/p&gt;
 &lt;h2 id=&#34;正题&#34;&gt;正题&lt;/h2&gt;
 &lt;p&gt;我会把最近用到的 ffmpeg 指令都记下来，并尝试解释每一个 option 和参数的详细含义（也许有一些只是个人理解）。希望能够在需要用到的时候很方便的找到，并且也希望能够帮助到看博客的人，虽说应该没什么人会看我的博客（。&lt;/p&gt;
@@ -122,15 +141,20 @@
 &lt;li&gt;&lt;a href=&#34;../../../ffmpeg-record/1-gif2video-video2gif&#34;&gt;GIF（图片）与视频互转&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href=&#34;../../../ffmpeg-record/2-extract-video-stream&#34;&gt;视频中不同的输入流的提取&lt;/a&gt;&lt;/li&gt;
 &lt;/ol&gt;
+&lt;h2 id=&#34;非常有帮助的一些资料&#34;&gt;非常有帮助的一些资料&lt;/h2&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;a href=&#34;https://catswhocode.com/ffmpeg-commands/&#34;target=&#34;_blank&#34;&gt;19 FFmpeg Commands For All Needs&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://linuxconfig.org/ffmpeg-audio-format-conversions&#34;target=&#34;_blank&#34;&gt;ffmpeg audio format conversions&lt;/a&gt;&lt;/li&gt;
+&lt;/ol&gt;
 </description>
     </item>
     
     <item>
       <title>上网出现了400/ERR_SSL_PROTOCOL_ERROR</title>
-      <link>https://study_less_shape.gitee.io/post/note/error_ssl_protocol/</link>
+      <link>https://study_less_shape.github.io/post/note/error_ssl_protocol/</link>
       <pubDate>Thu, 22 Apr 2021 23:59:24 +0800</pubDate>
       
-      <guid>https://study_less_shape.gitee.io/post/note/error_ssl_protocol/</guid>
+      <guid>https://study_less_shape.github.io/post/note/error_ssl_protocol/</guid>
       <description>&lt;p&gt;又是一件不起眼的小事，结果花了我几天的时间去解决。&lt;/p&gt;
 &lt;p&gt;前段时间，我的电脑突然就没法浏览网页了。网络问题在我的电脑上时常会发生，所以我很久之前就下了一个别人从数字家抽出来的一个断网工具。很快就检测出了问题并且可以正常浏览网页了。就在我兴致极好地进行网上冲浪的时候，突然有点想去某特，毕竟上次整了一阵去解锁帐号，感觉时不时还是要去登录一下，所以就去了。结果就出现了&lt;code&gt;ERR_SSL_PROTOCOL_ERROR&lt;/code&gt;。&lt;/p&gt;
 &lt;p&gt;过了一阵要进github，校园网真的不行，有时进得去有时又进不去，然后又是&lt;code&gt;ERR_SSL_PROTOCOL_ERROR&lt;/code&gt;。&lt;/p&gt;
@@ -148,10 +172,10 @@
     
     <item>
       <title>Unity安装一直卡在一个进度无法成功安装</title>
-      <link>https://study_less_shape.gitee.io/post/note/unity-install-blocked/</link>
+      <link>https://study_less_shape.github.io/post/note/unity-install-blocked/</link>
       <pubDate>Tue, 13 Apr 2021 20:13:50 +0800</pubDate>
       
-      <guid>https://study_less_shape.gitee.io/post/note/unity-install-blocked/</guid>
+      <guid>https://study_less_shape.github.io/post/note/unity-install-blocked/</guid>
       <description>&lt;p&gt;这两天折腾Unity，之前的Unity没法发布Android包，没有办法，去下载新的长期支持的版本。但是要不就是安装成功了但是我选择的模块指安装了一部分，要不然就是卡住了。&lt;/p&gt;
 &lt;p&gt;安装了一部分，之后继续安装其他的模块卡住是我没想到的。既没有报错也没有任何提示。
 &lt;img  src=&#34;unity_install_blocked.png&#34;
@@ -183,10 +207,10 @@
     
     <item>
       <title>Vscode插件Markdown Preview Enhanced无法预览</title>
-      <link>https://study_less_shape.gitee.io/post/note/markdown-pre-command-not-found/</link>
+      <link>https://study_less_shape.github.io/post/note/markdown-pre-command-not-found/</link>
       <pubDate>Sun, 11 Apr 2021 14:09:14 +0800</pubDate>
       
-      <guid>https://study_less_shape.gitee.io/post/note/markdown-pre-command-not-found/</guid>
+      <guid>https://study_less_shape.github.io/post/note/markdown-pre-command-not-found/</guid>
       <description>&lt;blockquote&gt;
 &lt;p&gt;写这篇博客是防止之后遇到相同的事时，需要费很多时间解决。&lt;/p&gt;
 &lt;/blockquote&gt;
@@ -210,10 +234,10 @@
     
     <item>
       <title>关于游戏技能的一些想法</title>
-      <link>https://study_less_shape.gitee.io/post/misnotes/game-skill-idea/</link>
+      <link>https://study_less_shape.github.io/post/misnotes/game-skill-idea/</link>
       <pubDate>Wed, 09 Dec 2020 20:19:18 +0800</pubDate>
       
-      <guid>https://study_less_shape.gitee.io/post/misnotes/game-skill-idea/</guid>
+      <guid>https://study_less_shape.github.io/post/misnotes/game-skill-idea/</guid>
       <description>&lt;p&gt;朋友的一个项目让我想了下组合元素发技能的方式。&lt;/p&gt;
 &lt;p&gt;好久没写代码了，写了一点游戏技能的C++代码，感觉有了一点点思路。&lt;/p&gt;
 &lt;h2 id=&#34;技能基础&#34;&gt;技能基础&lt;/h2&gt;
@@ -225,7 +249,7 @@
 &lt;/ul&gt;
 &lt;p&gt;顺带来个可以覆写的方法&lt;code&gt;use_skill()&lt;/code&gt;，返回的就是定义的技能效果；和一个用来获取id的&lt;code&gt;get_id()&lt;/code&gt;。&lt;br/&gt;
 (skill_base.h)&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-c++&#34; data-lang=&#34;c++&#34;&gt;&lt;span class=&#34;k&#34;&gt;class&lt;/span&gt; &lt;span class=&#34;nc&#34;&gt;skill_base&lt;/span&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-c++&#34; data-lang=&#34;c++&#34;&gt;&lt;span class=&#34;k&#34;&gt;class&lt;/span&gt; &lt;span class=&#34;nc&#34;&gt;skill_base&lt;/span&gt;
 &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
 &lt;span class=&#34;k&#34;&gt;protected&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;:&lt;/span&gt;
     &lt;span class=&#34;kt&#34;&gt;int&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;skill_id&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
@@ -246,7 +270,7 @@
 &lt;span class=&#34;p&#34;&gt;};&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;code&gt;effect&lt;/code&gt;是技能的效果，需要在&lt;code&gt;skill_base&lt;/code&gt;前定义一个&lt;code&gt;effect&lt;/code&gt;类：&lt;br/&gt;
 (skill_base.h)&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-c++&#34; data-lang=&#34;c++&#34;&gt;&lt;span class=&#34;k&#34;&gt;class&lt;/span&gt; &lt;span class=&#34;nc&#34;&gt;effect&lt;/span&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-c++&#34; data-lang=&#34;c++&#34;&gt;&lt;span class=&#34;k&#34;&gt;class&lt;/span&gt; &lt;span class=&#34;nc&#34;&gt;effect&lt;/span&gt;
 &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
 &lt;span class=&#34;k&#34;&gt;private&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;:&lt;/span&gt;
     &lt;span class=&#34;kt&#34;&gt;int&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;damage&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
@@ -268,7 +292,7 @@
 &lt;p&gt;有了这两个，就可以开始想办法弄点其他的了。这里有两个方案：一个是用构造者模式，写一个builder类，另外一个是写一个list类。这里选后一种。当然推荐第一种。&lt;/p&gt;
 &lt;p&gt;技能的list可以封装一个&lt;code&gt;vector&amp;lt;skill_base&amp;gt;&lt;/code&gt;字段，其他语言比如C#可以是&lt;code&gt;List&amp;lt;SkillBase&amp;gt;&lt;/code&gt;。此处简单的定义了三个方法，分别是&lt;code&gt;add_skill&lt;/code&gt;、&lt;code&gt;rm_skill&lt;/code&gt;、&lt;code&gt;use_skill&lt;/code&gt;，即添加技能、移除技能和使用技能。那么&lt;code&gt;skill_list&lt;/code&gt;大致可以定义成这样：&lt;br/&gt;
 (skill_base.h)&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-c++&#34; data-lang=&#34;c++&#34;&gt;&lt;span class=&#34;k&#34;&gt;class&lt;/span&gt; &lt;span class=&#34;nc&#34;&gt;skill_list&lt;/span&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-c++&#34; data-lang=&#34;c++&#34;&gt;&lt;span class=&#34;k&#34;&gt;class&lt;/span&gt; &lt;span class=&#34;nc&#34;&gt;skill_list&lt;/span&gt;
 &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
 &lt;span class=&#34;k&#34;&gt;private&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;:&lt;/span&gt;
     &lt;span class=&#34;n&#34;&gt;vector&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;skill_base&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;skills&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
@@ -298,7 +322,7 @@
 &lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;&lt;/span&gt;    &lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
 &lt;span class=&#34;p&#34;&gt;};&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;code&gt;use_skill&lt;/code&gt;根据id法则的不同有不同的实现细节。比如只是单纯的&lt;code&gt;push_back&lt;/code&gt;的话，就需要遍历数组寻找id &lt;del&gt;，这种情况可能使用哈希表会更好&lt;/del&gt; ；而在保证id是有序的或者是有一个生成法则，可以通过下标索引的花，时间可以降到&lt;code&gt;O(1)&lt;/code&gt;。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-c++&#34; data-lang=&#34;c++&#34;&gt;    &lt;span class=&#34;n&#34;&gt;effect&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;use_skill&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;kt&#34;&gt;int&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;id&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-c++&#34; data-lang=&#34;c++&#34;&gt;    &lt;span class=&#34;n&#34;&gt;effect&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;use_skill&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;kt&#34;&gt;int&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;id&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
     &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
         &lt;span class=&#34;n&#34;&gt;effect&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;e&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
         &lt;span class=&#34;k&#34;&gt;for&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;k&#34;&gt;auto&lt;/span&gt; &lt;span class=&#34;nl&#34;&gt;i&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;skills&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
@@ -313,7 +337,7 @@
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;技能实现&#34;&gt;技能实现&lt;/h2&gt;
 &lt;p&gt;如果使用构造者的话可能可以忽略这一步。这里写了四个简单的技能：风（wind）、火（fire）、水（water）、雷（thunder）。&lt;br/&gt;
 (skills.h)&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-c++&#34; data-lang=&#34;c++&#34;&gt;&lt;span class=&#34;cp&#34;&gt;#include&lt;/span&gt; &lt;span class=&#34;cpf&#34;&gt;&amp;#34;skill_base.h&amp;#34;&lt;/span&gt;&lt;span class=&#34;cp&#34;&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-c++&#34; data-lang=&#34;c++&#34;&gt;&lt;span class=&#34;cp&#34;&gt;#include&lt;/span&gt; &lt;span class=&#34;cpf&#34;&gt;&amp;#34;skill_base.h&amp;#34;&lt;/span&gt;&lt;span class=&#34;cp&#34;&gt;
 &lt;/span&gt;&lt;span class=&#34;cp&#34;&gt;&lt;/span&gt;&lt;span class=&#34;k&#34;&gt;class&lt;/span&gt; &lt;span class=&#34;nc&#34;&gt;wind&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;k&#34;&gt;public&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;skill_base&lt;/span&gt;
 &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
 &lt;span class=&#34;k&#34;&gt;public&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;:&lt;/span&gt;
@@ -360,7 +384,7 @@
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;使用&#34;&gt;使用！&lt;/h2&gt;
 &lt;p&gt;写了个小样例。前面init的部分在真正到项目中，应该是从配置文件中读取的。&lt;br/&gt;
 (main.cpp)&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-c++&#34; data-lang=&#34;c++&#34;&gt;&lt;span class=&#34;cp&#34;&gt;#include&lt;/span&gt; &lt;span class=&#34;cpf&#34;&gt;&amp;lt;iostream&amp;gt;&lt;/span&gt;&lt;span class=&#34;cp&#34;&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-c++&#34; data-lang=&#34;c++&#34;&gt;&lt;span class=&#34;cp&#34;&gt;#include&lt;/span&gt; &lt;span class=&#34;cpf&#34;&gt;&amp;lt;iostream&amp;gt;&lt;/span&gt;&lt;span class=&#34;cp&#34;&gt;
 &lt;/span&gt;&lt;span class=&#34;cp&#34;&gt;#include&lt;/span&gt; &lt;span class=&#34;cpf&#34;&gt;&amp;lt;../include/skills.h&amp;gt;&lt;/span&gt;&lt;span class=&#34;cp&#34;&gt;
 &lt;/span&gt;&lt;span class=&#34;cp&#34;&gt;&lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;// Windows将上面的注释，下面的取消注释
 &lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;// #include &amp;#34;../include/skills.h&amp;#34;
@@ -380,7 +404,7 @@
     &lt;span class=&#34;n&#34;&gt;list&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;add_skill&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;th&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;);&lt;/span&gt;
 &lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;之后就能直接用了！此处为了方便，输入id选择技能使用。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-c++&#34; data-lang=&#34;c++&#34;&gt;    &lt;span class=&#34;c1&#34;&gt;//input
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-c++&#34; data-lang=&#34;c++&#34;&gt;    &lt;span class=&#34;c1&#34;&gt;//input
 &lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;&lt;/span&gt;    &lt;span class=&#34;kt&#34;&gt;int&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;id&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
     &lt;span class=&#34;n&#34;&gt;cout&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class=&#34;s&#34;&gt;&amp;#34;input number to use skill:&amp;#34;&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;endl&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
     &lt;span class=&#34;n&#34;&gt;cin&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;id&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
@@ -399,10 +423,10 @@
     
     <item>
       <title>算法课题目笔记：贪心算法</title>
-      <link>https://study_less_shape.gitee.io/post/algorithm/7-greedy_method/</link>
+      <link>https://study_less_shape.github.io/post/algorithm/7-greedy_method/</link>
       <pubDate>Fri, 27 Nov 2020 00:00:00 +0000</pubDate>
       
-      <guid>https://study_less_shape.gitee.io/post/algorithm/7-greedy_method/</guid>
+      <guid>https://study_less_shape.github.io/post/algorithm/7-greedy_method/</guid>
       <description>&lt;blockquote&gt;
 &lt;p&gt;程序实验课做的题，题目来自&lt;a href=&#34;http://noi.openjudge.cn/ch0406/&#34;target=&#34;_blank&#34;&gt;NOI-4.6算法之贪心&lt;/a&gt;。本文留作复习使用&lt;/p&gt;
 &lt;/blockquote&gt;
@@ -470,7 +494,7 @@
 &lt;h3 id=&#34;代码实现-code-implement&#34;&gt;代码实现 &lt;a href=&#34;#code-implement&#34;&gt;¶&lt;/a&gt;&lt;/h3&gt;
 &lt;p&gt;在输入时，就处理好最大电池寿命和其他电池寿命的总和：&lt;br/&gt;
 (7.1.battery.cpp，部分代码)&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-c++&#34; data-lang=&#34;c++&#34;&gt;        &lt;span class=&#34;k&#34;&gt;while&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;n&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;--&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-c++&#34; data-lang=&#34;c++&#34;&gt;        &lt;span class=&#34;k&#34;&gt;while&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;n&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;--&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
         &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
             &lt;span class=&#34;n&#34;&gt;cin&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;&amp;gt;&amp;gt;&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;ba&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
             &lt;span class=&#34;k&#34;&gt;if&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;max_life&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;ba&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
@@ -487,7 +511,7 @@
         &lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;这里为了理清程序逻辑，将核心部分分离了出来。下面是对不同情况进行处理的代码：&lt;br/&gt;
 (7.1.battery.cpp，部分代码)&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-c++&#34; data-lang=&#34;c++&#34;&gt;&lt;span class=&#34;kt&#34;&gt;float&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;calculate_longest_life&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;kt&#34;&gt;int&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;sum&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;kt&#34;&gt;int&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;max_life&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-c++&#34; data-lang=&#34;c++&#34;&gt;&lt;span class=&#34;kt&#34;&gt;float&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;calculate_longest_life&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;kt&#34;&gt;int&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;sum&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;kt&#34;&gt;int&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;max_life&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
 &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
     &lt;span class=&#34;k&#34;&gt;if&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;max_life&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;sum&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
         &lt;span class=&#34;k&#34;&gt;return&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;sum&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt; &lt;span class=&#34;c1&#34;&gt;// 第一、二种情况
@@ -510,12 +534,12 @@
 &lt;p&gt;对于每一测试用例，打印一行&lt;code&gt;N&lt;/code&gt;个人都过河所需要的总时间。&lt;/p&gt;
 &lt;p&gt;&lt;a name = &#34;problem-input-example&#34;&gt;&lt;/a&gt;&lt;/p&gt;
 &lt;h4 id=&#34;样例输入problem-input-example&#34;&gt;样例输入&lt;a href=&#34;#problem-input-example&#34;&gt;¶&lt;/a&gt;&lt;/h4&gt;
-&lt;pre&gt;&lt;code&gt;1
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;1
 4
 1 2 5 10
 &lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;a name = &#34;problem-output-example&#34;&gt;&lt;/a&gt;&lt;/p&gt;
 &lt;h4 id=&#34;样例输出problem-output-example&#34;&gt;样例输出&lt;a href=&#34;#problem-output-example&#34;&gt;¶&lt;/a&gt;&lt;/h4&gt;
-&lt;pre&gt;&lt;code&gt;17
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;17
 &lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;a name = &#34;problem-from&#34;&gt;&lt;/a&gt;&lt;/p&gt;
 &lt;h4 id=&#34;来源problem-from&#34;&gt;来源&lt;a href=&#34;#problem-from&#34;&gt;¶&lt;/a&gt;&lt;/h4&gt;
 &lt;p&gt;POJ Monthly&amp;ndash;2004.07.18&lt;/p&gt;
@@ -538,7 +562,7 @@
 &lt;h3 id=&#34;代码实现code-implement-2&#34;&gt;代码实现&lt;a href=&#34;#code-implement-2&#34;&gt;¶&lt;/a&gt;&lt;/h3&gt;
 &lt;p&gt;为了方便使用贪心策略，需要对输入的数据进行排序。这里直接调用&lt;code&gt;algorithm&lt;/code&gt;头文件里的&lt;code&gt;sort&lt;/code&gt;函数进行升序排序。&lt;/p&gt;
 &lt;p&gt;和之前一样把主要的逻辑部分分出来，塞在单独的函数中。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-c++&#34; data-lang=&#34;c++&#34;&gt;&lt;span class=&#34;cp&#34;&gt;#include&lt;/span&gt; &lt;span class=&#34;cpf&#34;&gt;&amp;lt;iostream&amp;gt;&lt;/span&gt;&lt;span class=&#34;cp&#34;&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-c++&#34; data-lang=&#34;c++&#34;&gt;&lt;span class=&#34;cp&#34;&gt;#include&lt;/span&gt; &lt;span class=&#34;cpf&#34;&gt;&amp;lt;iostream&amp;gt;&lt;/span&gt;&lt;span class=&#34;cp&#34;&gt;
 &lt;/span&gt;&lt;span class=&#34;cp&#34;&gt;#include&lt;/span&gt; &lt;span class=&#34;cpf&#34;&gt;&amp;lt;algorithm&amp;gt;&lt;/span&gt;&lt;span class=&#34;cp&#34;&gt;
 &lt;/span&gt;&lt;span class=&#34;cp&#34;&gt;&lt;/span&gt;&lt;span class=&#34;k&#34;&gt;using&lt;/span&gt; &lt;span class=&#34;k&#34;&gt;namespace&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;std&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
 
@@ -567,7 +591,7 @@
     &lt;span class=&#34;k&#34;&gt;return&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;0&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
 &lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;在&lt;code&gt;N&amp;gt;=4&lt;/code&gt;时，从末尾开始遍历&lt;code&gt;people&lt;/code&gt;数组。根据&lt;a href=&#34;#two-strategies&#34;&gt;贪心策略&lt;/a&gt;，选择最小的一种情况。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-c++&#34; data-lang=&#34;c++&#34;&gt;    &lt;span class=&#34;kt&#34;&gt;int&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;total_time&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;0&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-c++&#34; data-lang=&#34;c++&#34;&gt;    &lt;span class=&#34;kt&#34;&gt;int&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;total_time&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;0&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
     &lt;span class=&#34;k&#34;&gt;while&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;N&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;&amp;gt;=&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;4&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
     &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
         &lt;span class=&#34;n&#34;&gt;total_time&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;+=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;min&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;
@@ -585,7 +609,7 @@
 
     &lt;span class=&#34;c1&#34;&gt;// continue...
 &lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;之后退出循环或是未进入循环，会有三种情况，&lt;code&gt;N=1&lt;/code&gt;、&lt;code&gt;N=2&lt;/code&gt;、&lt;code&gt;N=3&lt;/code&gt;，使用&lt;code&gt;switch&lt;/code&gt;或者&lt;code&gt;if&lt;/code&gt;判断即可&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-c++&#34; data-lang=&#34;c++&#34;&gt;    &lt;span class=&#34;c1&#34;&gt;// 剩下的1-3个人，用最快的人送过去
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-c++&#34; data-lang=&#34;c++&#34;&gt;    &lt;span class=&#34;c1&#34;&gt;// 剩下的1-3个人，用最快的人送过去
 &lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;&lt;/span&gt;    &lt;span class=&#34;k&#34;&gt;switch&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;N&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
     &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
         &lt;span class=&#34;k&#34;&gt;case&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;:&lt;/span&gt;
@@ -609,38 +633,18 @@
     
     <item>
       <title>About</title>
-      <link>https://study_less_shape.gitee.io/about/</link>
+      <link>https://study_less_shape.github.io/about/</link>
       <pubDate>Tue, 17 Nov 2020 22:03:50 +0800</pubDate>
       
-      <guid>https://study_less_shape.gitee.io/about/</guid>
-      <description>&lt;ul&gt;
-&lt;li&gt;从头（零）开始Rust和OpenGL（&lt;a href=&#34;https://gitee.com/study_less_shape/rust-opengl-nercury&#34;target=&#34;_blank&#34;&gt;施工中&lt;/a&gt;）&lt;/li&gt;
+      <guid>https://study_less_shape.github.io/about/</guid>
+      <description>&lt;p&gt;有点点无所事事的懒癌……
+偶尔随便写点东西。
+比较喜欢听歌看动漫。
+常听的歌单是自己整理的
+&lt;a href=&#34;https://c.y.qq.com/base/fcgi-bin/u?__=HgAfs44b&#34;target=&#34;_blank&#34;&gt;⫷点击跳转⫸&lt;/a&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;从头（零）开始Rust和OpenGL（&lt;a href=&#34;https://gitee.com/study_less_shape/rust-opengl-nercury&#34;target=&#34;_blank&#34;&gt;停工中&lt;/a&gt;）&lt;/li&gt;
 &lt;/ul&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>Cargo一直fetch failed</title>
-      <link>https://study_less_shape.gitee.io/post/rust/fetch-failed/</link>
-      <pubDate>Tue, 17 Nov 2020 17:16:04 +0800</pubDate>
-      
-      <guid>https://study_less_shape.gitee.io/post/rust/fetch-failed/</guid>
-      <description>&lt;h1 id=&#34;前因&#34;&gt;前因&lt;/h1&gt;
-&lt;p&gt;在从朋友那儿clone一份rust代码之后，cargo run竟然出错了，一时半会儿也没解决，以为问题不大就没关注，结果问题也同样出现在了我自己的代码身上&lt;/p&gt;
-&lt;p&gt;&lt;img  src=&#34;fetch-failed.png&#34;
-        alt=&#34;error-details&#34;/&gt;
-(出错详情)&lt;/p&gt;
-&lt;h1 id=&#34;解决&#34;&gt;解决&lt;/h1&gt;
-&lt;blockquote&gt;
-&lt;p&gt;这是在更换镜像源没法解决之后，无意间找搜到的解决方案&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;以下解决方案来自&lt;a href=&#34;https://stackoverflow.com/questions/45722823/cargo-fails-with-spurious-network-error-the-operation-timed-out-on-windows-10&#34;target=&#34;_blank&#34;&gt;stackoverflow&lt;/a&gt;
-先检查代理&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-powershell&#34; data-lang=&#34;powershell&#34;&gt;&lt;span class=&#34;n&#34;&gt;netsh&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;winhttp&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;show&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;proxy&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;如果有代理的话进行重置&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-powershell&#34; data-lang=&#34;powershell&#34;&gt;&lt;span class=&#34;n&#34;&gt;netsh&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;winhttp&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;reset&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;proxy&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h1 id=&#34;后记&#34;&gt;后记&lt;/h1&gt;
-&lt;p&gt;残留的代理是之前为编译其他项目而留下的，造成了不小麻烦，&lt;strong&gt;慎用命令行直接设置的代理&lt;/strong&gt;&lt;/p&gt;
 </description>
     </item>
     

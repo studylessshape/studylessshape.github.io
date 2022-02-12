@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<html lang="zh"><meta charset="utf-8"><meta name="generator" content="Hugo 0.85.0" /><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<html lang="zh"><meta charset="utf-8"><meta name="generator" content="Hugo 0.89.0" /><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="color-scheme" content="light dark">
 <meta name="supported-color-schemes" content="light dark"><title>算法课题目笔记：贪心算法&nbsp;&ndash;&nbsp;学少何Blog</title><link rel="stylesheet" href="/css/core.min.1956e613a36574601191d938635793e7eff08bb2942b4eaf2868cf44a7b752d66cedb4d0e8bf4f59a32a7abf70c3801e.css" integrity="sha384-GVbmE6NldGARkdk4Y1eT5&#43;/wi7KUK06vKGjPRKe3UtZs7bTQ6L9PWaMqer9ww4Ae"><meta name="twitter:card" content="summary" />
-<meta name="twitter:title" content="算法课题目笔记：贪心算法" /><meta name="twitter:image" content="https://study_less_shape.gitee.io/post/algorithm/7-greedy_method/cover.png" /><body><section id="header">
+<meta name="twitter:title" content="算法课题目笔记：贪心算法" /><meta name="twitter:image" content="https://study_less_shape.github.io/post/algorithm/7-greedy_method/cover.png" /><body><section id="header">
     <div class="header wrap"><span class="header left-side"><a class="site home" href="/"><span class="site name">学少何Blog</span></a></span>
         <span class="header right-side"><div class="nav wrap"><nav class="nav"><a class="nav item" href="/categories">归类</a><a class="nav item" href="/tags">标签</a><a class="nav item" href="/about">关于</a><a class="nav item" href="/index%2exml">RSS</a></nav></div></span></div></section><section id="content"><div class="article-container"><section class="article header">
     <h1 class="article title">算法课题目笔记：贪心算法</h1><p class="article date">2020-11-27<span class="lastmod"> • 更新于 2020-12-19</span></p></section><article class="article markdown-body"><p><img class="cover" src="cover.png" alt></p><blockquote>
@@ -72,7 +72,7 @@
 <h3 id="代码实现-code-implement">代码实现 <a href="#code-implement">¶</a></h3>
 <p>在输入时，就处理好最大电池寿命和其他电池寿命的总和：<br/>
 (7.1.battery.cpp，部分代码)</p>
-<div class="highlight"><pre class="chroma"><code class="language-c++" data-lang="c++">        <span class="k">while</span><span class="p">(</span><span class="n">n</span><span class="o">--</span><span class="p">)</span>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-c++" data-lang="c++">        <span class="k">while</span><span class="p">(</span><span class="n">n</span><span class="o">--</span><span class="p">)</span>
         <span class="p">{</span>
             <span class="n">cin</span><span class="o">&gt;&gt;</span><span class="n">ba</span><span class="p">;</span>
             <span class="k">if</span><span class="p">(</span><span class="n">max_life</span> <span class="o">&lt;</span> <span class="n">ba</span><span class="p">)</span>
@@ -89,7 +89,7 @@
         <span class="p">}</span>
 </code></pre></div><p>这里为了理清程序逻辑，将核心部分分离了出来。下面是对不同情况进行处理的代码：<br/>
 (7.1.battery.cpp，部分代码)</p>
-<div class="highlight"><pre class="chroma"><code class="language-c++" data-lang="c++"><span class="kt">float</span> <span class="nf">calculate_longest_life</span><span class="p">(</span><span class="kt">int</span> <span class="n">sum</span><span class="p">,</span> <span class="kt">int</span> <span class="n">max_life</span><span class="p">)</span>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-c++" data-lang="c++"><span class="kt">float</span> <span class="nf">calculate_longest_life</span><span class="p">(</span><span class="kt">int</span> <span class="n">sum</span><span class="p">,</span> <span class="kt">int</span> <span class="n">max_life</span><span class="p">)</span>
 <span class="p">{</span>
     <span class="k">if</span><span class="p">(</span><span class="n">max_life</span> <span class="o">&gt;</span> <span class="n">sum</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">sum</span><span class="p">;</span> <span class="c1">// 第一、二种情况
@@ -112,12 +112,12 @@
 <p>对于每一测试用例，打印一行<code>N</code>个人都过河所需要的总时间。</p>
 <p><a name = "problem-input-example"></a></p>
 <h4 id="样例输入problem-input-example">样例输入<a href="#problem-input-example">¶</a></h4>
-<pre><code>1
+<pre tabindex="0"><code>1
 4
 1 2 5 10
 </code></pre><p><a name = "problem-output-example"></a></p>
 <h4 id="样例输出problem-output-example">样例输出<a href="#problem-output-example">¶</a></h4>
-<pre><code>17
+<pre tabindex="0"><code>17
 </code></pre><p><a name = "problem-from"></a></p>
 <h4 id="来源problem-from">来源<a href="#problem-from">¶</a></h4>
 <p>POJ Monthly&ndash;2004.07.18</p>
@@ -140,7 +140,7 @@
 <h3 id="代码实现code-implement-2">代码实现<a href="#code-implement-2">¶</a></h3>
 <p>为了方便使用贪心策略，需要对输入的数据进行排序。这里直接调用<code>algorithm</code>头文件里的<code>sort</code>函数进行升序排序。</p>
 <p>和之前一样把主要的逻辑部分分出来，塞在单独的函数中。</p>
-<div class="highlight"><pre class="chroma"><code class="language-c++" data-lang="c++"><span class="cp">#include</span> <span class="cpf">&lt;iostream&gt;</span><span class="cp">
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-c++" data-lang="c++"><span class="cp">#include</span> <span class="cpf">&lt;iostream&gt;</span><span class="cp">
 </span><span class="cp">#include</span> <span class="cpf">&lt;algorithm&gt;</span><span class="cp">
 </span><span class="cp"></span><span class="k">using</span> <span class="k">namespace</span> <span class="n">std</span><span class="p">;</span>
 
@@ -169,7 +169,7 @@
     <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
 <span class="p">}</span>
 </code></pre></div><p>在<code>N&gt;=4</code>时，从末尾开始遍历<code>people</code>数组。根据<a href="#two-strategies">贪心策略</a>，选择最小的一种情况。</p>
-<div class="highlight"><pre class="chroma"><code class="language-c++" data-lang="c++">    <span class="kt">int</span> <span class="n">total_time</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-c++" data-lang="c++">    <span class="kt">int</span> <span class="n">total_time</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
     <span class="k">while</span><span class="p">(</span><span class="n">N</span> <span class="o">&gt;=</span> <span class="mi">4</span><span class="p">)</span>
     <span class="p">{</span>
         <span class="n">total_time</span> <span class="o">+=</span> <span class="n">min</span><span class="p">(</span>
@@ -187,7 +187,7 @@
 
     <span class="c1">// continue...
 </span></code></pre></div><p>之后退出循环或是未进入循环，会有三种情况，<code>N=1</code>、<code>N=2</code>、<code>N=3</code>，使用<code>switch</code>或者<code>if</code>判断即可</p>
-<div class="highlight"><pre class="chroma"><code class="language-c++" data-lang="c++">    <span class="c1">// 剩下的1-3个人，用最快的人送过去
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-c++" data-lang="c++">    <span class="c1">// 剩下的1-3个人，用最快的人送过去
 </span><span class="c1"></span>    <span class="k">switch</span><span class="p">(</span><span class="n">N</span><span class="p">)</span>
     <span class="p">{</span>
         <span class="k">case</span> <span class="mi">1</span><span class="o">:</span>
