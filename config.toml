@@ -3,7 +3,7 @@ languageCode = "zh-cn"
 language = "zh-cn"
 defaultContentLanguage = "zh"
 title = "学少何Blog"
-theme = "Notepadium"
+theme = "hugo-notepadium"
 tag = "tags"
 category = "categories"
 
