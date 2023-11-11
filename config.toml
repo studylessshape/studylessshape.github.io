@@ -1,0 +1,54 @@
+baseURL = "https://study_less_shape.github.io/"
+languageCode = "zh-cn"
+language = "zh-cn"
+defaultContentLanguage = "zh"
+title = "学少何Blog"
+theme = "Notepadium"
+tag = "tags"
+category = "categories"
+
+[markup.highlight]
+codeFences = true
+noClasses = false
+
+[markup.goldmark.renderer]
+unsafe = true
+
+[[params.nav.custom]]
+title = "归类"
+url = "/categories"
+
+[[params.nav.custom]]
+title = "标签"
+url = "/tags"
+
+[[params.nav.custom]]
+title = "关于"
+url = "/about"
+
+[[params.nav.custom]]
+title = "RSS"
+url = "/index.xml"
+
+[params.syntax]
+use = "hljs"  # builtin: "prismjs", "hljs". "none" means Chroma
+theme = "atom-one-light"
+darkTheme = "tomorrow-night-eighties"
+
+[params]
+style = "auto"  # default: auto. light: light theme, dark: dark theme, auto: based on system.
+dateFormat = ""  # if unset, default is "2006-01-02"
+logo = ""  # if you have a logo png
+slogan = ""
+license = ""  # CC License
+fullRss = true
+
+
+[params.profile]
+enable = true
+avatar = ""
+name = "学少何"
+bio = "不求上进的社畜……"  # support markdown syntax
+twitter = ""  # https://twitter.com/XXX
+github = "studylessshape"  # https://github.com/XXX
+gitee = "study_less_shape" # https://gitee.com/XXX
