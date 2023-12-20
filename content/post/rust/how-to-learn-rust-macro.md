@@ -1,6 +1,7 @@
 ---
 title: "如何入门 Rust 的宏？"
 date: 2023-12-17T22:16:02+08:00
+lastmod: 2023-12-20T20:03:02+08:00
 draft: false
 tags: ["Rust", "宏"]
 categories: ["Rust"]
@@ -36,7 +37,7 @@ cargo expand # run
 ### 入门学习的教程和网站
 宏到底是个什么，可以阅读一下 [Rust 参考手册（中文版非官方翻译）](https://rustwiki.org/zh-CN/reference/macros.html)，了解声明宏和过程宏。
 
-入门学习宏可以使用 [proc-macro-workshop](https://github.com/dtolnay/proc-macro-workshop) 进行学习。这个仓库中包含了几个比较常用的声明宏和过程宏的实现模板。
+入门学习宏可以使用 [proc-macro-workshop](https://github.com/dtolnay/proc-macro-workshop) 进行学习。这个仓库中包含了几个比较常用的声明宏和过程宏的实现模板。并且同时可以阅读学习 [使用 macro_rules! 来创建宏（通过例子学 Rust 中文版）](https://rustwiki.org/zh-CN/rust-by-example/macros.html)。
 
 > [syn](https://docs.rs/syn)、[quote](https://docs.rs/quote) 和 [proc-macro-workshop](https://github.com/dtolnay/proc-macro-workshop) 都是大佬 [dtolnay](https://github.com/dtolnay) 实现的，真的太强了！
 
@@ -56,4 +57,5 @@ cargo expand # run
 - 教程
   - [Rust 参考手册（中文版非官方翻译）](https://rustwiki.org/zh-CN/reference/macros.html)
   - [proc-macro-workshop](https://github.com/dtolnay/proc-macro-workshop)
+  - [使用 macro_rules! 来创建宏（通过例子学 Rust 中文版）](https://rustwiki.org/zh-CN/rust-by-example/macros.html)
   - [The Little Book of Rust Macros](https://veykril.github.io/tlborm/)

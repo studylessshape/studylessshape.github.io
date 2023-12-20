@@ -1,7 +1,7 @@
 ---
 title: "Passge Collection"
 date: 2022-02-12
-lastmod: 2023-10-22
+lastmod: 2023-12-20T20:06:02+08:00
 draft: false
 tags: ["文章收集", "C#", "Rust"]
 categories: ["随记"]
@@ -22,6 +22,9 @@ summary: "收集一些我看过的好文章、工具或框架等"
   > 刚开始学习，官方的教程还是较为简单的，可以看看官方推荐的一些第三方教程。
 
 ## Rust
+### 学习
+- [Rust宏入门](../rust/how-to-learn-rust-macro.md)
+
 ### Web 框架
 - [actix-web](https://actix.rs/)
   > 据说源码中非常多的 `unsafe` 引起了争议，但是这个框架确实还不错。并且有比较厉害的维护者接手项目，有着不错的更新频率。
