@@ -23,6 +23,9 @@ summary: "收集一些我看过的好文章、工具或框架等"
 
 ## Rust
 ### 学习
+- [Rust 官方文档中文教程](https://rustwiki.org/)
+  > 有非常多 Rust 文档的中文版，适合查阅和学习
+
 - [Rust宏入门](../rust/how-to-learn-rust-macro.md)
 
 ### Web 框架
