@@ -1,7 +1,7 @@
 ---
 title: "记一次使用 Github action 同步 Gitee 仓库到 Github"
 date: 2024-01-01T11:07:34+08:00
-lastmod: 2024-01-01T15:12:02+08:00
+lastmod: 2024-01-01T15:40:02+08:00
 draft: false
 tags: ["github", "gitee", "github action", "同步私有仓库", "发布和部署静态文档"]
 categories: ["笔记"]
@@ -232,4 +232,4 @@ jobs:
 # 后记
 其实之前准备尝试使用 [hub-mirror-action](https://github.com/Yikun/hub-mirror-action) 来同步的，但是这个 action 只能支持一段的私钥和 Token 的配置，所以只能够同步公开仓库。
 
-另外，之后有时间会把这两个 action 文件做修缮然后发出来。
+两种不同的方式的 action 都发布到这个仓库了：[sync-gitee-to-github](https://github.com/studylessshape/sync-gitee-to-github)
