@@ -3,7 +3,7 @@ title: "记一次使用 Github action 同步 Gitee 仓库到 Github"
 date: 2024-01-01T11:07:34+08:00
 lastmod: 2024-01-01T15:40:02+08:00
 draft: false
-tags: ["github", "gitee", "github action", "同步私有仓库", "发布和部署静态文档"]
+tags: ["github", "gitee", "github action", "同步私有仓库"]
 categories: ["笔记"]
 summary: "使用 Github action 将 Gitee 的私有仓库同步到 Github 的私有仓库"
 ---
