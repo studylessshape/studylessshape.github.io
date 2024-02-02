@@ -1,7 +1,7 @@
 ---
 title: "文章、工具收集"
 date: 2022-02-12
-lastmod: 2024-01-02T12:23:02+08:00
+lastmod: 2024-02-02T20:11:02
 draft: false
 tags: ["文章收集", "C#", "Rust", "Github", "工具", "Tools"]
 categories: ["随记"]
@@ -26,6 +26,13 @@ summary: "收集一些我看过的好文章、工具或框架等"
   > 刚开始学习，官方的教程还是较为简单的，可以看看官方推荐的一些第三方教程。
 - [Reference Source](https://referencesource.microsoft.com/)
   > C# 的 .net framework 的源码网站，可以在线查看源码，也可以下载下来查看源码
+
+### C# UI
+
+- [ScottPlot](https://github.com/scottplot/scottplot)
+  > 高性能的数据图标展示库，支持 WPF、WinForm 等主流的 C# 应用框架
+- [LiveCharts2](https://livecharts.dev/)
+  > 性能和占用上没有 ScottPlot 那么好，但是风格化和动画表现优秀
 
 ## Rust
 
@@ -67,3 +74,14 @@ summary: "收集一些我看过的好文章、工具或框架等"
   - [vuepress](https://vuepress.vuejs.org/zh/)：静态文档生成
   - [vuepress-theme-hope](https://theme-hope.vuejs.press/zh/)：vuepress 的一个主题
   - [Element Plus](https://element-plus.org/zh-CN/)：vue 的一个 UI 组件库
+  - [vuetify](https://vuetifyjs.com/zh-Hans/)：Modern 风格的 UI 组件库
+
+- [Animotion](https://animotion.dev/)
+  > css 动画制作
+
+## Markdown
+- [markmap](https://github.com/markmap/markmap)
+  > 使用 markdown 制作思维导图
+
+## 3D建模/游戏资源
+- [PolyHaven](https://polyhaven.com)
