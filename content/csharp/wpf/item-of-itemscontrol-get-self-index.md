@@ -4,6 +4,7 @@ date: 2024-02-23T20:47:28+08:00
 draft: false
 tags: ["WPF", "C#", "ItemsControl", "ItemContainerGenerator"]
 categories: ["C#"]
+summary: "WPF 中如何获取到 ItemControl 的 Item 索引值"
 ---
 
 ## 目的

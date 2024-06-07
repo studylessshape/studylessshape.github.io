@@ -6,6 +6,7 @@ title = "学少何Blog"
 theme = "hugo-notepadium"
 tag = "tags"
 category = "categories"
+copyright = "© 2024 学少何"
 
 [markup.highlight]
 codeFences = true
@@ -48,7 +49,7 @@ fullRss = true
 enable = true
 avatar = ""
 name = "学少何"
-bio = "不求上进的社畜……"  # support markdown syntax
+bio = "_不求上进的社畜……_"  # support markdown syntax
 twitter = ""  # https://twitter.com/XXX
 github = "studylessshape"  # https://github.com/XXX
 gitee = "study_less_shape" # https://gitee.com/XXX
