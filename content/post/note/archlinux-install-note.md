@@ -1,7 +1,8 @@
 ---
 title: "Archlinux 安装笔记"
 date: 2024-06-06T10:33:09+08:00
-draft: true
+lastmod: 2024-06-07T16:05:09+08:00
+draft: false
 tags: ["archlinux", "linux", "安装"]
 categories: ["Linux"]
 summary: "记录下安装 Archlinux 的经历"
@@ -30,7 +31,7 @@ summary: "记录下安装 Archlinux 的经历"
 - [官方安装教程（中文翻译）](https://wiki.archlinuxcn.org/wiki/%E5%AE%89%E8%A3%85%E6%8C%87%E5%8D%97)
 - [Archlinux 简明指南](https://arch.icekylin.online/guide/)
   > 包含安装教程，和一些常用软件、工具的安装
-- [RsProxy](https://rsproxy.cn/)
+- [RsProxy](http://rsproxy.cn/)
   > 目前使用过最快的国内 Rust 镜像
 - [paru](https://github.com/Morganamilo/paru)
   > AUR 软件包安装助手
@@ -106,6 +107,8 @@ Wlan 联网可以参考简明指南的[连接网络章节](https://arch.icekylin
 
 ![enter-archinstsall](07.enter-archinstall.png)
 
+> 如果一直卡在 `Check version`，可以使用 `Ctrl` + `C` 先终止安装，再输入 `archinstall --skip-version-check` 来禁止版本检查。
+
 进入 `archinstall` 的页面如上所示。
 
 `Archinstall language` 不作修改，点击 `↓` 或 `j` 选择 `Mirrors`，回车进入后选择 `Mirror region` 并回车。等待一小会儿之后，键入 `/china`，搜索国内镜像，并回车选择。
@@ -142,4 +145,126 @@ Wlan 联网可以参考简明指南的[连接网络章节](https://arch.icekylin
 
 ![end-archinstall-configuration](13.end-archinstall-configuration.png)
 
-选择 `Install`，然后回车，Archlinux 就正式开始安装了。
+选择 `Install`，然后回车，Archlinux 就正式开始安装了。安装过程中尽量保证网络畅通。
+
+经过一段时间的等待，安装便完成了，会提示是否进入控制界面，选择进入。
+
+![install-end](14.install-end.png)
+
+Archlinux 没有自带中文字体，所以使用 pacman 安装一下中文字体：
+
+```bash
+pacman -S noto-fonts-cjk
+```
+
+安装完成后，输入 `exit` 退出 chroot 模式，然后输入 `poweroff` 关机，将 U 盘拔掉，再开机。
+
+## 配置系统
+再次启动后，会进入到 ssdm 的启动页，如下所示，说明我们已经成功安装了 Archlinux，接下来就是配置系统的时候了。
+
+![enter-ssdm](15.enter-greeter.png)
+
+> 如果觉得当前的启动页与 Kde 的风格不符合，可以进入 `系统设置->颜色和主题->登录屏幕(ssdm)`，选择 `Breeze 微风`并应用即可。
+> ![modify-ssdm-theme](15.1.modify-ssdm-theme.png)
+
+输入密码进入桌面，我们依次打开 `左下角菜单->系统->Konsole 终端`。
+
+> 因为在 archinstall 中，已经修改了镜像地区，所以后续使用 pacman 或 paru 时，并不需要修改地区。如果出现安装卡住，大部分时候是因为 aur 上软件包安装文件的指定服务器，国内无法访问或者访问过慢。
+
+### 安装浏览器
+首先需要安装的是浏览器，火狐其实就很不错，输入下面的命令安装火狐浏览器：
+
+```bash
+sudo pacman -S firefox
+```
+
+输入密码和 `y` 并回车继续安装。
+
+![install-firefox](16.install-firefox.png)
+
+### 安装 paru
+安装 `git` 和 `rustup`：
+
+```bash
+sudo pacman -S git rustup
+```
+
+打开浏览器，在地址栏输入 `http://rsproxy.cn/` 或者输入 `rsproxy` 并搜索，进入 rsproxy 的网站。按照教程修改 `.bashrc`，然后输入下面的命令安装 rust：
+
+```bash
+rustup install stable
+```
+
+安装完成之后，按照 rsproxy 的教程，修改 `~/.cargo/config` 或 `~/.cargo/config.toml` 的内容。
+
+> 修改文件内容时，可能会出现找不到 `vi` 指令，这是因为 Archlinux 不会默认将 `vim` 指定 `vi` 别称。
+
+打开 [paru 的 github 仓库](https://github.com/Morganamilo/paru)，找到 `Install` 出，复制下面的命名开始安装 paru。
+
+```bash
+sudo pacman -S --needed base-devel
+git clone https://aur.archlinux.org/paru.git
+cd paru
+makepkg -si
+```
+
+### 安装输入法
+输入法选择安装 fcitx5，即小企鹅 5。输入下面的命令安装输入法所需的所有软件包：
+
+```bash
+paru -S fcitx5-im fcitx5-chinese-addons
+```
+
+> 除了 `fcitx5-chinese-addons`，也可以查看 [fcitx5 的 archlinux 页面](https://wiki.archlinuxcn.org/wiki/Fcitx5)，安装其他中文输入法组件。
+> 同时可以寻找想要安装的词库、皮肤或其他组件，也可以去搜索引擎中搜索。
+
+安装全部内容完成之后，进入系统设置。打开`键盘->虚拟键盘`，选择 `Fcitx5` 并应用。应用之后会提示是否启用云拼音，可以根据自己需要选择。
+
+![select-virsual-keyboard-fcitx5](17.select-virsual-keyboard-fcitx5.png)
+
+现在在可以输入的地方按下 `Ctrl` + `Space`，就可以看到光标旁的 `en` 变成了 `拼`，就可以输入中文了，同时也可以再次按下 `Ctrl` + `Space` 切换回英文输入。
+
+#### 配置输入法（可选）
+返回系统设置，找到区域和语言，选择输入法。点击配置全局选项，将 `切换启用/禁用输入法` 的快捷键修改为自己习惯的按键，此处我修改成了 `Shift` 键。
+
+![config-fcitx5](17.1.config-fcitx5.png)
+
+修改好后，应用并返回，找到 `配置附加组件...->经典用户界面`，往下翻找到 `主题`，在这里可以修改输入法的主题。
+
+![config-fcitx5-theme](17.2.config-fcitx5-theme.png)
+
+### 安装 QQ（安装示例）
+QQ 的安装比较典型，因为 QQ 在安装之后无法正常使用输入法。
+
+安装 QQ 可以使用下面的命令：
+
+```bash
+paru -S linuxqq
+```
+
+执行时会提示有几个不同的软件包：
+
+![execute-paru-s-linuxqq](18.execute-paru-s-linuxqq.png)
+
+不确定的话，可以上 [Aur](https://aur.archlinux.org/) 上搜索 `linuxqq`，看看几个软件包有什么区别：
+
+![search-linuxqq](19.search-linuxqq.png)
+
+QQ 在之前发布过 NT 版，支持多平台。而在 [Aur](https://aur.archlinux.org/) 上，`linuxqq` 被标记过期，那么其实最好是选择其他的软件包安装。其中 `linuxqq-nt-bwrap` 和 `linuxqq-appimage` 任选其中一个安装即可。此处选择 2，即 `linuxqq-appimage`。
+
+安装完成，打开并登录 QQ，此时如果想发消息，会发现切换不了输入法。
+
+退出 QQ，打开左下角菜单，找到 QQ，`右键->编辑应用程序...->应用程序(A)`，看到参数一栏，在后面添加下面的参数：
+
+```bash
+--enable-features=UseOzonePlatform --ozone-platform=wayland --enable-wayland-ime
+```
+
+然后就可以正常使用输入法了。
+
+## 结束
+剩下的都可以自己慢慢摸索了。
+
+想要的软件包可以在 [Packages - Archlinux](https://www.archlinux.org/packages/) 和 [Aur](https://aur.archlinux.org/) 上安装，Kde 社区的软件可以上 [Kde 应用软件官网](https://apps.kde.org/zh-cn/) 上查找。
+
+也可以看看 [Archlinux 简明指南](https://arch.icekylin.online/guide/) 和 [Archlinux wiki](https://wiki.archlinux.org/)（[Archlinux 中文维基](https://wiki.archlinuxcn.org/wiki/%E9%A6%96%E9%A1%B5)）。

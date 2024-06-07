@@ -1,7 +1,7 @@
 ---
 title: "文章、工具收集"
 date: 2022-02-12
-lastmod: 2024-02-02T20:11:02
+lastmod: 2024-06-07T15:05:02
 draft: false
 tags: ["文章收集", "C#", "Rust", "Github", "工具", "Tools"]
 categories: ["随记"]
@@ -9,8 +9,6 @@ summary: "收集一些我看过的好文章、工具或框架等"
 ---
 
 最近突然想把看到的一些好的文章收集一下了，慢慢更新，看到一篇收集一篇。
-
-# 文章或文档
 
 ## 计算机基础
 
@@ -35,6 +33,9 @@ summary: "收集一些我看过的好文章、工具或框架等"
   > 性能和占用上没有 ScottPlot 那么好，但是风格化和动画表现优秀
 
 ## Rust
+
+- [RsProxy](http://rsproxy.cn/)
+  > 目前用过最快的 Rust 国内镜像，来自字节跳动团队。
 
 ### 学习
 
@@ -85,3 +86,18 @@ summary: "收集一些我看过的好文章、工具或框架等"
 
 ## 3D建模/游戏资源
 - [PolyHaven](https://polyhaven.com)
+- [Blender](https://www.blender.org/)
+
+## 视频相关
+- [ffmpeg](https://ffmpeg.org/): 强大的命令行工具，可以用来做二次开发
+- [Kdenlive](https://kdenlive.org/zh/): 来自 Kde 社区的开源视频编辑工具
+- [Aegisub](https://aegisub.org/zh-cn/): 字幕编辑工具，虽然很久没更新了但是是功能最多最强大的
+
+## 图像制作/处理
+- [Krita](https://krita.org/zh-cn/): 来自 Kde 社区的开源画图软件，风格类似 PS
+
+## 音频/音乐相关
+- [PxTone](https://pxtone.org/): 来自洞窟物语作者的软件，可以制作音乐
+
+## Shell
+- [MobaXterm](https://mobaxterm.mobatek.net/): 免费的终端软件
