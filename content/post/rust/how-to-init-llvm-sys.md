@@ -1,7 +1,7 @@
 ---
 title: "如何初始化 llvm-sys"
 date: 2024-11-23T14:37:14+08:00
-draft: true
+draft: false
 tags: ["Rust"]
 categories: ["Rust"]
 summary: "尝试在 rust 中调用 LLVM 并生成中间代码时出现了问题，并尝试解决"
