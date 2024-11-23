@@ -2,3 +2,6 @@
 	path = themes/hugo-notepadium
 	url = https://github.com/cntrump/hugo-notepadium
 	branch = master
+[submodule "themes/hugo-notice"]
+	path = themes/hugo-notice
+	url = https://github.com/martignoni/hugo-notice

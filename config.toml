@@ -3,7 +3,7 @@ languageCode = "zh-cn"
 language = "zh-cn"
 defaultContentLanguage = "zh"
 title = "学少何Blog"
-theme = "hugo-notepadium"
+theme = ["hugo-notepadium", "hugo-notice"]
 tag = "tags"
 category = "categories"
 copyright = "© 2024 学少何"
@@ -38,12 +38,11 @@ darkTheme = "tomorrow-night-eighties"
 
 [params]
 style = "auto"  # default: auto. light: light theme, dark: dark theme, auto: based on system.
-dateFormat = ""  # if unset, default is "2006-01-02"
+dateFormat = "2006年1月2日 1:02"  # if unset, default is "2006-01-02"
 logo = ""  # if you have a logo png
 slogan = ""
 license = ""  # CC License
 fullRss = true
-
 
 [params.profile]
 enable = true
