@@ -7,6 +7,6 @@ My blog was writed by markdown which use [hugo](https://github.com/gohugoio/hugo
 - [content/rust](content/rust): record something of developing by rust
 
 # My Friend
-- [ZerAx](https://gitee.com/ZerAx)([github](https://github.com/Weiipad)): Game developer, is developing the game engine by Rust.
+- [ZerAx](https://gitee.com/ZerAx)([github](https://github.com/Weiipad)): Game developer, ~~is developing the game engine by Rust.~~ is making game by using Godot.
 - [家海Memory](https://gitee.com/jiahai-memory): In working, my teacher of life.
 - [LingHang](https://gitee.com/LingHan_Flander): Work for people.
