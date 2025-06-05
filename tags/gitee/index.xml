@@ -1,4 +1,4 @@
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>gitee on 学少何Blog</title><link>https://study_less_shape.github.io/tags/gitee/</link><description>Recent content in gitee on 学少何Blog</description><generator>Hugo -- gohugo.io</generator><language>zh-cn</language><copyright>© 2024 学少何</copyright><lastBuildDate>Mon, 01 Jan 2024 11:07:34 +0800</lastBuildDate><atom:link href="https://study_less_shape.github.io/tags/gitee/index.xml" rel="self" type="application/rss+xml"/><item><title>如何初始化 llvm-sys</title><link>https://study_less_shape.github.io/post/rust/how-to-init-llvm-sys/</link><pubDate>Sat, 23 Nov 2024 14:37:14 +0800</pubDate><guid>https://study_less_shape.github.io/post/rust/how-to-init-llvm-sys/</guid><description>&lt;h2 id="导入-llvm-sys库">导入 llvm-sys库&lt;/h2>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Gitee on 学少何Blog</title><link>https://study_less_shape.github.io/tags/gitee/</link><description>Recent content in Gitee on 学少何Blog</description><generator>Hugo -- gohugo.io</generator><language>zh-cn</language><copyright>© 2024 学少何</copyright><lastBuildDate>Mon, 01 Jan 2024 11:07:34 +0800</lastBuildDate><atom:link href="https://study_less_shape.github.io/tags/gitee/index.xml" rel="self" type="application/rss+xml"/><item><title>如何初始化 llvm-sys</title><link>https://study_less_shape.github.io/post/rust/how-to-init-llvm-sys/</link><pubDate>Sat, 23 Nov 2024 14:37:14 +0800</pubDate><guid>https://study_less_shape.github.io/post/rust/how-to-init-llvm-sys/</guid><description>&lt;h2 id="导入-llvm-sys库">导入 llvm-sys库&lt;/h2>
 &lt;p>添加 crate &lt;a href="https://crates.io/crates/llvm-sys"target="_blank" rel="noopener noreferrer">llvm-sys&lt;/a> 到现有的项目中。&lt;/p>
 &lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-shell" data-lang="shell">&lt;span class="line">&lt;span class="cl">cargo add llvm-sys
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>如果有指定 llvm 版本需求，可以指定版本，比如版本 &lt;code>18.1.x&lt;/code> 的 LLVM，可以指定 llmv-sys 的版本为 &lt;code>180&lt;/code>。&lt;/p>
@@ -131,11 +131,11 @@ position: relative;
 &lt;/span>信息&lt;/p>&lt;p>Linux 直接使用包管理器安装 LLVM，在安装完成后，试着输入命令 &lt;code>llvm-config&lt;/code>，如果打印出了使用帮助信息，则可以不需要这一节的内容。&lt;/p>&lt;/div>
 &lt;p>进入 LLVM 的官网 &lt;a href="https://llvm.org/"target="_blank" rel="noopener noreferrer">https://llvm.org/&lt;/a>，点击左侧的 &lt;code>All Releases&lt;/code>，或者直接进入 &lt;a href="https://releases.llvm.org/"target="_blank" rel="noopener noreferrer">https://releases.llvm.org/&lt;/a>。&lt;/p>
 &lt;p>找到自己需要的版本，并点击 &lt;u>&lt;code>Download&lt;/code>&lt;/u>。&lt;/p>
-&lt;p>&lt;img src="download-llvm-page.png"
+&lt;p>&lt;img loading="lazy" src="download-llvm-page.png"
 alt="download-llvm-page"/>&lt;/p>
 &lt;p>目前的本人尝试下载的两个版本，都将下载地址放到了 github 上，而不是其官方网站了。&lt;/p>
 &lt;p>在 github release 中下载需要注意，不要下载 &lt;code>win32.exe&lt;/code> 或 &lt;code>win64.exe&lt;/code>，因为这两个执行文件的是安装包，安装好的 bin 文件夹下没有 &lt;code>llvm-config&lt;/code> 程序。以 &lt;code>19.1.0&lt;/code> 为例，需要下载下方的 &lt;code>LLVM-19.1.0-Windows-X64.tar.xz&lt;/code> 文件。文件很大，所以如果下载不下来需要魔法才行，或者尝试去寻找并使用 github 文件下载加速站。&lt;/p>
-&lt;p>&lt;img src="select-file-from-github-release.png"
+&lt;p>&lt;img loading="lazy" src="select-file-from-github-release.png"
 alt="select-file-from-github-release"/>&lt;/p>
 &lt;p>下载好之后，将压缩包解压出来，建议路径中最好没有空格和非英文字母的字符。&lt;/p>
 &lt;p>解压好之后，可以直接在 bin 文件夹下看一下有没有 &lt;code>llvm-config.exe&lt;/code>，确认好之后就需要配置环境变量了。&lt;/p>
@@ -145,10 +145,10 @@ alt="select-file-from-github-release"/>&lt;/p>
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">cargo check
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>如果还出现了编译错误，并且与上面提到的问题一致，则可能需要重启一下控制台、IDE 或者系统。&lt;/p>
 &lt;p>也可以设置到系统的环境变量里。&lt;/p>
-&lt;p>&lt;img src="set-env-for-system.png"
+&lt;p>&lt;img loading="lazy" src="set-env-for-system.png"
 alt="set-env-for-system"/>&lt;/p>
 &lt;p>没问题时，&lt;code>cargo check&lt;/code> 应该会有如下输出：&lt;/p>
-&lt;p>&lt;img src="cargo-check-success.png"
+&lt;p>&lt;img loading="lazy" src="cargo-check-success.png"
 alt="cargo-check-success"/>&lt;/p>
 &lt;div class="notice note" >
 &lt;p class="notice-title">
@@ -163,8 +163,7 @@ alt="cargo-check-success"/>&lt;/p>
 &lt;li>因为有 &lt;code>archinstall&lt;/code>，目前的安装 Archlinux 已经非常简单了。&lt;/li>
 &lt;/ol>
 &lt;blockquote>
-&lt;p>另外这台旧电脑准备送给家人用，Linux 不太方便的安装软件方式，可以杜绝调很多安全问题。&lt;/p>
-&lt;/blockquote>
+&lt;p>另外这台旧电脑准备送给家人用，Linux 不太方便的安装软件方式，可以杜绝调很多安全问题。&lt;/p>&lt;/blockquote>
 &lt;p>旧电脑为华硕（ASUS）的飞行堡垒5。&lt;/p>
 &lt;ul>
 &lt;li>CPU: Intel(R) Core(TM) i5-8300H CPU @ 2.30GHz&lt;/li>
@@ -176,49 +175,42 @@ alt="cargo-check-success"/>&lt;/p>
 &lt;ul>
 &lt;li>&lt;a href="https://archlinux.org/"target="_blank" rel="noopener noreferrer">Archlinux 官网&lt;/a>
 &lt;blockquote>
-&lt;p>下载 Archlinux 镜像&lt;/p>
-&lt;/blockquote>
+&lt;p>下载 Archlinux 镜像&lt;/p>&lt;/blockquote>
 &lt;/li>
 &lt;li>&lt;a href="https://rufus.ie/zh/"target="_blank" rel="noopener noreferrer">rufus&lt;/a>
 &lt;blockquote>
-&lt;p>镜像安装引导盘制作&lt;/p>
-&lt;/blockquote>
+&lt;p>镜像安装引导盘制作&lt;/p>&lt;/blockquote>
 &lt;/li>
 &lt;li>&lt;a href="https://wiki.archlinuxcn.org/wiki/%E5%AE%89%E8%A3%85%E6%8C%87%E5%8D%97"target="_blank" rel="noopener noreferrer">官方安装教程（中文翻译）&lt;/a>&lt;/li>
 &lt;li>&lt;a href="https://arch.icekylin.online/guide/"target="_blank" rel="noopener noreferrer">Archlinux 简明指南&lt;/a>
 &lt;blockquote>
-&lt;p>包含安装教程，和一些常用软件、工具的安装&lt;/p>
-&lt;/blockquote>
+&lt;p>包含安装教程，和一些常用软件、工具的安装&lt;/p>&lt;/blockquote>
 &lt;/li>
 &lt;li>&lt;a href="http://rsproxy.cn/"target="_blank" rel="noopener noreferrer">RsProxy&lt;/a>
 &lt;blockquote>
-&lt;p>目前使用过最快的国内 Rust 镜像&lt;/p>
-&lt;/blockquote>
+&lt;p>目前使用过最快的国内 Rust 镜像&lt;/p>&lt;/blockquote>
 &lt;/li>
 &lt;li>&lt;a href="https://github.com/Morganamilo/paru"target="_blank" rel="noopener noreferrer">paru&lt;/a>
 &lt;blockquote>
-&lt;p>AUR 软件包安装助手&lt;/p>
-&lt;/blockquote>
+&lt;p>AUR 软件包安装助手&lt;/p>&lt;/blockquote>
 &lt;/li>
 &lt;li>&lt;a href="https://aur.archlinux.org/"target="_blank" rel="noopener noreferrer">AUR&lt;/a>
 &lt;blockquote>
-&lt;p>archlinux 的 aur 仓库网页，搜索需要的软件包很方便，官方直接支持的软件包可以点开 &lt;code>Home&lt;/code> 旁边的 &lt;code>packages&lt;/code> 查看&lt;/p>
-&lt;/blockquote>
+&lt;p>archlinux 的 aur 仓库网页，搜索需要的软件包很方便，官方直接支持的软件包可以点开 &lt;code>Home&lt;/code> 旁边的 &lt;code>packages&lt;/code> 查看&lt;/p>&lt;/blockquote>
 &lt;/li>
 &lt;/ul>
 &lt;h2 id="下载镜像">下载镜像&lt;/h2>
 &lt;p>进入 &lt;a href="https://archlinux.org/"target="_blank" rel="noopener noreferrer">Archlinux 官网&lt;/a>，点击导航栏最右侧的 Download，然后下载 torrent 文件，使用自己常用的种子下载工具下载镜像即可。&lt;/p>
 &lt;blockquote>
-&lt;p>直接使用磁力链接也可以，但是部分时候磁力链接可能加载不了下载列表。&lt;/p>
-&lt;/blockquote>
-&lt;p>&lt;img src="01.arhclinux-download.png"
+&lt;p>直接使用磁力链接也可以，但是部分时候磁力链接可能加载不了下载列表。&lt;/p>&lt;/blockquote>
+&lt;p>&lt;img loading="lazy" src="01.arhclinux-download.png"
 alt="archlinux-download"/>&lt;/p>
 &lt;p>Archlinux 的镜像文件相对来说比较小。写这篇博客时，下载的版本是 &lt;code>archlinux-2024.06.01-x86_64&lt;/code>。&lt;/p>
 &lt;h3 id="启动盘制作">启动盘制作&lt;/h3>
 &lt;p>此处我使用 &lt;a href="https://rufus.ie/zh/"target="_blank" rel="noopener noreferrer">rufus&lt;/a>，当然其他制作工具也是可以的。&lt;/p>
 &lt;p>&lt;strong>！！！制作启动盘前，请将 U 盘内的重要数据进行备份！！！&lt;/strong>&lt;/p>
 &lt;p>插入一个 U 盘，然后打开 rufus，分区类型选择 GPT，目标系统类型选择 UEFI，然后点击开始。&lt;/p>
-&lt;p>&lt;img src="02.arhclinux-ustart-make.png"
+&lt;p>&lt;img loading="lazy" src="02.arhclinux-ustart-make.png"
 alt="rufus-make"/>&lt;/p>
 &lt;p>U 盘会先被格式化，然后 rufus 会写入系统镜像。&lt;/p>
 &lt;h2 id="bios-设置">BIOS 设置&lt;/h2>
@@ -227,14 +219,14 @@ alt="rufus-make"/>&lt;/p>
 &lt;p>此处需要根据不同的主板来进行操作，比如华硕的主板，出现 ASUS Logo 时长按 ESC 键，然后选择 USB 启动即可。&lt;/p>
 &lt;p>因为电脑已经寄走了，所以之后的安装画面都会使用虚拟机。&lt;/p>
 &lt;p>安装选择版本选择 &lt;code>x86_64&lt;/code> 即可，也可根据自己电脑的实际情况选择。&lt;/p>
-&lt;p>&lt;img src="03.arhclinux-bios.png"
+&lt;p>&lt;img loading="lazy" src="03.arhclinux-bios.png"
 alt="archlinux-bios"/>&lt;/p>
-&lt;p>&lt;img src="04.arhclinux-bios-enter.png"
+&lt;p>&lt;img loading="lazy" src="04.arhclinux-bios-enter.png"
 alt="archlinux-bios-enter"/>&lt;/p>
 &lt;p>出现上图的样子，就是成功进入了安装界面了。&lt;/p>
 &lt;h2 id="检查网络">检查网络&lt;/h2>
 &lt;p>在进入安装界面的上面，有这样一段话：&lt;/p>
-&lt;p>&lt;img src="05.network-hint.png"
+&lt;p>&lt;img loading="lazy" src="05.network-hint.png"
 alt="network-hint"/>&lt;/p>
 &lt;p>输入 &lt;code>iwctl&lt;/code> 可以进入无线网络的连接程序。输入 &lt;code>help&lt;/code> 指令可以获取帮助。&lt;/p>
 &lt;p>Wlan 联网可以参考简明指南的&lt;a href="https://arch.icekylin.online/guide/rookie/basic-install.html#_3-%E8%BF%9E%E6%8E%A5%E7%BD%91%E7%BB%9C"target="_blank" rel="noopener noreferrer">连接网络章节&lt;/a>。&lt;/p>
@@ -242,73 +234,68 @@ alt="network-hint"/>&lt;/p>
 &lt;h2 id="检查磁盘">检查磁盘&lt;/h2>
 &lt;p>这一步的目的是为了清空磁盘。如果需要重装 Archlinux，这一步比较关键。&lt;/p>
 &lt;blockquote>
-&lt;p>在重装 Archlinux 时，如果不预先删掉分区，&lt;code>archinstall&lt;/code> 的磁盘选项里，通过建议创建的分区后，不会删掉原来的分区，安装报错并中断。&lt;/p>
-&lt;/blockquote>
+&lt;p>在重装 Archlinux 时，如果不预先删掉分区，&lt;code>archinstall&lt;/code> 的磁盘选项里，通过建议创建的分区后，不会删掉原来的分区，安装报错并中断。&lt;/p>&lt;/blockquote>
 &lt;p>！！！清空磁盘前，请确认磁盘的重要数据已经备份！！！&lt;/p>
 &lt;p>输入 &lt;code>fdisk -l&lt;/code>，查看自己的磁盘。&lt;/p>
-&lt;p>&lt;img src="06.fdisk-list.png"
+&lt;p>&lt;img loading="lazy" src="06.fdisk-list.png"
 alt="fdisk-list"/>&lt;/p>
 &lt;p>上面显示的有两个磁盘，其中 &lt;code>/dev/sda&lt;/code> 是我现在的磁盘。&lt;/p>
 &lt;p>如果有分区，即上面的命令有 &lt;code>/dev/sda1&lt;/code>、&lt;code>/dev/sda2&lt;/code>，建议输入 &lt;code>fdisk /dev/sda&lt;/code>，进入磁盘管理控制台。然后输入 &lt;code>d&lt;/code> + 回车删除分区，多个分区需要多次 &lt;code>d&lt;/code> 指令。&lt;/p>
 &lt;blockquote>
-&lt;p>电脑如果有两个磁盘，或者只有一个磁盘但是已经安装了 Windows 系统，可能会导致 &lt;code>archinstall&lt;/code> 无法找到该磁盘，但是 &lt;code>fdisk&lt;/code> 能够列出该磁盘，所以可能需要同样的方式删除磁盘分区（待验证）。&lt;/p>
-&lt;/blockquote>
+&lt;p>电脑如果有两个磁盘，或者只有一个磁盘但是已经安装了 Windows 系统，可能会导致 &lt;code>archinstall&lt;/code> 无法找到该磁盘，但是 &lt;code>fdisk&lt;/code> 能够列出该磁盘，所以可能需要同样的方式删除磁盘分区（待验证）。&lt;/p>&lt;/blockquote>
 &lt;h2 id="安装">安装&lt;/h2>
 &lt;p>网络和磁盘配置好之后，可以键入 &lt;code>archinstall&lt;/code> + 回车，来安装 Archlinux 了。&lt;/p>
-&lt;p>&lt;img src="07.enter-archinstall.png"
+&lt;p>&lt;img loading="lazy" src="07.enter-archinstall.png"
 alt="enter-archinstsall"/>&lt;/p>
 &lt;blockquote>
-&lt;p>如果一直卡在 &lt;code>Check version&lt;/code>，可以使用 &lt;code>Ctrl&lt;/code> + &lt;code>C&lt;/code> 先终止安装，再输入 &lt;code>archinstall --skip-version-check&lt;/code> 来禁止版本检查。&lt;/p>
-&lt;/blockquote>
+&lt;p>如果一直卡在 &lt;code>Check version&lt;/code>，可以使用 &lt;code>Ctrl&lt;/code> + &lt;code>C&lt;/code> 先终止安装，再输入 &lt;code>archinstall --skip-version-check&lt;/code> 来禁止版本检查。&lt;/p>&lt;/blockquote>
 &lt;p>进入 &lt;code>archinstall&lt;/code> 的页面如上所示。&lt;/p>
 &lt;p>&lt;code>Archinstall language&lt;/code> 不作修改，点击 &lt;code>↓&lt;/code> 或 &lt;code>j&lt;/code> 选择 &lt;code>Mirrors&lt;/code>，回车进入后选择 &lt;code>Mirror region&lt;/code> 并回车。等待一小会儿之后，键入 &lt;code>/china&lt;/code>，搜索国内镜像，并回车选择。&lt;/p>
-&lt;p>&lt;img src="08.mirrors-select.gif"
+&lt;p>&lt;img loading="lazy" src="08.mirrors-select.gif"
 alt="mirrors-select"/>&lt;/p>
 &lt;p>按 &lt;code>j&lt;/code> 到 &lt;code>← Back&lt;/code> 并回车。进入 &lt;code>Locales&lt;/code> 设置，需要更改的是 &lt;code>Locale language&lt;/code>，进入后，选择 &lt;code>zh-cn.UTF8&lt;/code>。&lt;/p>
-&lt;p>&lt;img src="09.locale-select.gif"
+&lt;p>&lt;img loading="lazy" src="09.locale-select.gif"
 alt="locale-select"/>&lt;/p>
 &lt;p>然后是磁盘配置。直接使用建议配置就行，因为之前已经做了删除分区的操作，所以执行安装时应该不会出错了。磁盘格式可以按自己需要选择，此处选择 &lt;code>btrfs&lt;/code>。&lt;/p>
-&lt;p>&lt;img src="10.disk-configuration.gif"
+&lt;p>&lt;img loading="lazy" src="10.disk-configuration.gif"
 alt="disk-configuration"/>&lt;/p>
 &lt;p>主机名可以按需求更改，此处不变。&lt;/p>
 &lt;p>&lt;code>Root Password&lt;/code> 即 root 用户密码，建议设置一个。&lt;code>User account&lt;/code> 里，设置一个用户，是否有 &lt;code>sudo&lt;/code> 权限可以根据自己需要来，为了方便我设置了 &lt;code>sudo&lt;/code> 权限。&lt;/p>
-&lt;p>&lt;img src="11.user-set.gif"
+&lt;p>&lt;img loading="lazy" src="11.user-set.gif"
 alt="user-set"/>&lt;/p>
 &lt;p>&lt;code>Profiles&lt;/code> 选择桌面类型，当然如果是有其他需要，也可以不直接通过 &lt;code>archinstall&lt;/code> 安装桌面环境。桌面环境挺多的，具体可以在 &lt;a href="https://wiki.archlinuxcn.org/wiki/Category:%E6%A1%8C%E9%9D%A2%E7%8E%AF%E5%A2%83"target="_blank" rel="noopener noreferrer">分类:桌面环境&lt;/a> 查看，此处选择 Kde Plasma。&lt;/p>
-&lt;p>&lt;img src="12.profile-set.gif"
+&lt;p>&lt;img loading="lazy" src="12.profile-set.gif"
 alt="profile-set"/>&lt;/p>
 &lt;p>&lt;code>Audio&lt;/code> 可以 &lt;code>No audio server&lt;/code>，但还是建议随意选一个。&lt;/p>
 &lt;p>&lt;code>Kernels&lt;/code> 即内核，建议多选择一个 &lt;code>linux-zen&lt;/code>，方便之后安装 &lt;code>waydroid&lt;/code> 并运行安卓应用。&lt;/p>
 &lt;p>&lt;code>Network configuration&lt;/code> 建议如果选择安装了桌面环境，就使用 &lt;code>Use NetworkManager&lt;/code>，这样可以使有无线网卡的主板，连接 WIFI。&lt;/p>
 &lt;p>&lt;code>Timezone&lt;/code> 选择上海。&lt;/p>
 &lt;p>最终的配置如下所示。&lt;/p>
-&lt;p>&lt;img src="13.end-archinstall-configuration.png"
+&lt;p>&lt;img loading="lazy" src="13.end-archinstall-configuration.png"
 alt="end-archinstall-configuration"/>&lt;/p>
 &lt;p>选择 &lt;code>Install&lt;/code>，然后回车，Archlinux 就正式开始安装了。安装过程中尽量保证网络畅通。&lt;/p>
 &lt;p>经过一段时间的等待，安装便完成了，会提示是否进入控制界面，选择进入。&lt;/p>
-&lt;p>&lt;img src="14.install-end.png"
+&lt;p>&lt;img loading="lazy" src="14.install-end.png"
 alt="install-end"/>&lt;/p>
 &lt;p>Archlinux 没有自带中文字体，所以使用 pacman 安装一下中文字体：&lt;/p>
 &lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">pacman -S noto-fonts-cjk
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>安装完成后，输入 &lt;code>exit&lt;/code> 退出 chroot 模式，然后输入 &lt;code>poweroff&lt;/code> 关机，将 U 盘拔掉，再开机。&lt;/p>
 &lt;h2 id="配置系统">配置系统&lt;/h2>
 &lt;p>再次启动后，会进入到 ssdm 的启动页，如下所示，说明我们已经成功安装了 Archlinux，接下来就是配置系统的时候了。&lt;/p>
-&lt;p>&lt;img src="15.enter-greeter.png"
+&lt;p>&lt;img loading="lazy" src="15.enter-greeter.png"
 alt="enter-ssdm"/>&lt;/p>
 &lt;blockquote>
 &lt;p>如果觉得当前的启动页与 Kde 的风格不符合，可以进入 &lt;code>系统设置-&amp;gt;颜色和主题-&amp;gt;登录屏幕(ssdm)&lt;/code>，选择 &lt;code>Breeze 微风&lt;/code>并应用即可。
-&lt;img src="15.1.modify-ssdm-theme.png"
-alt="modify-ssdm-theme"/>&lt;/p>
-&lt;/blockquote>
+&lt;img loading="lazy" src="15.1.modify-ssdm-theme.png"
+alt="modify-ssdm-theme"/>&lt;/p>&lt;/blockquote>
 &lt;p>输入密码进入桌面，我们依次打开 &lt;code>左下角菜单-&amp;gt;系统-&amp;gt;Konsole 终端&lt;/code>。&lt;/p>
 &lt;blockquote>
-&lt;p>因为在 archinstall 中，已经修改了镜像地区，所以后续使用 pacman 或 paru 时，并不需要修改地区。如果出现安装卡住，大部分时候是因为 aur 上软件包安装文件的指定服务器，国内无法访问或者访问过慢。&lt;/p>
-&lt;/blockquote>
+&lt;p>因为在 archinstall 中，已经修改了镜像地区，所以后续使用 pacman 或 paru 时，并不需要修改地区。如果出现安装卡住，大部分时候是因为 aur 上软件包安装文件的指定服务器，国内无法访问或者访问过慢。&lt;/p>&lt;/blockquote>
 &lt;h3 id="安装浏览器">安装浏览器&lt;/h3>
 &lt;p>首先需要安装的是浏览器，火狐其实就很不错，输入下面的命令安装火狐浏览器：&lt;/p>
 &lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">sudo pacman -S firefox
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>输入密码和 &lt;code>y&lt;/code> 并回车继续安装。&lt;/p>
-&lt;p>&lt;img src="16.install-firefox.png"
+&lt;p>&lt;img loading="lazy" src="16.install-firefox.png"
 alt="install-firefox"/>&lt;/p>
 &lt;h3 id="安装-paru">安装 paru&lt;/h3>
 &lt;p>安装 &lt;code>git&lt;/code> 和 &lt;code>rustup&lt;/code>：&lt;/p>
@@ -317,8 +304,7 @@ alt="install-firefox"/>&lt;/p>
 &lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">rustup install stable
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>安装完成之后，按照 rsproxy 的教程，修改 &lt;code>~/.cargo/config&lt;/code> 或 &lt;code>~/.cargo/config.toml&lt;/code> 的内容。&lt;/p>
 &lt;blockquote>
-&lt;p>修改文件内容时，可能会出现找不到 &lt;code>vi&lt;/code> 指令，这是因为 Archlinux 不会默认将 &lt;code>vim&lt;/code> 指定 &lt;code>vi&lt;/code> 别称。&lt;/p>
-&lt;/blockquote>
+&lt;p>修改文件内容时，可能会出现找不到 &lt;code>vi&lt;/code> 指令，这是因为 Archlinux 不会默认将 &lt;code>vim&lt;/code> 指定 &lt;code>vi&lt;/code> 别称。&lt;/p>&lt;/blockquote>
 &lt;p>打开 &lt;a href="https://github.com/Morganamilo/paru"target="_blank" rel="noopener noreferrer">paru 的 github 仓库&lt;/a>，找到 &lt;code>Install&lt;/code> 出，复制下面的命名开始安装 paru。&lt;/p>
 &lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">sudo pacman -S --needed base-devel
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">git clone https://aur.archlinux.org/paru.git
@@ -329,28 +315,27 @@ alt="install-firefox"/>&lt;/p>
 &lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">paru -S fcitx5-im fcitx5-chinese-addons
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;blockquote>
 &lt;p>除了 &lt;code>fcitx5-chinese-addons&lt;/code>，也可以查看 &lt;a href="https://wiki.archlinuxcn.org/wiki/Fcitx5"target="_blank" rel="noopener noreferrer">fcitx5 的 archlinux 页面&lt;/a>，安装其他中文输入法组件。
-同时可以寻找想要安装的词库、皮肤或其他组件，也可以去搜索引擎中搜索。&lt;/p>
-&lt;/blockquote>
+同时可以寻找想要安装的词库、皮肤或其他组件，也可以去搜索引擎中搜索。&lt;/p>&lt;/blockquote>
 &lt;p>安装全部内容完成之后，进入系统设置。打开&lt;code>键盘-&amp;gt;虚拟键盘&lt;/code>，选择 &lt;code>Fcitx5&lt;/code> 并应用。应用之后会提示是否启用云拼音，可以根据自己需要选择。&lt;/p>
-&lt;p>&lt;img src="17.select-virsual-keyboard-fcitx5.png"
+&lt;p>&lt;img loading="lazy" src="17.select-virsual-keyboard-fcitx5.png"
 alt="select-virsual-keyboard-fcitx5"/>&lt;/p>
 &lt;p>现在在可以输入的地方按下 &lt;code>Ctrl&lt;/code> + &lt;code>Space&lt;/code>，就可以看到光标旁的 &lt;code>en&lt;/code> 变成了 &lt;code>拼&lt;/code>，就可以输入中文了，同时也可以再次按下 &lt;code>Ctrl&lt;/code> + &lt;code>Space&lt;/code> 切换回英文输入。&lt;/p>
 &lt;h4 id="配置输入法可选">配置输入法（可选）&lt;/h4>
 &lt;p>返回系统设置，找到区域和语言，选择输入法。点击配置全局选项，将 &lt;code>切换启用/禁用输入法&lt;/code> 的快捷键修改为自己习惯的按键，此处我修改成了 &lt;code>Shift&lt;/code> 键。&lt;/p>
-&lt;p>&lt;img src="17.1.config-fcitx5.png"
+&lt;p>&lt;img loading="lazy" src="17.1.config-fcitx5.png"
 alt="config-fcitx5"/>&lt;/p>
 &lt;p>修改好后，应用并返回，找到 &lt;code>配置附加组件...-&amp;gt;经典用户界面&lt;/code>，往下翻找到 &lt;code>主题&lt;/code>，在这里可以修改输入法的主题。&lt;/p>
-&lt;p>&lt;img src="17.2.config-fcitx5-theme.png"
+&lt;p>&lt;img loading="lazy" src="17.2.config-fcitx5-theme.png"
 alt="config-fcitx5-theme"/>&lt;/p>
 &lt;h3 id="安装-qq安装示例">安装 QQ（安装示例）&lt;/h3>
 &lt;p>QQ 的安装比较典型，因为 QQ 在安装之后无法正常使用输入法。&lt;/p>
 &lt;p>安装 QQ 可以使用下面的命令：&lt;/p>
 &lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">paru -S linuxqq
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>执行时会提示有几个不同的软件包：&lt;/p>
-&lt;p>&lt;img src="18.execute-paru-s-linuxqq.png"
+&lt;p>&lt;img loading="lazy" src="18.execute-paru-s-linuxqq.png"
 alt="execute-paru-s-linuxqq"/>&lt;/p>
 &lt;p>不确定的话，可以上 &lt;a href="https://aur.archlinux.org/"target="_blank" rel="noopener noreferrer">Aur&lt;/a> 上搜索 &lt;code>linuxqq&lt;/code>，看看几个软件包有什么区别：&lt;/p>
-&lt;p>&lt;img src="19.search-linuxqq.png"
+&lt;p>&lt;img loading="lazy" src="19.search-linuxqq.png"
 alt="search-linuxqq"/>&lt;/p>
 &lt;p>QQ 在之前发布过 NT 版，支持多平台。而在 &lt;a href="https://aur.archlinux.org/"target="_blank" rel="noopener noreferrer">Aur&lt;/a> 上，&lt;code>linuxqq&lt;/code> 被标记过期，那么其实最好是选择其他的软件包安装。其中 &lt;code>linuxqq-nt-bwrap&lt;/code> 和 &lt;code>linuxqq-appimage&lt;/code> 任选其中一个安装即可。此处选择 2，即 &lt;code>linuxqq-appimage&lt;/code>。&lt;/p>
 &lt;p>安装完成，打开并登录 QQ，此时如果想发消息，会发现切换不了输入法。&lt;/p>
@@ -367,8 +352,7 @@ alt="search-linuxqq"/>&lt;/p>
 &lt;ul>
 &lt;li>&lt;a href="https://github.com/MaterialDesignInXAML/MaterialDesignInXamlToolkit"target="_blank" rel="noopener noreferrer">MaterialDesignThemes&lt;/a>
 &lt;blockquote>
-&lt;p>注意按照 &lt;a href="https://github.com/MaterialDesignInXAML/MaterialDesignInXamlToolkit/wiki/Getting-Started"target="_blank" rel="noopener noreferrer">Getting Start&lt;/a> 来配置主题&lt;/p>
-&lt;/blockquote>
+&lt;p>注意按照 &lt;a href="https://github.com/MaterialDesignInXAML/MaterialDesignInXamlToolkit/wiki/Getting-Started"target="_blank" rel="noopener noreferrer">Getting Start&lt;/a> 来配置主题&lt;/p>&lt;/blockquote>
 &lt;/li>
 &lt;/ul>
 &lt;h2 id="添加-itemscontrol">添加 ItemsControl&lt;/h2>
@@ -431,8 +415,8 @@ alt="search-linuxqq"/>&lt;/p>
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nt">&amp;lt;ItemsControl.ItemTemplate&lt;/span>&lt;span class="err">[...]&lt;/span>&lt;span class="nt">&amp;gt;&lt;/span>
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nt">&amp;lt;/ItemsControl&amp;gt;&lt;/span>
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>这时候已经能看到设计器上面有三个 Chips 按钮了。&lt;/p>
-&lt;p>&lt;img src="add-itemscontrol.png"
-alt/>&lt;/p>
+&lt;p>&lt;img loading="lazy" src="add-itemscontrol.png"
+alt=""/>&lt;/p>
 &lt;h2 id="添加-converter-来获取-index">添加 Converter 来获取 Index&lt;/h2>
 &lt;p>为了获取 Index，我们需要找一下 &lt;code>ItemsControl&lt;/code> 的&lt;a href="https://learn.microsoft.com/zh-cn/dotnet/api/system.windows.controls.itemscontrol?view=windowsdesktop-8.0"target="_blank" rel="noopener noreferrer">文档&lt;/a>，但是里面好像并没有想要的东西。&lt;/p>
 &lt;p>不过有一个属性比较令人在意，叫 &lt;a href="https://learn.microsoft.com/zh-cn/dotnet/api/system.windows.controls.itemscontrol.itemcontainergenerator?view=windowsdesktop-8.0"target="_blank" rel="noopener noreferrer">ItemContainerGenerator&lt;/a>。&lt;/p>
@@ -449,8 +433,8 @@ alt/>&lt;/p>
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nt">&amp;lt;/DataTemplate&amp;gt;&lt;/span>
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nt">&amp;lt;/ItemsControl.ItemTemplate&amp;gt;&lt;/span>
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>看向设计器，一个令人兴奋的效果出现了，我们数组中的元素出现在了 Text 中。&lt;/p>
-&lt;p>&lt;img src="binding-show-textblock.png"
-alt/>&lt;/p>
+&lt;p>&lt;img loading="lazy" src="binding-show-textblock.png"
+alt=""/>&lt;/p>
 &lt;p>有这么个想法产生了，如果我们获取 &lt;code>DataTemplate&lt;/code> 或者 &lt;code>CheckBox&lt;/code> 控件，但是不指定其 Path 来绑定，那么传入的不就是控件自身了吗？&lt;/p>
 &lt;p>为了调用 &lt;code>IndexFromContainer&lt;/code> 函数，还需要获得 &lt;code>ItemsControl&lt;/code> 的 &lt;code>ItemContainerGenerator&lt;/code>。所以需要用到 &lt;code>MultiBinding&lt;/code>，这个绑定和 &lt;code>Binding&lt;/code> 的区别在于，它可以绑定多个数据。&lt;/p>
 &lt;p>那么事不宜迟，开始为 &lt;code>TextBlock&lt;/code> 来进行 &lt;code>MultiBinding&lt;/code>。其中的 &lt;code>Binding&lt;/code>，分别绑定 &lt;code>ItemsControl&lt;/code> 的 &lt;code>ItemContainerGenerator&lt;/code> 和当前控件。&lt;/p>
@@ -485,8 +469,7 @@ alt/>&lt;/p>
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">}&lt;/span>
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>为 Converter 实现了 &lt;code>IMultiValueConverter&lt;/code> 接口，这样就可以让 &lt;code>MultiBinding&lt;/code> 使用此 Converter。&lt;/p>
 &lt;blockquote>
-&lt;p>Converter 的使用可以查看 &lt;a href="https://learn.microsoft.com/zh-cn/dotnet/desktop/wpf/data/how-to-convert-bound-data?view=netframeworkdesktop-4.8"target="_blank" rel="noopener noreferrer">如何：转换绑定的数据&lt;/a>&lt;/p>
-&lt;/blockquote>
+&lt;p>Converter 的使用可以查看 &lt;a href="https://learn.microsoft.com/zh-cn/dotnet/desktop/wpf/data/how-to-convert-bound-data?view=netframeworkdesktop-4.8"target="_blank" rel="noopener noreferrer">如何：转换绑定的数据&lt;/a>&lt;/p>&lt;/blockquote>
 &lt;p>我们可以将返回值直接返回 &lt;code>values&lt;/code>，并在 &lt;code>Convert&lt;/code> 函数的 return 处打上断点。&lt;/p>
 &lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-csharp" data-lang="csharp">&lt;span class="line">&lt;span class="cl">&lt;span class="kd">public&lt;/span> &lt;span class="kt">object&lt;/span> &lt;span class="n">Convert&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="kt">object&lt;/span>&lt;span class="p">[]&lt;/span> &lt;span class="n">values&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">Type&lt;/span> &lt;span class="n">targetType&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="kt">object&lt;/span> &lt;span class="n">parameter&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">CultureInfo&lt;/span> &lt;span class="n">culture&lt;/span>&lt;span class="p">)&lt;/span>
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">{&lt;/span>
@@ -531,13 +514,12 @@ alt/>&lt;/p>
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nt">&amp;lt;/Grid&amp;gt;&lt;/span>
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nt">&amp;lt;/Window&amp;gt;&lt;/span>
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>现在调试运行一下，看绑定的控件是否都传入了。&lt;/p>
-&lt;p>&lt;img src="convert-values.png"
-alt/>&lt;/p>
+&lt;p>&lt;img loading="lazy" src="convert-values.png"
+alt=""/>&lt;/p>
 &lt;p>如果和上图一样，都是这 &lt;code>ItemsControl&lt;/code> 和 &lt;code>CheckBox&lt;/code> 类型，那么说明绑定成功了。如果调试步骤没有进入 Convert，或者 &lt;code>values&lt;/code> 的内容有区别，需要检查一下绑定是否是按照上面的来的。&lt;/p>
 &lt;blockquote>
 &lt;p>你可能注意到了有几个绑定失败的提示，这是因为在 Convert 中返回的 &lt;code>values&lt;/code> 在退出函数之后被销毁了，所以 &lt;code>TextBlock.Text&lt;/code> 拿到了一个空值。&lt;/p>
-&lt;p>如果需要拿到非空值，需要使用 &lt;code>values.Clone()&lt;/code>。&lt;/p>
-&lt;/blockquote>
+&lt;p>如果需要拿到非空值，需要使用 &lt;code>values.Clone()&lt;/code>。&lt;/p>&lt;/blockquote>
 &lt;p>现在需要的内容都有了，开始获取 Index 吧！&lt;/p>
 &lt;p>在 Convert 函数中，先把 &lt;code>ItemsControl&lt;/code> 和 &lt;code>CheckBox&lt;/code> 选出来。&lt;/p>
 &lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-csharp" data-lang="csharp">&lt;span class="line">&lt;span class="cl">&lt;span class="kd">public&lt;/span> &lt;span class="kt">object&lt;/span> &lt;span class="n">Convert&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="kt">object&lt;/span>&lt;span class="p">[]&lt;/span> &lt;span class="n">values&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">Type&lt;/span> &lt;span class="n">targetType&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="kt">object&lt;/span> &lt;span class="n">parameter&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">CultureInfo&lt;/span> &lt;span class="n">culture&lt;/span>&lt;span class="p">)&lt;/span>
@@ -572,20 +554,20 @@ alt/>&lt;/p>
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">}&lt;/span>
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>生成一下项目，回到设计器，会发现 Text 还是没有内容。&lt;/p>
 &lt;p>在 &lt;code>var index = ...&lt;/code> 处打上断点，然后调试执行。看向 &lt;code>Index&lt;/code>，会发现其值为 -1。&lt;/p>
-&lt;p>&lt;img src="convert-error-index.png"
-alt/>&lt;/p>
+&lt;p>&lt;img loading="lazy" src="convert-error-index.png"
+alt=""/>&lt;/p>
 &lt;p>这显然不符合我们的需求，&lt;code>IndexFromContainer&lt;/code> 并没有找到我们需要的 Index，同时取消断点，会发现绑定又失败了，绑定的值又变为了 &lt;code>null&lt;/code>。&lt;/p>
 &lt;p>看向官方文档 &lt;a href="https://learn.microsoft.com/zh-cn/dotnet/api/system.windows.data.relativesourcemode?view=windowsdesktop-8.0#fields"target="_blank" rel="noopener noreferrer">RelativeSourceMode Enum&lt;/a>，有一项叫做 &lt;code>TemplatedParent&lt;/code>。翻译看看描述。&lt;/p>
-&lt;p>&lt;img src="mode-templated-parent.png"
-alt/>&lt;/p>
+&lt;p>&lt;img loading="lazy" src="mode-templated-parent.png"
+alt=""/>&lt;/p>
 &lt;p>大概意思是能够获取到绑定的模板控件，那么将绑定的内容修改一下：&lt;/p>
 &lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-xml" data-lang="xml">&lt;span class="line">&lt;span class="cl">&lt;span class="nt">&amp;lt;MultiBinding&lt;/span>&lt;span class="err">[...]&lt;/span>&lt;span class="nt">&amp;gt;&lt;/span>
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nt">&amp;lt;Binding&lt;/span>&lt;span class="err">[...]&lt;/span>&lt;span class="nt">&amp;gt;&lt;/span>
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nt">&amp;lt;Binding&lt;/span> &lt;span class="na">RelativeSource=&lt;/span>&lt;span class="s">&amp;#34;{RelativeSource Mode=TemplatedParent}&amp;#34;&lt;/span>&lt;span class="nt">&amp;gt;&amp;lt;/Binding&amp;gt;&lt;/span>
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nt">&amp;lt;/MultiBinding&amp;gt;&lt;/span>
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>同时在 Convert 方法中打一下断点，看看其内容。&lt;/p>
-&lt;p>&lt;img src="templated-parent-type.png"
-alt/>&lt;/p>
+&lt;p>&lt;img loading="lazy" src="templated-parent-type.png"
+alt=""/>&lt;/p>
 &lt;p>发现它的类型是 &lt;code>ContentPresenter&lt;/code>。修改 Convert 函数的内容。&lt;/p>
 &lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-csharp" data-lang="csharp">&lt;span class="line">&lt;span class="cl">&lt;span class="kd">public&lt;/span> &lt;span class="kt">object&lt;/span> &lt;span class="n">Convert&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="kt">object&lt;/span>&lt;span class="p">[]&lt;/span> &lt;span class="n">values&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">Type&lt;/span> &lt;span class="n">targetType&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="kt">object&lt;/span> &lt;span class="n">parameter&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">CultureInfo&lt;/span> &lt;span class="n">culture&lt;/span>&lt;span class="p">)&lt;/span>
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">{&lt;/span>
@@ -616,11 +598,11 @@ alt/>&lt;/p>
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">return&lt;/span> &lt;span class="s">&amp;#34;&amp;#34;&lt;/span>&lt;span class="p">;&lt;/span>
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">}&lt;/span>
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>再次生成项目，回到设计器，应该可以看到 Text 的内容变成 Index 了。&lt;/p>
-&lt;p>&lt;img src="item-index-in-view.png"
-alt/>&lt;/p>
+&lt;p>&lt;img loading="lazy" src="item-index-in-view.png"
+alt=""/>&lt;/p>
 &lt;p>当然可以返回时 &lt;code>+1&lt;/code>，即 &lt;code>return $&amp;quot;{index + 1}&amp;quot;;&lt;/code> ，这样显示的起始 Index 就是 1 了。&lt;/p>
-&lt;p>&lt;img src="after-index-add-one.png"
-alt/>&lt;/p>
+&lt;p>&lt;img loading="lazy" src="after-index-add-one.png"
+alt=""/>&lt;/p>
 &lt;h2 id="附">附&lt;/h2>
 &lt;p>仓库链接：&lt;a href="https://github.com/studylessshape/WPFUserRecord/tree/main/IndexWithItemsControl"target="_blank" rel="noopener noreferrer">IndexWithItemsControl&lt;/a>&lt;/p>
 &lt;p>文档列表：&lt;/p>
@@ -642,8 +624,7 @@ alt/>&lt;/p>
 &lt;li>&lt;a href="https://github.com/MaterialDesignInXAML/MaterialDesignInXamlToolkit"target="_blank" rel="noopener noreferrer">MaterialDesignThemes&lt;/a>
 &lt;blockquote>
 &lt;p>MaterialDesignThemes 需要根据 &lt;a href="https://github.com/MaterialDesignInXAML/MaterialDesignInXamlToolkit/wiki/Getting-Started"target="_blank" rel="noopener noreferrer">Getting Start&lt;/a> 来进行配置。&lt;/p>
-&lt;p>同时其 Demo 程序是重要的参考，如果和我一样使用 Release 版，可以直接去 Github 的 Release 中下载 DemoApp，如果想使用最新版的功能，可以克隆整个项目，并直接运行 Demo 项目。&lt;/p>
-&lt;/blockquote>
+&lt;p>同时其 Demo 程序是重要的参考，如果和我一样使用 Release 版，可以直接去 Github 的 Release 中下载 DemoApp，如果想使用最新版的功能，可以克隆整个项目，并直接运行 Demo 项目。&lt;/p>&lt;/blockquote>
 &lt;/li>
 &lt;/ul>
 &lt;h2 id="目录">目录&lt;/h2>
@@ -656,27 +637,27 @@ alt/>&lt;/p>
 &lt;p>情况是这样的，给一个最小值和最大值，介于两者之间的值的单元格，统一设置一个填充颜色。&lt;/p>
 &lt;h2 id="使用条件格式">使用条件格式&lt;/h2>
 &lt;p>网上查找很容易就找到了条件格式。&lt;/p>
-&lt;p>&lt;img src="condition-style.png"
-alt/>&lt;/p>
+&lt;p>&lt;img loading="lazy" src="condition-style.png"
+alt=""/>&lt;/p>
 &lt;p>假设现在有以下表格，要做的就是将下面的满足条件的值设置一个颜色。（图片使用的是 WPS，但 LibreOffice 和 Microsoft Office 的操作方式基本一致）&lt;/p>
-&lt;p>&lt;img src="table-no-style.png"
-alt/>&lt;/p>
+&lt;p>&lt;img loading="lazy" src="table-no-style.png"
+alt=""/>&lt;/p>
 &lt;p>首先选中下面 1-29 所有的单元格，然后点击&lt;strong>条件格式&lt;/strong> -&amp;gt; &lt;strong>新建规则&lt;/strong>。应该会出现下图所示的弹窗。&lt;/p>
-&lt;p>&lt;img src="new-condition.png"
-alt/>&lt;/p>
+&lt;p>&lt;img loading="lazy" src="new-condition.png"
+alt=""/>&lt;/p>
 &lt;p>然后选择第二项&lt;code>只为包含以下内容的单元格设置格式&lt;/code>，第一个输入框可以输入最小值，也可以如下图一样选择一个单元格的值，第二个输入框同理，输入的是最大值。输入框下的格式就是配置满足条件后，单元格会被设置的格式。此处设置了单元格的颜色为淡青色。&lt;/p>
-&lt;p>&lt;img src="select-block.png"
-alt/>&lt;/p>
+&lt;p>&lt;img loading="lazy" src="select-block.png"
+alt=""/>&lt;/p>
 &lt;p>点击确定后，应该可以看到满足条件的单元格变色了，并且如果改变选择的最大最小值，可以看到单元格颜色的变化。&lt;/p>
-&lt;p>&lt;img src="condition-style-set.gif"
-alt/>&lt;/p>
+&lt;p>&lt;img loading="lazy" src="condition-style-set.gif"
+alt=""/>&lt;/p>
 &lt;p>利用同样的方式，可以设置更多的值的范围，最终可能得到的效果如下图。&lt;/p>
-&lt;p>&lt;img src="set-result.png"
-alt/>&lt;/p>
+&lt;p>&lt;img loading="lazy" src="set-result.png"
+alt=""/>&lt;/p>
 &lt;h2 id="另一种需求">另一种需求？&lt;/h2>
 &lt;p>现在出现了另一种情况，并不是每个单元格都有一个值，如下图，但是我们需要根据有数值的那一行和有数值的那一列来设置中间没有数值的单元格格式。&lt;/p>
-&lt;p>&lt;img src="another-problem.png"
-alt/>&lt;/p>
+&lt;p>&lt;img loading="lazy" src="another-problem.png"
+alt=""/>&lt;/p>
 &lt;p>这时候就要用到四个公式（参考&lt;a href="https://zhuanlan.zhihu.com/p/29887818"target="_blank" rel="noopener noreferrer">公式中如何固定获取相对单元格的值&lt;/a>）：&lt;/p>
 &lt;ul>
 &lt;li>&lt;code>ROW()&lt;/code>：获取当前行号&lt;/li>
@@ -691,8 +672,8 @@ alt/>&lt;/p>
 &lt;pre tabindex="0">&lt;code class="language-excel" data-lang="excel">=AND(INDIRECT(ADDRESS(ROW()-1,COLUMN()))&amp;gt;=,INDIRECT(ADDRESS(ROW()-1,COLUMN()))&amp;lt;=)
 &lt;/code>&lt;/pre>&lt;p>通过鼠标点击，将光标调整到大于等于号后面，然后选择最小值的单元格，同理后面的小于等于号，选择最大值的单元格，设置好格式后点击确定即可。&lt;/p>
 &lt;p>整个过程可见下面的动图。&lt;/p>
-&lt;p>&lt;img src="condition-set-one-row.gif"
-alt/>&lt;/p>
+&lt;p>&lt;img loading="lazy" src="condition-set-one-row.gif"
+alt=""/>&lt;/p>
 &lt;p>看起来效果还可以，但别忘了我们还有一列有数值的单元格。所以还需要一个 &lt;code>INDIRECT&lt;/code> 获取对应的值，并将两者加起来。获取第一列的值的公式如下：&lt;/p>
 &lt;pre tabindex="0">&lt;code class="language-excel" data-lang="excel">=INDIRECT(ADDRESS(ROW(),1));
 &lt;/code>&lt;/pre>&lt;p>如果不知道是第几列，&lt;code>1&lt;/code> 的位置可以替换成 &lt;code>COLUMN() - INDIRECT(ADDRESS(ROW()-1,COLUMN()))&lt;/code>，替换完的公式如下：&lt;/p>
@@ -700,14 +681,13 @@ alt/>&lt;/p>
 &lt;/code>&lt;/pre>&lt;p>将获取第一列的值和上一行的值结合起来，可以得到下面的公式：&lt;/p>
 &lt;pre tabindex="0">&lt;code class="language-excel" data-lang="excel">=AND(INDIRECT(ADDRESS(ROW()-1,COLUMN()))+INDIRECT(ADDRESS(ROW(),COLUMN() - INDIRECT(ADDRESS(ROW()-1,COLUMN()))))&amp;gt;=,INDIRECT(ADDRESS(ROW()-1,COLUMN()))+INDIRECT(ADDRESS(ROW(),COLUMN() - INDIRECT(ADDRESS(ROW()-1,COLUMN()))))&amp;lt;=)
 &lt;/code>&lt;/pre>&lt;blockquote>
-&lt;p>设置时，由于公式太长不太好将光标移动到想要的位置，可以用上面的 &lt;code>INDIRECT(ADDRESS(ROW(),1))&lt;/code> 替换 &lt;code>INDIRECT(ADDRESS(ROW(),COLUMN() - INDIRECT(ADDRESS(ROW()-1,COLUMN())))&lt;/code>。&lt;/p>
-&lt;/blockquote>
+&lt;p>设置时，由于公式太长不太好将光标移动到想要的位置，可以用上面的 &lt;code>INDIRECT(ADDRESS(ROW(),1))&lt;/code> 替换 &lt;code>INDIRECT(ADDRESS(ROW(),COLUMN() - INDIRECT(ADDRESS(ROW()-1,COLUMN())))&lt;/code>。&lt;/p>&lt;/blockquote>
 &lt;p>看起来很长，实际上就是将行值和列值加起来了。按照上面的方法设置条件格式，应该可以获得下面的效果：&lt;/p>
-&lt;p>&lt;img src="after-add-row-value.png"
-alt/>&lt;/p>
+&lt;p>&lt;img loading="lazy" src="after-add-row-value.png"
+alt=""/>&lt;/p>
 &lt;p>同时应该注意到，每个单元格可以设置多个条件格式，所以在对每一行进行重复设置后，应该可以得到下面的效果。&lt;/p>
-&lt;p>&lt;img src="condition-set-row-col.gif"
-alt/>&lt;/p>
+&lt;p>&lt;img loading="lazy" src="condition-set-row-col.gif"
+alt=""/>&lt;/p>
 &lt;h2 id="后记">后记&lt;/h2>
 &lt;p>Excel 在使用的时候，无不感觉商业软件在易用性上的成功。但一旦需要一些奇怪或是复杂的需求，光靠 Excel 自身就非常困难。上面可以看到，其实就五个简单的公式，但是完成复杂需求时就会组合嵌套导致公式巨长无比。而且条件格式的公式输入框的光标移动键，被强行改成了单元格选择，这就导致修改更加不便，也不知道为什么这么设计，明明旁边已经有了一个切换单元格选择的按钮。&lt;/p>
 &lt;p>当然这次后面的情况，实际上不太会出现，有的话应该就一行或一列，不太会出现列行同时的情况。&lt;/p>
@@ -718,17 +698,17 @@ alt/>&lt;/p>
 &lt;h1 id="开始尝试同步">开始尝试同步&lt;/h1>
 &lt;p>最简单的方式是先克隆 Gitee 的仓库，然后再提交到 Github。克隆 Gitee 仓库有两种方式，一种是通过 ssh，可以获取到提交记录；另一种是使用 Gitee 的 Open API，但这种方式不会有 Gitee 上的提交记录。&lt;/p>
 &lt;p>首先要有一个 Github Token。在 Github 的设置里找到 &lt;code>Developer Settings&lt;/code>，选择 &lt;code>Personal access tokens&lt;/code> -&amp;gt; &lt;code>Tokens (classic)&lt;/code>，选择 &lt;code>Generate new token (classic)&lt;/code>。&lt;code>Expiration&lt;/code> 即有效期，根据自己的需求选择，我选择了无限期，然后下面的权限将 &lt;code>repo&lt;/code> 和 &lt;code>workflows&lt;/code> 全点上。&lt;/p>
-&lt;p>&lt;img src="git-token.png"
+&lt;p>&lt;img loading="lazy" src="git-token.png"
 alt="git-token"/>&lt;/p>
 &lt;p>&lt;strong>Token 一定不要泄漏！&lt;/strong>&lt;/p>
 &lt;h2 id="ssh-克隆仓库">ssh 克隆仓库&lt;/h2>
 &lt;p>首先需要生成一个 ssh 密钥。如何生成可以查看 Gitee 的文档&lt;a href="https://help.gitee.com/repository/ssh-key/generate-and-add-ssh-public-key"target="_blank" rel="noopener noreferrer">生成、添加 SSH 公钥&lt;/a>。使用的指令如下：&lt;/p>
 &lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">&amp;gt; ssh-keygen -t ed25519 -C &lt;span class="s2">&amp;#34;Gitee SSH Key&amp;#34;&lt;/span>
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>生成的密钥可以通过打印到控制台的信息查看。找到保存密钥的位置（windows 在 &lt;code>C:\Users\{user}\.ssh&lt;/code> 处，linux 位于 &lt;code>~/.ssh&lt;/code> 文件夹下）。带有 &lt;code>.pub&lt;/code> 后缀的为公钥，此处添加到了 Gitee 仓库的公钥中。设置为仓库的公钥可以保证这个公钥只用于克隆和同步仓库，可以增加安全性。&lt;/p>
-&lt;p>&lt;img src="public-ssh-key.png"
+&lt;p>&lt;img loading="lazy" src="public-ssh-key.png"
 alt="公钥"/>&lt;/p>
 &lt;p>在 Github 创建一个和 Gitee 仓库同名的仓库，并将私钥配置给对应的 Github 仓库。找到仓库设置，找到 &lt;code>Secrets and Variables&lt;/code>，点击 &lt;code>New repository secret&lt;/code>，名字随意，然后将私钥的内容复制进去。&lt;/p>
-&lt;p>&lt;img src="private-key-github.png"
+&lt;p>&lt;img loading="lazy" src="private-key-github.png"
 alt="私钥"/>&lt;/p>
 &lt;p>同理，之前生成的 Token 也要作为 secrets 配置进去。&lt;/p>
 &lt;p>这一步完成之后，我们就可以尝试使用 ssh 来克隆仓库了。&lt;/p>
@@ -754,13 +734,13 @@ alt="私钥"/>&lt;/p>
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>为了模拟 Github action 的方式，此处直接回车，然后会发现无法连接，提示如下：&lt;/p>
 &lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">Host key verification failed.
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>具体解决方案可以查看这篇博客：&lt;a href="https://blog.csdn.net/xjp_xujiping/article/details/120012413"target="_blank" rel="noopener noreferrer">SSH 连接时出现 Host key verification failed 的原因及解决方法&lt;/a>。需要修改的配置的条目，可以在 ssh 的文档中找到：&lt;a href="https://www.man7.org/linux/man-pages/man5/ssh_config.5.html"target="_blank" rel="noopener noreferrer">ssh_config - StrictHostKeyChecking&lt;/a>&lt;/p>
-&lt;p>&lt;img src="ssh_config-StrictHostKeyChecking.png"
+&lt;p>&lt;img loading="lazy" src="ssh_config-StrictHostKeyChecking.png"
 alt="ssh_config - StrictHostKeyChecking"/>&lt;/p>
 &lt;p>打开或创建 &lt;code>~/.ssh/config&lt;/code> 文件，将下面的内容添加到文件当中：&lt;/p>
 &lt;pre tabindex="0">&lt;code class="language-config" data-lang="config">Host gitee.com
 StrictHostKeyChecking=no
 &lt;/code>&lt;/pre>&lt;p>配置完成后，再次输入 &lt;code>ssh -T git@gitee.com&lt;/code> 并回车，就没有问题了。&lt;/p>
-&lt;p>&lt;img src="ssh-connection-test-result.png"
+&lt;p>&lt;img loading="lazy" src="ssh-connection-test-result.png"
 alt="ssh-connection-test-result"/>&lt;/p>
 &lt;h3 id="github-action-使用-ssh">Github action 使用 ssh&lt;/h3>
 &lt;p>完成了 ssh 的连接测试，接下来就可以先将上面的内容转存到 Github action 中了。在仓库的根目录创建 &lt;code>.github&lt;/code> 文件夹，并在 &lt;code>.github&lt;/code> 下创建 &lt;code>workflows&lt;/code> 文件夹。创建一个文件末尾格式为 &lt;code>.yml&lt;/code> 的文件，并在文件中输入下面的内容：&lt;/p>
@@ -812,10 +792,10 @@ alt="ssh-connection-test-result"/>&lt;/p>
 &lt;/ol>
 &lt;p>将配置好的 action 文件提交到 Gitee 和 Github 的仓库上。然后修改一些其他文件的内容并提交到 Gitee 仓库上。&lt;/p>
 &lt;p>在 Github 的仓库页面，找到 Action，然后找到 Mirror sync。&lt;/p>
-&lt;p>&lt;img src="github-action.png"
+&lt;p>&lt;img loading="lazy" src="github-action.png"
 alt="github action"/>&lt;/p>
 &lt;p>点击旁边的 Run workflow，再点击绿色的 Run workflow。刷新一下就可以看见一个正在执行的工作流了。如果之前配置 Gitee 的 ssh 的公钥和私钥、以及 Github 的 Token 没有问题，那么运行结束后，所有的条目将都是正常完成的。&lt;/p>
-&lt;p>&lt;img src="run-success.png"
+&lt;p>&lt;img loading="lazy" src="run-success.png"
 alt="run-success"/>&lt;/p>
 &lt;h2 id="使用-gitee-open-api不推荐">使用 Gitee Open API（不推荐）&lt;/h2>
 &lt;p>完整的 Github aciton 直接放在下面了：&lt;/p>
@@ -848,7 +828,7 @@ alt="run-success"/>&lt;/p>
 &lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>要使用 Gitee Open API，需要先生成一个私人令牌。&lt;/p>
 &lt;h3 id="生成私人令牌">生成私人令牌&lt;/h3>
 &lt;p>在 Gitee 的个人设置里，找到&lt;strong>私人令牌&lt;/strong>，点击&lt;strong>生成新令牌&lt;/strong>，建议只勾选 &lt;code>projects&lt;/code> 权限。&lt;/p>
-&lt;p>&lt;img src="gitee-open-api-key-gen.png"
+&lt;p>&lt;img loading="lazy" src="gitee-open-api-key-gen.png"
 alt="gitee-open-api-key-gen.png"/>&lt;/p>
 &lt;p>点击生成，将生成好的内容复制。打开对应的 Github 仓库，在 &lt;code>Secrets and Variables&lt;/code> -&amp;gt; &lt;code>Actions&lt;/code> 中，新建一个仓库机密，命名为 &lt;code>GITEE_ACCESS_TOKEN&lt;/code>。这样，Github action 就能够使用这个私人令牌了。&lt;/p>
 &lt;h3 id="action-中的命令解释">Action 中的命令解释&lt;/h3>
@@ -858,8 +838,7 @@ alt="gitee-open-api-key-gen.png"/>&lt;/p>
 &lt;h1 id="后记">后记&lt;/h1>
 &lt;p>其实之前准备尝试使用 &lt;a href="https://github.com/Yikun/hub-mirror-action"target="_blank" rel="noopener noreferrer">hub-mirror-action&lt;/a> 来同步的，但是这个 action 只能支持一段的私钥和 Token 的配置，所以只能够同步公开仓库。&lt;/p>
 &lt;p>两种不同的方式的 action 都发布到这个仓库了：&lt;a href="https://github.com/studylessshape/sync-gitee-to-github"target="_blank" rel="noopener noreferrer">sync-gitee-to-github&lt;/a>&lt;/p></description></item><item><title>如何入门 Rust 的宏？</title><link>https://study_less_shape.github.io/post/rust/how-to-learn-rust-macro/</link><pubDate>Sun, 17 Dec 2023 22:16:02 +0800</pubDate><guid>https://study_less_shape.github.io/post/rust/how-to-learn-rust-macro/</guid><description>&lt;blockquote>
-&lt;p>避免长篇大论，可以直接翻到最底下的&lt;a href="#%e6%95%b4%e7%90%86">整理&lt;/a>一栏。&lt;/p>
-&lt;/blockquote>
+&lt;p>避免长篇大论，可以直接翻到最底下的&lt;a href="#%e6%95%b4%e7%90%86">整理&lt;/a>一栏。&lt;/p>&lt;/blockquote>
 &lt;h2 id="rust-的宏是什么">Rust 的宏是什么？&lt;/h2>
 &lt;p>Rust 的宏可以看作编译时期，将代码按照编写好的宏规则去生成的指令。换句话说就是用一定的规则将原来的代码替换掉。&lt;/p>
 &lt;p>常见的宏有两种，一个是 &lt;code>macro_rules!&lt;/code> 声明的&lt;strong>声明式宏&lt;/strong>，另一种是和 Rust 函数一样的写法的&lt;strong>过程宏&lt;/strong>。&lt;/p>
@@ -880,8 +859,7 @@ alt="gitee-open-api-key-gen.png"/>&lt;/p>
 &lt;p>宏到底是个什么，可以阅读一下 &lt;a href="https://rustwiki.org/zh-CN/reference/macros.html"target="_blank" rel="noopener noreferrer">Rust 参考手册（中文版非官方翻译）&lt;/a>，了解声明宏和过程宏。&lt;/p>
 &lt;p>入门学习宏可以使用 &lt;a href="https://github.com/dtolnay/proc-macro-workshop"target="_blank" rel="noopener noreferrer">proc-macro-workshop&lt;/a> 进行学习。这个仓库中包含了几个比较常用的声明宏和过程宏的实现模板。并且同时可以阅读学习 &lt;a href="https://rustwiki.org/zh-CN/rust-by-example/macros.html"target="_blank" rel="noopener noreferrer">使用 macro_rules! 来创建宏（通过例子学 Rust 中文版）&lt;/a>。&lt;/p>
 &lt;blockquote>
-&lt;p>&lt;a href="https://docs.rs/syn"target="_blank" rel="noopener noreferrer">syn&lt;/a>、&lt;a href="https://docs.rs/quote"target="_blank" rel="noopener noreferrer">quote&lt;/a> 和 &lt;a href="https://github.com/dtolnay/proc-macro-workshop"target="_blank" rel="noopener noreferrer">proc-macro-workshop&lt;/a> 都是大佬 &lt;a href="https://github.com/dtolnay"target="_blank" rel="noopener noreferrer">dtolnay&lt;/a> 实现的，真的太强了！&lt;/p>
-&lt;/blockquote>
+&lt;p>&lt;a href="https://docs.rs/syn"target="_blank" rel="noopener noreferrer">syn&lt;/a>、&lt;a href="https://docs.rs/quote"target="_blank" rel="noopener noreferrer">quote&lt;/a> 和 &lt;a href="https://github.com/dtolnay/proc-macro-workshop"target="_blank" rel="noopener noreferrer">proc-macro-workshop&lt;/a> 都是大佬 &lt;a href="https://github.com/dtolnay"target="_blank" rel="noopener noreferrer">dtolnay&lt;/a> 实现的，真的太强了！&lt;/p>&lt;/blockquote>
 &lt;p>另外，宏小册，即 &lt;a href="https://veykril.github.io/tlborm/"target="_blank" rel="noopener noreferrer">The Little Book of Rust Macros&lt;/a>，可以当作工具书进行参阅。&lt;/p>
 &lt;h2 id="闲话">闲话&lt;/h2>
 &lt;p>一个朋友之前尝试写了个类似于 &lt;code>lisp&lt;/code> 的脚本语言的解析库，名叫 &lt;a href="https://gitee.com/ZerAx/dj-rs"target="_blank" rel="noopener noreferrer">dj&lt;/a>。我就尝试为其实现一个运行器，方便测试和运行。&lt;/p>
@@ -919,8 +897,7 @@ alt="gitee-open-api-key-gen.png"/>&lt;/p>
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nx">serde_json&lt;/span> &lt;span class="p">=&lt;/span> &lt;span class="s2">&amp;#34;1.0.107&amp;#34;&lt;/span>
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nx">tokio&lt;/span> &lt;span class="p">=&lt;/span> &lt;span class="p">{&lt;/span> &lt;span class="nx">version&lt;/span> &lt;span class="p">=&lt;/span> &lt;span class="s2">&amp;#34;1.33.0&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="nx">features&lt;/span> &lt;span class="p">=&lt;/span> &lt;span class="p">[&lt;/span>&lt;span class="s2">&amp;#34;full&amp;#34;&lt;/span>&lt;span class="p">]&lt;/span> &lt;span class="p">}&lt;/span>
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;blockquote>
-&lt;p>以上依赖版本为本文编写时的最新稳定版，需要注意和自己的版本区别，&lt;code>axum&lt;/code> 的功能基本都有解释，可以查看 &lt;a href="https://docs.rs/axum/latest/axum/#feature-flags"target="_blank" rel="noopener noreferrer">&lt;code>axum&lt;/code> 文档&lt;/a>&lt;/p>
-&lt;/blockquote>
+&lt;p>以上依赖版本为本文编写时的最新稳定版，需要注意和自己的版本区别，&lt;code>axum&lt;/code> 的功能基本都有解释，可以查看 &lt;a href="https://docs.rs/axum/latest/axum/#feature-flags"target="_blank" rel="noopener noreferrer">&lt;code>axum&lt;/code> 文档&lt;/a>&lt;/p>&lt;/blockquote>
 &lt;h3 id="axum-的程序基本结构">&lt;code>axum&lt;/code> 的程序基本结构&lt;/h3>
 &lt;p>从官方文档可以看到，一个 &lt;code>axum&lt;/code> 程序，包含了程序入口、路由、路由服务和 &lt;code>axum&lt;/code> 服务端（即 &lt;code>axum::Server&lt;/code>），我们先将其基本结构写入到 &lt;code>main.rs&lt;/code> 的文件中（代码来自官方文档）：&lt;/p>
 &lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-rust" data-lang="rust">&lt;span class="line">&lt;span class="cl">&lt;span class="k">use&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">axum&lt;/span>::&lt;span class="p">{&lt;/span>&lt;span class="n">routing&lt;/span>::&lt;span class="n">get&lt;/span>&lt;span class="p">,&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">Router&lt;/span>&lt;span class="p">};&lt;/span>&lt;span class="w">
@@ -1027,8 +1004,7 @@ alt="gitee-open-api-key-gen.png"/>&lt;/p>
 &lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">&lt;/span>&lt;span class="p">}&lt;/span>&lt;span class="w">
 &lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>这时再运行后端和前端，打开前端的网页，点击按钮应该可以每次获取到不同的数字。打开开发者控制台，并选择网络（没有的话点加号或者 &lt;code>》&lt;/code> 可以找到），再多次点击按钮，可以看到每次点击按钮都发送了一次 Http 请求。&lt;/p>
 &lt;blockquote>
-&lt;p>如果前端开发者控制台报 &lt;code style="color: red;">Uncaught (in promise) ReferenceError: num is not defined&lt;/code> 这种错误，应该是在给 Vue 中 &lt;code>data&lt;/code> 里的字段赋值的时候没有加 &lt;code>this&lt;/code> 关键字，把 &lt;code>num&lt;/code> 改为 &lt;code>this.num&lt;/code> 即可&lt;/p>
-&lt;/blockquote>
+&lt;p>如果前端开发者控制台报 &lt;code style="color: red;">Uncaught (in promise) ReferenceError: num is not defined&lt;/code> 这种错误，应该是在给 Vue 中 &lt;code>data&lt;/code> 里的字段赋值的时候没有加 &lt;code>this&lt;/code> 关键字，把 &lt;code>num&lt;/code> 改为 &lt;code>this.num&lt;/code> 即可&lt;/p>&lt;/blockquote>
 &lt;h1 id="改为-websocket-传输随机数">改为 WebSocket 传输随机数&lt;/h1>
 &lt;h2 id="后端代码修改">后端代码修改&lt;/h2>
 &lt;p>添加一个新的函数，函数名为 &lt;code>handle_random&lt;/code>，再添加一个函数名为 &lt;code>handle_random_socket&lt;/code>：&lt;/p>
@@ -1145,8 +1121,7 @@ alt="gitee-open-api-key-gen.png"/>&lt;/p>
 &lt;li>&lt;a href="https://cn.vuejs.org/"target="_blank" rel="noopener noreferrer">vue&lt;/a>&lt;/li>
 &lt;li>&lt;a href="https://developer.mozilla.org/zh-CN/docs/Web/API/WebSocket"target="_blank" rel="noopener noreferrer">WebSocket - Web API 接口参考 | MDN&lt;/a>&lt;/li>
 &lt;/ol></description></item><item><title>使用 Actix Web 和 Vue 在开发中遇到的问题</title><link>https://study_less_shape.github.io/post/rust/actix-web-with-vue/</link><pubDate>Tue, 02 May 2023 00:00:00 +0000</pubDate><guid>https://study_less_shape.github.io/post/rust/actix-web-with-vue/</guid><description>&lt;blockquote>
-&lt;p>精力有限，不再更新了。&lt;/p>
-&lt;/blockquote>
+&lt;p>精力有限，不再更新了。&lt;/p>&lt;/blockquote>
 &lt;h2 id="前言">前言&lt;/h2>
 &lt;p>这篇博客会不定期记录我在使用 &lt;code>actix web&lt;/code> 和 &lt;code>vue&lt;/code> 时遇到的问题。两者放在一起是因为我在开发过程中，前端使用 &lt;code>vue&lt;/code>，后端使用 &lt;code>actix web&lt;/code>，一些地方可能两者结合起来才能说明的更加清楚。&lt;/p>
 &lt;h2 id="遇到的问题">遇到的问题&lt;/h2>
@@ -1229,17 +1204,14 @@ alt="gitee-open-api-key-gen.png"/>&lt;/p>
 &lt;p>原文为：&lt;/p>
 &lt;blockquote>
 &lt;p>&lt;code>CARGO_HOME&lt;/code> — Cargo maintains a local cache of the registry index and of git checkouts of crates. By default these are stored under &lt;code>$HOME/.cargo&lt;/code> (&lt;code>%USERPROFILE%\.cargo&lt;/code> on Windows), but this variable overrides the location of this directory. Once a crate is cached it is not removed by the clean command. For more details refer to the &lt;a href="https://doc.rust-lang.org/cargo/guide/cargo-home.html"target="_blank" rel="noopener noreferrer">guide&lt;/a>.&lt;/p>
-&lt;p>&lt;code>RUSTUP_HOME&lt;/code> (default: &lt;code>~/.rustup&lt;/code> or &lt;code>%USERPROFILE%/.rustup&lt;/code>) Sets the root rustup folder, used for storing installed toolchains and configuration options.&lt;/p>
-&lt;/blockquote>
+&lt;p>&lt;code>RUSTUP_HOME&lt;/code> (default: &lt;code>~/.rustup&lt;/code> or &lt;code>%USERPROFILE%/.rustup&lt;/code>) Sets the root rustup folder, used for storing installed toolchains and configuration options.&lt;/p>&lt;/blockquote>
 &lt;p>可以看到 &lt;code>CARGO_HOME&lt;/code> 是 cargo 的包和仓库的位置，cargo 的配置也会存在对应的文件夹下。而 &lt;code>RUSTUP_HOME&lt;/code> 则是 rustup 的根目录，存放了工具链和配置（工具链中包含 cargo 和 rustc 等重要的工具）。&lt;/p>
 &lt;h2 id="修改时需要注意的地方">修改时需要注意的地方&lt;/h2>
 &lt;p>在修改的 &lt;code>CARGO_HOME&lt;/code> 之后，对应的位置会直接存入或下载之前 .cargo 文件夹下的内容。建议在修改之后，先不要使用 cargo，而是将原来文件夹下的 config 文件移动到新位置，或者在新位置创建一个 config。这是为了确保镜像不会出错。&lt;/p>
 &lt;p>并且在修改之后，也不要将原来的 .cargo 直接删除。这并不是为了将原本的内容复制到新位置，太费时间了，而是为了确保不删掉可执行文件。建议查看一下环境变量。像我这边，cargo 的运行程序就是使用的 .cargo/bin 目录下的 cargo.exe，而不是 .rustup/toolchains/%version%/cargo.exe。所以如果和我情况一样，就将 bin 复制到新目录，并将环境变量做对应的修改。&lt;/p>
 &lt;blockquote>
-&lt;p>可以在 Path 中，新建一个位置，内容为 &lt;code>%CARGO_HOME%\bin&lt;/code>。注意在修改之后，需要重启控制台或电脑，来确认 cargo 和 rustup 能否运行（rustup 也在 .cargo\bin 中）。&lt;/p>
-&lt;/blockquote>
+&lt;p>可以在 Path 中，新建一个位置，内容为 &lt;code>%CARGO_HOME%\bin&lt;/code>。注意在修改之后，需要重启控制台或电脑，来确认 cargo 和 rustup 能否运行（rustup 也在 .cargo\bin 中）。&lt;/p>&lt;/blockquote>
 &lt;p>而 &lt;code>RUSTUP_HOME&lt;/code> 这边，在修改之后，直接将原文件夹下的内容全复制到新位置就行了。因为除了工具链，其他的是文档和配置文件等内容，不算特别大，复制不需要特别久。也可以选择不复制，将原来的 settings.toml 复制到新位置，然后运行下面的命令补全文件即可。&lt;/p>
 &lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-sh" data-lang="sh">&lt;span class="line">&lt;span class="cl">rustup default stable
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;blockquote>
-&lt;p>如果运行 &lt;code>rustup update&lt;/code>，可能会提示一些警告，一般来说按照警告操作即可。&lt;/p>
-&lt;/blockquote></description></item></channel></rss>
+&lt;p>如果运行 &lt;code>rustup update&lt;/code>，可能会提示一些警告，一般来说按照警告操作即可。&lt;/p>&lt;/blockquote></description></item></channel></rss>
