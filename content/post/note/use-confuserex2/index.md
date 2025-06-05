@@ -1,7 +1,7 @@
 ---
 title: "使用 ConfuserEX2 加密混淆 C# 程序"
 date: 2025-06-05T10:19:57+08:00
-draft: true
+draft: false
 tags: ["C#", "ConfuserEX2", "混淆", "代码加密"]
 categories: ["C#"]
 summary: "这段时间使用 ConfuserEx2 加密混淆 C# 程序的方法"
