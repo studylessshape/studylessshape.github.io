@@ -1,4 +1,81 @@
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Csharps on 学少何Blog</title><link>https://study_less_shape.github.io/csharp/</link><description>Recent content in Csharps on 学少何Blog</description><generator>Hugo -- gohugo.io</generator><language>zh-cn</language><copyright>© 2024 学少何</copyright><lastBuildDate>Fri, 23 Feb 2024 20:47:28 +0800</lastBuildDate><atom:link href="https://study_less_shape.github.io/csharp/index.xml" rel="self" type="application/rss+xml"/><item><title>如何初始化 llvm-sys</title><link>https://study_less_shape.github.io/post/rust/how-to-init-llvm-sys/</link><pubDate>Sat, 23 Nov 2024 14:37:14 +0800</pubDate><guid>https://study_less_shape.github.io/post/rust/how-to-init-llvm-sys/</guid><description>&lt;h2 id="导入-llvm-sys库">导入 llvm-sys库&lt;/h2>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Csharps on 学少何Blog</title><link>https://study_less_shape.github.io/csharp/</link><description>Recent content in Csharps on 学少何Blog</description><generator>Hugo -- gohugo.io</generator><language>zh-cn</language><copyright>© 2024 学少何</copyright><lastBuildDate>Fri, 23 Feb 2024 20:47:28 +0800</lastBuildDate><atom:link href="https://study_less_shape.github.io/csharp/index.xml" rel="self" type="application/rss+xml"/><item><title>使用 ConfuserEX2 加密混淆 C# 程序</title><link>https://study_less_shape.github.io/post/note/use-confuserex2/</link><pubDate>Thu, 05 Jun 2025 10:19:57 +0800</pubDate><guid>https://study_less_shape.github.io/post/note/use-confuserex2/</guid><description>&lt;h2 id="为什么需要对-c-程序进行混淆和加密">为什么需要对 C# 程序进行混淆和加密&lt;/h2>
+&lt;p>通常需要这样做大多是因为商业项目。&lt;/p>
+&lt;p>就我个人情况而言，目前是在为一个公司使用的软件编写插件，有外发需求，所以需要对插件进行代码加密。&lt;/p>
+&lt;h2 id="快速使用">快速使用&lt;/h2>
+&lt;p>目前我用得最舒适的方式是将 ConfuserEx 集成到项目中，并在编译的同时进行加密操作。&lt;/p>
+&lt;blockquote>
+&lt;p>ConfuserEx 的生成操作为，在项目构建完成之后，会将指定的文件进行加密，并根据配置来决定是否替换掉原文件。&lt;/p>&lt;/blockquote>
+&lt;h3 id="使用前">使用前&lt;/h3>
+&lt;p>ConfuserEx2 推荐去 Github 的 &lt;a href="https://github.com/mkaring/ConfuserEx/releases/latest"target="_blank" rel="noopener noreferrer">Release 界面&lt;/a>下载一个最新的 GUI 工具，方便管理和添加加密规则。&lt;/p>
+&lt;h3 id="初始化加密">初始化加密&lt;/h3>
+&lt;p>对于新建或者已有的 C# 项目，可以通过 Visual Studio 的包管理，或者通过 nuget 包管理器添加 ConfuserEx 的 MSBuild 包。&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">dotnet add package Confuser.MSBuild --version 1.6.0
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>然后打开 ConfuserEx 的 GUI 工具，点击加号添加一个需要加密的文件，可以是 DLL 也可以是 EXE。当然，这个文件最好是单独的一个项目生成的文件。&lt;/p>
+&lt;p>比如此处我的项目是 &lt;code>Less.Utils&lt;/code>，所以我添加了 &lt;code>Less.Utils.dll&lt;/code> 文件。&lt;/p>
+&lt;p>&lt;img loading="lazy" src="01.add-dll-by-confuser.jpg"
+alt="add-dll-by-confuser"/>&lt;/p>
+&lt;p>然后在 &lt;code>Settings&lt;/code> 选项卡中，找到刚才添加的文件，然后点击右侧的加号添加一个加密规则。再点击编辑图标修改规则。&lt;/p>
+&lt;p>&lt;code>Preset&lt;/code> 是预设，建议选择 &lt;code>None&lt;/code>，如果是加密应用程序可以按照需要选择。&lt;/p>
+&lt;p>点击在 &lt;code>Protection&lt;/code> 下方右侧的加号即可添加一个加密规则。加密规则可以有很多个可以选择。&lt;/p>
+&lt;p>目前 ConfuserEx 支持的规则有（描述都为机翻）：&lt;/p>
+&lt;ul>
+&lt;li>&lt;code>Anti Debug&lt;/code>：此保护可防止对程序集进行调试或分析。&lt;/li>
+&lt;li>&lt;code>Anti Dump&lt;/code>：此保护可防止从内存中转储程序集。&lt;/li>
+&lt;li>&lt;code>Anti IL Dasm&lt;/code>：此保护使用阻止 ILDasm 反汇编的属性标记模块。&lt;/li>
+&lt;li>&lt;code>Anti Tamper&lt;/code>：此保护可确保应用程序的完整性。&lt;/li>
+&lt;li>&lt;code>Constants&lt;/code>：此保护对代码中的常量进行编码和压缩。&lt;/li>
+&lt;li>&lt;code>Control Flow&lt;/code>：此保护会破坏方法中的代码，以便反编译器无法反编译方法。&lt;/li>
+&lt;li>&lt;code>Protection Hardening&lt;/code>：此组件改进了保护代码，使其更难绕过它。&lt;/li>
+&lt;li>&lt;code>Invalid Metadata&lt;/code>：此保护将无效的元数据添加到模块中，以防止反汇编器/反编译器打开它们。&lt;/li>
+&lt;li>&lt;code>Resources&lt;/code>：此保护对嵌入的资源进行编码和压缩。&lt;/li>
+&lt;li>&lt;code>Type Scrambler&lt;/code>：将类型替换为泛型。&lt;/li>
+&lt;li>&lt;code>Name&lt;/code>：此保护会混淆符号的名称，因此既不能编译也不能读取反编译的源代码。&lt;/li>
+&lt;li>&lt;code>Watermarking&lt;/code>：这会将水印应用于程序集，表明 ConfuserEx 保护了程序集。所以人们试图扭转混淆，知道放弃。&lt;/li>
+&lt;/ul>
+&lt;p>对于类库的加密，目前个人添加的是 &lt;code>Anti Dump&lt;/code>、&lt;code>Anti IL Dasm&lt;/code>、&lt;code>Anti Tamper&lt;/code>、&lt;code>Constants&lt;/code>、&lt;code>Control Flow&lt;/code> 这 5 项。&lt;/p>
+&lt;p>添加完成后，点击工具栏的 &lt;code>Save Project&lt;/code>，保存到项目的根目录下，文件命名和项目名需要一致。&lt;/p>
+&lt;h3 id="项目设置">项目设置&lt;/h3>
+&lt;p>加密会影响调试，所以首选需要设置在 Release 模式下才进行加密。&lt;/p>
+&lt;p>双击项目打开项目文件，在文件中添加下面的内容：&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-xml" data-lang="xml">&lt;span class="line">&lt;span class="cl">&lt;span class="nt">&amp;lt;PropertyGroup&lt;/span> &lt;span class="na">Condition=&lt;/span>&lt;span class="s">&amp;#34;&amp;#39;$(Configuration)&amp;#39; == &amp;#39;Release&amp;#39;&amp;#34;&lt;/span>&lt;span class="nt">&amp;gt;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nt">&amp;lt;Obfuscate&amp;gt;&lt;/span>true&lt;span class="nt">&amp;lt;/Obfuscate&amp;gt;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nt">&amp;lt;ConfuserReplaceOutput&amp;gt;&lt;/span>true&lt;span class="nt">&amp;lt;/ConfuserReplaceOutput&amp;gt;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nt">&amp;lt;/PropertyGroup&amp;gt;&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>这几行配置了在 Release 模式下启用加密，并替换掉原来的文件。&lt;/p>
+&lt;p>然后打开刚才保存的加密配置文件，文件名为 &lt;code>&amp;lt;项目名&amp;gt;.crproj&lt;/code>。如果在 VS 中不存在，可以通过右键项目，添加现有项来添加。&lt;/p>
+&lt;p>打开之后，将路径替换为 &lt;code>$(Output)&lt;/code>，修改后保存。&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-xml" data-lang="xml">&lt;span class="line">&lt;span class="cl">&lt;span class="nt">&amp;lt;project&lt;/span> &lt;span class="na">outputDir=&lt;/span>&lt;span class="s">&amp;#34;$(Output)\Confused&amp;#34;&lt;/span> &lt;span class="na">baseDir=&lt;/span>&lt;span class="s">&amp;#34;$(Output)&amp;#34;&lt;/span> &lt;span class="na">xmlns=&lt;/span>&lt;span class="s">&amp;#34;http://confuser.codeplex.com&amp;#34;&lt;/span>&lt;span class="nt">&amp;gt;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nt">&amp;lt;module&lt;/span> &lt;span class="na">path=&lt;/span>&lt;span class="s">&amp;#34;Less.Utils.dll&amp;#34;&lt;/span>&lt;span class="nt">&amp;gt;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nt">&amp;lt;rule&lt;/span> &lt;span class="na">pattern=&lt;/span>&lt;span class="s">&amp;#34;true&amp;#34;&lt;/span> &lt;span class="na">inherit=&lt;/span>&lt;span class="s">&amp;#34;false&amp;#34;&lt;/span>&lt;span class="nt">&amp;gt;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nt">&amp;lt;protection&lt;/span> &lt;span class="na">id=&lt;/span>&lt;span class="s">&amp;#34;anti dump&amp;#34;&lt;/span> &lt;span class="nt">/&amp;gt;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nt">&amp;lt;protection&lt;/span> &lt;span class="na">id=&lt;/span>&lt;span class="s">&amp;#34;anti ildasm&amp;#34;&lt;/span> &lt;span class="nt">/&amp;gt;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nt">&amp;lt;protection&lt;/span> &lt;span class="na">id=&lt;/span>&lt;span class="s">&amp;#34;anti tamper&amp;#34;&lt;/span> &lt;span class="nt">/&amp;gt;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nt">&amp;lt;protection&lt;/span> &lt;span class="na">id=&lt;/span>&lt;span class="s">&amp;#34;constants&amp;#34;&lt;/span> &lt;span class="nt">/&amp;gt;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nt">&amp;lt;protection&lt;/span> &lt;span class="na">id=&lt;/span>&lt;span class="s">&amp;#34;ctrl flow&amp;#34;&lt;/span> &lt;span class="nt">/&amp;gt;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nt">&amp;lt;/rule&amp;gt;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nt">&amp;lt;/module&amp;gt;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nt">&amp;lt;/project&amp;gt;&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>这样，加密配置就完成了。现在在 Release 模式下编译的生成的文件，就会应用上面的加密规则。&lt;/p>
+&lt;h2 id="市面上的加密工具">市面上的加密工具&lt;/h2>
+&lt;h3 id="dotfuscator">Dotfuscator&lt;/h3>
+&lt;p>可以直接使用 Visual Studio Installer，在其单个组件中找到并安装。安装之后在 Visual Studio 中使用功能搜索 dot，就能够使用了。相对来说使用方便，但是免费版加密程度有限，而且在我实际使用时，加密后的插件无法正常使用，所以不太推荐。&lt;/p>
+&lt;p>不过如果是加密应用程序，应该还是没有问题的。&lt;/p>
+&lt;h3 id="agilenet">Agile.NET&lt;/h3>
+&lt;p>&lt;a href="https://www.secureteam.net/acode-features-detailed"target="_blank" rel="noopener noreferrer">Agile.NET&lt;/a> 是一个商业的加密工具，功能强大，但是需要付费，而且价格不便宜。&lt;/p>
+&lt;p>不过效果确实看着不错，加密后的代码公开方法和类型都能够正常用 ILSpy 和 dnSpy 查看，只是方法体全被去掉了。&lt;/p>
+&lt;h3 id="结界net">结界.NET&lt;/h3>
+&lt;p>&lt;a href="https://github.com/dcsoft-yyf/JIEJIE.NET"target="_blank" rel="noopener noreferrer">结界.NET&lt;/a> 是开源的命令行加密工具，同时也有 GUI 界面。使用方法可以看一下这个博客 -&amp;gt; &lt;a href="https://www.cnblogs.com/dotnet-box/p/17360983.html"target="_blank" rel="noopener noreferrer">【JIEJIE.NET - 强大的 .NET 代码混淆工具】&lt;/a>&lt;/p>
+&lt;p>不过这个加密工具同样是不推荐对类库进行加密，个人只推荐加密应用程序。&lt;/p>
+&lt;h3 id="confuserex2">ConfuserEX2&lt;/h3>
+&lt;p>&lt;a href="https://github.com/mkaring/ConfuserEx"target="_blank" rel="noopener noreferrer">ConfuserEx2&lt;/a>，也是原作者停止更新后，社区其他开发者接手更新的项目。目前没有继续发布新的稳定版本了，但是还在继续更新。&lt;/p>
+&lt;p>这个工具除了 GUI 的界面，还有对应的 nuget 包 &lt;a href="https://www.nuget.org/packages/Confuser.MSBuild"target="_blank" rel="noopener noreferrer">Confuser.MSBuild&lt;/a>，能够在项目编译的同时进行加密操作。&lt;/p>
+&lt;p>就个人目前使用体验而言，这个是用起来最无感且最方便的。&lt;/p>
+&lt;h2 id="一些反编译工具">一些反编译工具&lt;/h2>
+&lt;ul>
+&lt;li>&lt;a href="https://github.com/icsharpcode/ILSpy"target="_blank" rel="noopener noreferrer">ILSpy&lt;/a>&lt;/li>
+&lt;li>&lt;a href="https://github.com/dnSpyEx/dnSpy"target="_blank" rel="noopener noreferrer">dnSpy(Ex)&lt;/a> &lt;em>这个是原作者停止维护后，其他开发者接手并持续更新的项目&lt;/em>&lt;/li>
+&lt;/ul>
+&lt;p>dnSpy 可以修改并重新编译程序和 DLL 文件，相对来说功能更强大。&lt;/p></description></item><item><title>如何初始化 llvm-sys</title><link>https://study_less_shape.github.io/post/rust/how-to-init-llvm-sys/</link><pubDate>Sat, 23 Nov 2024 14:37:14 +0800</pubDate><guid>https://study_less_shape.github.io/post/rust/how-to-init-llvm-sys/</guid><description>&lt;h2 id="导入-llvm-sys库">导入 llvm-sys库&lt;/h2>
 &lt;p>添加 crate &lt;a href="https://crates.io/crates/llvm-sys"target="_blank" rel="noopener noreferrer">llvm-sys&lt;/a> 到现有的项目中。&lt;/p>
 &lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-shell" data-lang="shell">&lt;span class="line">&lt;span class="cl">cargo add llvm-sys
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>如果有指定 llvm 版本需求，可以指定版本，比如版本 &lt;code>18.1.x&lt;/code> 的 LLVM，可以指定 llmv-sys 的版本为 &lt;code>180&lt;/code>。&lt;/p>
@@ -1195,23 +1272,4 @@ alt="gitee-open-api-key-gen.png"/>&lt;/p>
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>当然也不一定是 &lt;code>parseInt&lt;/code>，也可以根据自己后台的数据类型决定使用哪种类型。&lt;/p>
 &lt;h3 id="2-数据获取问题">2. 数据获取问题&lt;/h3>
 &lt;p>以前使用过 &lt;code>JavaWeb&lt;/code>，前端可以直接获取到 Java 中的对象，前后端的数据同步基本上没有什么问题。而在我编写毕设项目时，发现 Http 中的 &lt;code>GET&lt;/code> 请求，在页面不刷新的时候，第二次请求同一个地址，会读取缓存，无论怎样修改都会出现这种情况。由于当时对前端和后端的通信了解的比较少，所以在需要重复获取数据的时候采用了跳转页面或者修改请求地址这种比较简单的方法，甚至很多地方直接使用其他不会读取缓存的方法。&lt;/p>
-&lt;p>在之后的一段时间中了解到了 WebSocket，实际上就是为前端和后端建立一个 TCP 连接，这样的话想要获取需要的数据，数据可以从建立好的连接获取，就不需要考虑 &lt;code>GET&lt;/code> 请求的缓存问题了。&lt;/p></description></item><item><title>修改/移动 rustup 和 cargo 位置</title><link>https://study_less_shape.github.io/post/rust/change-rustup-and-cargo-location/</link><pubDate>Sat, 04 Feb 2023 15:29:43 +0800</pubDate><guid>https://study_less_shape.github.io/post/rust/change-rustup-and-cargo-location/</guid><description>&lt;h2 id="移动方法">移动方法&lt;/h2>
-&lt;p>移动方法按照这篇博客移动即可，博客地址：&lt;a href="https://tian051011.me/archives/7/"target="_blank" rel="noopener noreferrer">https://tian051011.me/archives/7/&lt;/a>。&lt;/p>
-&lt;h2 id="环境变量来源">环境变量来源&lt;/h2>
-&lt;p>当然不能够说就这样完了，对于我说，我更想知道到底为什么会是这两个变量。&lt;/p>
-&lt;p>在进行 rust 开发的时候，有两个比较重要的工具，一个是 rustup，另一个是 cargo。rustup 中包含了 rust 开发的工具链，而 cargo 则是包管理。如果没有改变位置，那么在原本 C 盘的位置应该分别位于 &lt;code>%USERPROFILE%/.rustup&lt;/code> 和 &lt;code>%USERPROFILE%\.cargo&lt;/code> 下。&lt;code>%USERPROFILE%&lt;/code> 是用户目录，一般来说就是在 C 盘。&lt;/p>
-&lt;p>那么对应的两个环境变量可以在 &lt;a href="https://doc.rust-lang.org/cargo/reference/environment-variables.html"target="_blank" rel="noopener noreferrer">Environment Variables - The Cargo Book&lt;/a> 和 &lt;a href="https://rust-lang.github.io/rustup/environment-variables.html"target="_blank" rel="noopener noreferrer">Environment Variables - The rustup book&lt;/a> 中找到。&lt;/p>
-&lt;p>原文为：&lt;/p>
-&lt;blockquote>
-&lt;p>&lt;code>CARGO_HOME&lt;/code> — Cargo maintains a local cache of the registry index and of git checkouts of crates. By default these are stored under &lt;code>$HOME/.cargo&lt;/code> (&lt;code>%USERPROFILE%\.cargo&lt;/code> on Windows), but this variable overrides the location of this directory. Once a crate is cached it is not removed by the clean command. For more details refer to the &lt;a href="https://doc.rust-lang.org/cargo/guide/cargo-home.html"target="_blank" rel="noopener noreferrer">guide&lt;/a>.&lt;/p>
-&lt;p>&lt;code>RUSTUP_HOME&lt;/code> (default: &lt;code>~/.rustup&lt;/code> or &lt;code>%USERPROFILE%/.rustup&lt;/code>) Sets the root rustup folder, used for storing installed toolchains and configuration options.&lt;/p>&lt;/blockquote>
-&lt;p>可以看到 &lt;code>CARGO_HOME&lt;/code> 是 cargo 的包和仓库的位置，cargo 的配置也会存在对应的文件夹下。而 &lt;code>RUSTUP_HOME&lt;/code> 则是 rustup 的根目录，存放了工具链和配置（工具链中包含 cargo 和 rustc 等重要的工具）。&lt;/p>
-&lt;h2 id="修改时需要注意的地方">修改时需要注意的地方&lt;/h2>
-&lt;p>在修改的 &lt;code>CARGO_HOME&lt;/code> 之后，对应的位置会直接存入或下载之前 .cargo 文件夹下的内容。建议在修改之后，先不要使用 cargo，而是将原来文件夹下的 config 文件移动到新位置，或者在新位置创建一个 config。这是为了确保镜像不会出错。&lt;/p>
-&lt;p>并且在修改之后，也不要将原来的 .cargo 直接删除。这并不是为了将原本的内容复制到新位置，太费时间了，而是为了确保不删掉可执行文件。建议查看一下环境变量。像我这边，cargo 的运行程序就是使用的 .cargo/bin 目录下的 cargo.exe，而不是 .rustup/toolchains/%version%/cargo.exe。所以如果和我情况一样，就将 bin 复制到新目录，并将环境变量做对应的修改。&lt;/p>
-&lt;blockquote>
-&lt;p>可以在 Path 中，新建一个位置，内容为 &lt;code>%CARGO_HOME%\bin&lt;/code>。注意在修改之后，需要重启控制台或电脑，来确认 cargo 和 rustup 能否运行（rustup 也在 .cargo\bin 中）。&lt;/p>&lt;/blockquote>
-&lt;p>而 &lt;code>RUSTUP_HOME&lt;/code> 这边，在修改之后，直接将原文件夹下的内容全复制到新位置就行了。因为除了工具链，其他的是文档和配置文件等内容，不算特别大，复制不需要特别久。也可以选择不复制，将原来的 settings.toml 复制到新位置，然后运行下面的命令补全文件即可。&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-sh" data-lang="sh">&lt;span class="line">&lt;span class="cl">rustup default stable
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;blockquote>
-&lt;p>如果运行 &lt;code>rustup update&lt;/code>，可能会提示一些警告，一般来说按照警告操作即可。&lt;/p>&lt;/blockquote></description></item></channel></rss>
+&lt;p>在之后的一段时间中了解到了 WebSocket，实际上就是为前端和后端建立一个 TCP 连接，这样的话想要获取需要的数据，数据可以从建立好的连接获取，就不需要考虑 &lt;code>GET&lt;/code> 请求的缓存问题了。&lt;/p></description></item></channel></rss>
