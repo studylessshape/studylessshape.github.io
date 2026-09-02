@@ -56,6 +56,13 @@ gitee = "study_less_shape" # https://gitee.com/XXX
 
 # for chinese
 [params.beian]
-#   icp = "湘ICP备2024065160号-1"     # example: 粤ICP备20056596号-1
+  icp = ""     # example: 粤ICP备20056596号-1
+  # icp = "湘ICP备2024065160号-1"     # example: 粤ICP备20056596号-1
   gongan = ""  # example: 粤公网安备 44030502005645号
   code = ""    # example: 44030502005645
+
+[params.comments]
+enable = true  # En/Disable comments globally, default: false. You can always enable comments on per page.
+
+[params.comments.utterances]
+repo = "studylessshape/studylessshape.github.io" # enable comments with [utteranc.es](https://utteranc.es/)
