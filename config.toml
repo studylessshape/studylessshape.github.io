@@ -1,4 +1,5 @@
 baseURL = "https://study_less_shape.github.io/"
+languageCode = "zh-cn" # deprecated on: v0.158.0, but not removed on v0.165.0.
 locale = "zh-cn"
 language = "zh-cn"
 defaultContentLanguage = "zh"
