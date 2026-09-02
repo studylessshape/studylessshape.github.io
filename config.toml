@@ -1,12 +1,12 @@
 baseURL = "https://study_less_shape.github.io/"
-languageCode = "zh-cn"
+locale = "zh-cn"
 language = "zh-cn"
 defaultContentLanguage = "zh"
 title = "学少何Blog"
 theme = ["hugo-notepadium", "hugo-notice"]
 tag = "tags"
 category = "categories"
-copyright = "© 2024 学少何"
+copyright = "© 2026 学少何"
 
 [markup.highlight]
 codeFences = true
