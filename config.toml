@@ -53,3 +53,9 @@ bio = "_不求上进的社畜……_"  # support markdown syntax
 twitter = ""  # https://twitter.com/XXX
 github = "studylessshape"  # https://github.com/XXX
 gitee = "study_less_shape" # https://gitee.com/XXX
+
+# for chinese
+[params.beian]
+#   icp = "湘ICP备2024065160号-1"     # example: 粤ICP备20056596号-1
+  gongan = ""  # example: 粤公网安备 44030502005645号
+  code = ""    # example: 44030502005645
