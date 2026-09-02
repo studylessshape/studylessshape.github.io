@@ -67,3 +67,4 @@ enable = true  # En/Disable comments globally, default: false. You can always en
 [params.comments.utterances]
 repo = "studylessshape/studylessshape.github.io" # enable comments with [utteranc.es](https://utteranc.es/)
 theme = "github-dark"
+label = "blog comment" # default: "💬 Comments"
